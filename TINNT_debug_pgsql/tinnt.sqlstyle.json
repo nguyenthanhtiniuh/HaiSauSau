@@ -1,0 +1,142 @@
+{
+  "kind": "bravo-studio-sql-style",
+  "version": 2,
+  "style": {
+    "name": "TINNT",
+    "options": {
+      "whitespace": {
+        "indentKind": "spaces",
+        "indentWidth": 7,
+        "maxLineWidth": 150,
+        "semicolonSpacing": "none",
+        "preserveBlankLinesBetween": true,
+        "blankLinesBetween": 1,
+        "preserveBlankLinesWithin": true,
+        "alignLineComments": false
+      },
+      "lists": {
+        "commaPlacement": "leading",
+        "firstItem": "never",
+        "subsequentItems": "always",
+        "alignment": "indent",
+        "spaceBeforeComma": false,
+        "spaceAfterComma": false,
+        "commaAnchor": "indented",
+        "alignAliases": true,
+        "alignComments": true
+      },
+      "casing": {
+        "keywords": "upper",
+        "identifiers": "preserve",
+        "builtinFunctions": "preserve",
+        "dataTypes": "preserve"
+      },
+      "parentheses": {
+        "spacesAround": true,
+        "spacesAroundContents": true,
+        "collapseUnder": 150,
+        "layout": "hug",
+        "indentContents": true
+      },
+      "functionCalls": {
+        "spacesAroundParens": false,
+        "spacesAroundArgumentList": false,
+        "spaceInEmptyParens": false,
+        "spaceAfterParens": true,
+        "argumentsOnNewLines": "never"
+      },
+      "in": {
+        "spaceAroundContents": false,
+        "firstValue": "never",
+        "subsequentValues": "never",
+        "openParenOnNewLine": false,
+        "openParenAnchor": "indented"
+      },
+      "operators": {
+        "spacesAroundComparison": true,
+        "spacesAroundArithmetic": true,
+        "andOrOnNewLine": "never",
+        "andOrAnchor": "indented",
+        "andOrBeforeCondition": true,
+        "betweenOnNewLine": "never",
+        "betweenAndOnNewLine": "never",
+        "betweenAndAnchor": "indented",
+        "alignComparison": false
+      },
+      "join": {
+        "keywordOnNewLine": true,
+        "keywordAnchor": "none",
+        "onKeywordOnNewLine": false,
+        "blankLineBetween": false,
+        "tableOnNewLine": false,
+        "indentTable": true,
+        "onKeywordAnchor": "none",
+        "onConditionOnNewLine": "never",
+        "onConditionAnchor": "indented"
+      },
+      "insert": {
+        "columnList": "hug",
+        "indentColumnList": true,
+        "subsequentColumns": "never",
+        "values": "hug",
+        "indentValues": true
+      },
+      "case": {
+        "firstWhen": "never",
+        "whenAnchor": "indented",
+        "thenOnNewLine": false,
+        "endOnNewLine": false,
+        "endAnchor": "none",
+        "collapseUnder": 150,
+        "expressionsOnNewLine": false,
+        "thenAnchor": "indented",
+        "elseOnNewLine": true,
+        "alignElseToWhen": true
+      },
+      "dml": {
+        "collapseUnder": 0,
+        "clauseAnchor": "none",
+        "clauseIndentation": false,
+        "fromTable": "never",
+        "whereCondition": "never",
+        "groupOrderExpression": "never",
+        "insertTable": "never",
+        "distinct": "never",
+        "newLineAfterDistinct": false,
+        "subqueryCollapseUnder": 0
+      },
+      "ddl": {
+        "parenLayout": "hug",
+        "indentParenContents": true,
+        "alignTypesAndConstraints": false,
+        "constraintsOnNewLines": "never",
+        "constraintColumns": "hug",
+        "indentClauses": false,
+        "firstRoutineParam": "never"
+      },
+      "controlFlow": {
+        "beginOnNewLine": true,
+        "indentBeginEnd": true,
+        "indentContents": true,
+        "collapseUnder": 0,
+        "routineBodyIndent": true
+      },
+      "cte": {
+        "nameOnNewLine": false,
+        "indentName": true,
+        "columnsOnNewLine": false,
+        "columnAnchor": "indented",
+        "asOnNewLine": false,
+        "asAnchor": "indented",
+        "contentsLayout": "hug",
+        "indentContents": true
+      },
+      "variables": {
+        "alignTypesAndValues": false,
+        "spaceBeforePrecision": false,
+        "assignedValueOnNewLine": false,
+        "equalsOnNewLine": false
+      }
+    }
+  }
+}

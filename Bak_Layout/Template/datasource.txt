@@ -1,0 +1,3722 @@
+<root>
+	<TableCollection>
+		<Item>
+			<Name>B20Item</Name>
+			<Source>Tbl</Source>
+			<Alias>bi</Alias>
+			<Columns>
+					Id, ParentId, IsGroup, BranchCode, Code, Name, Name2, ProductId, BarCode, Unit, ItemType, ItemGroupId, ShortCode, IsActive, 
+					CreatedBy, CreatedAt, ModifiedBy, ModifiedAt, ItemTypeName, ParentCode, ProductCostInfo, ItemCatgId, ItemPurchasePriceTypeId,
+					ItemGroupName, ItemGroup, ProductClassName1, ProductClassName2, ProductClassName3, ProductionDefineName, Weight, Length, Width, 
+					Height, IsItemWithSerialNo, IsItemWithInstall, IsItemWithTransport, IsItemWithScale, IsItemWithLocation, IsItemWithLot, IsItemWithColor, 
+					IsItemWithSize, IsItemWithQuality, ShelfLife, ManufacturerId, ProductItemId, IsUniform, Spec, ItemCatgCode, ItemCatgName, ExciseTaxId,
+					EnvTaxId, ItemAccount, ItemAccount1, ItemAccount2, ItemAccount3, COGSAccount, COGSAccount1, COGSAccount2, COGSAccount3, SalesAccount,
+					SalesAccount1, SalesAccount2, SalesAccount3, SalesReturnAccount, SalesReturnAccount1, SalesReturnAccount2, SalesReturnAccount3, EnvTaxRate,
+					ItemClassPurchaseId, ItemClassPurchaseName, EInvoiceName, ShortName
+			</Columns>
+			<SourceCollection>
+				<Tbl>
+					<Name>B20Item</Name>
+					<Columns>
+							Tbl.Id, Tbl.ParentId, Tbl.IsGroup, Tbl.BranchCode, Tbl.Code, Tbl.Name, info.Name2, Info.ProductId, Tbl.Unit, Tbl.ItemType, Tbl.ItemGroupId, Tbl.ShortCode, Tbl.BarCode,
+							Tbl.IsActive, Tbl.CreatedBy, Tbl.CreatedAt, Tbl.ModifiedBy, Tbl.ModifiedAt, bc.Name AS ItemTypeName, bi0.Code AS ParentCode, info.ItemPurchasePriceTypeId,
+			     	  pd.Name AS ProductCostInfo, Tbl.ItemCatgId, gr.Name AS ItemGroupName, (CASE WHEN Tbl.IsGroup=True THEN 0 WHEN Tbl.ItemType = 3 THEN 2 ELSE 1 END) AS ItemGroup,
+  						ProductClass1.Name AS ProductClassName1, ProductClass2.Name AS ProductClassName2, ProductClass3.Name AS ProductClassName3, ce.Name AS ProductionDefineName,					 
+							info.Weight, info.Length, info.Width, info.Height, COALESCE(info.IsItemWithSerialNo, 0) AS IsItemWithSerialNo, info.IsItemWithInstall, info.IsItemWithTransport, info.IsItemWithScale,
+							COALESCE(info.IsItemWithLocation, 0) AS IsItemWithLocation,
+							info.IsItemWithLot, info.IsItemWithColor, info.IsItemWithSize, info.IsItemWithQuality, info.ShelfLife, info.ManufacturerId, info.ProductItemId, info.IsUniform,
+							info.ProductClassId1, info.ProductClassId2, info.ProductClassId3, info.Spec, ItemCatg.Code AS ItemCatgCode, ItemCatg.Name AS ItemCatgName, Info.ExciseTaxId,
+							Info.EnvTaxId, gr.ItemAccount, gr.ItemAccount1, gr.ItemAccount2, gr.ItemAccount3, gr.COGSAccount, gr.COGSAccount1, gr.COGSAccount2, gr.COGSAccount3,
+							gr.SalesAccount, gr.SalesAccount1, gr.SalesAccount2, gr.SalesAccount3, gr.SalesReturnAccount, gr.SalesReturnAccount1, gr.SalesReturnAccount2, gr.SalesReturnAccount3, 
+							info.EnvTaxRate, info.EstimatePuchaseDay, Tbl.ItemClassPurchaseId, itemclass.Name AS ItemClassPurchaseName, Tbl.EInvoiceName, Tbl.ShortName
+						</Columns>
+					<JoinCollection>
+						<B20ItemInfo>
+							<Alias>info</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Tbl.Id = info.ItemId</JoinCondition>
+						</B20ItemInfo>
+						<B20Class>
+							<Alias>bc</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>CAST(Tbl.ItemType AS NVARCHAR(24)) = bc.Code AND ParentCode = 'DMVT_Loai_Vt'</JoinCondition>
+						</B20Class>
+						<B20Product>
+							<Alias>pd</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>pd.Id = info.ProductId</JoinCondition>
+						</B20Product>
+						<B20Item>
+							<Alias>bi0</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Tbl.ParentId = bi0.Id</JoinCondition>
+						</B20Item>
+						<B20ItemGroup>
+							<Alias>gr</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Tbl.ItemGroupId = gr.Id</JoinCondition>
+						</B20ItemGroup>
+						<B20ItemCatg>
+							<Alias>ItemCatg</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Tbl.ItemCatgId = ItemCatg.Id</JoinCondition>
+						</B20ItemCatg>
+						<ProductClass1>
+							<Name>B20ProductClass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>info.ProductClassId1 = ProductClass1.Id</JoinCondition>
+						</ProductClass1>
+						<ProductClass2>
+							<Name>B20ProductClass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>info.ProductClassId2 = ProductClass2.Id</JoinCondition>
+						</ProductClass2>
+						<ProductClass3>
+							<Name>B20ProductClass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>info.ProductClassId3 = ProductClass3.Id</JoinCondition>
+						</ProductClass3>
+						<B20ProductionDefine>
+							<Alias>ce</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>info.ProductionDefineId = ce.Id</JoinCondition>
+						</B20ProductionDefine>
+						<B20ItemClassPurchase>
+							<Alias>itemclass</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Tbl.ItemClassPurchaseId = itemclass.Id</JoinCondition>
+						</B20ItemClassPurchase>
+					</JoinCollection>
+					<FilterKey>{=BRANCHFILTER('Tbl.BranchCode')}</FilterKey>
+				</Tbl>
+			</SourceCollection>
+		</Item>
+		<CurrentInventory>
+			<Columns>CAST(MAX(ci.Id) AS int) AS Id, MAX(ci.BranchCode) AS BranchCode, '{=FISCALYEAR('Name')}' AS FiscalYear, ci.WarehouseId, 
+					MAX(wh.Code) AS WarehouseCode, ci.ItemId, MAX(item.Code) AS ItemCode, SUM(ci.Quantity) AS Quantity, SUM(ci.Amount) AS Amount,
+					CAST(IIF(SUM(ci.Quantity) != 0, SUM(ci.Amount) / SUM(ci.Quantity), 0) AS numeric(18, 6)) AS AverageUnitCost,
+					MAX(item.Name) AS ItemName, MAX(item.Unit) AS Unit, MAX(wh.Name) AS WarehouseName</Columns>
+			<Alias>ci</Alias>
+			<!--06/01/2025 PhongNVT sửa phân quyền kho: bỏ DynamicInvByWarehouseId, WarehouseUser-->
+			<Source>DynamicInv</Source>
+			<JoinCollection>
+				<Item>
+					<Name>B20Item</Name>
+					<Alias>item</Alias>
+					<JoinType>Inner</JoinType>
+					<JoinCondition>ci.ItemId = item.Id</JoinCondition>
+				</Item>
+				<Warehouse>
+					<Name>B20Warehouse</Name>
+					<Alias>wh</Alias>
+					<JoinType>Inner</JoinType>
+					<JoinCondition>ci.WarehouseId = wh.Id</JoinCondition>
+				</Warehouse>
+			</JoinCollection>
+			<GroupCollection>
+				<Group_0>
+					<Expr>BRANCH('IsGroup') = 1</Expr>
+					<Group>ci.BranchCode, ci.WarehouseId, ci.ItemId</Group>
+				</Group_0>
+				<Group_1>
+					<Expr>BRANCH('IsGroup') = 0</Expr>
+					<Group>ci.WarehouseId, ci.ItemId</Group>
+				</Group_1>
+			</GroupCollection>
+			<Having>SUM(ci.Quantity) != 0</Having>
+			<SortCollection>
+				<Sort_0>
+					<Expr>BRANCH('IsGroup') = 1</Expr>
+					<Sort>ci.BranchCode, ci.WarehouseId, ci.ItemId</Sort>
+				</Sort_0>
+				<Sort_1>
+					<Expr>BRANCH('IsGroup') = 0</Expr>
+					<Sort>ci.WarehouseId, ci.ItemId</Sort>
+				</Sort_1>
+			</SortCollection>
+			<SourceCollection>
+				<BranchList>
+					<Source>dbo.ufn_B00Branch_GetChildTable('{=BRANCH()}')</Source>
+					<Columns>BranchCode</Columns>
+				</BranchList>
+				<FiscalYear>
+					<Source>B00FiscalYear</Source>
+					<Columns>fy.BranchCode, Name, StartDate, EndDate, FirstUsingDate,
+				IIF({=CONFIG('M_TablePartitionsMethod')} = 0 OR DBNamePartitioned != '', '', DataCode) AS DataCode,
+				DBPartitioned, DBNamePartitioned
+			</Columns>
+					<Alias>fy</Alias>
+					<JoinCollection>
+						<Join_0>
+							<Source>BranchList</Source>
+							<Alias>br</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>fy.BranchCode = br.BranchCode</JoinCondition>
+						</Join_0>
+					</JoinCollection>
+					<FilterKey>fy.Name = {=FISCALYEAR('Name')}</FilterKey>
+				</FiscalYear>
+				<FiscalYearScan>
+					<Source>FiscalYear</Source>
+					<Columns>DataCode, DBNamePartitioned</Columns>
+					<Group>DataCode, DBNamePartitioned</Group>
+				</FiscalYearScan>
+				<DynamicInv>
+					<Name>B30CurrentInventory</Name>
+					<DBNamePartitioned>$DBNamePartitioned</DBNamePartitioned>
+					<DataCode>$DataCode</DataCode>
+					<Columns>BranchCode, Id, WarehouseId, ItemId, Quantity, IIF(Quantity &lt;&gt; 0, Amount/Quantity, 0) AS AverageUnitCost, Amount</Columns>
+					<FilterKey>FiscalYear = {=FISCALYEAR('Name')} AND Quantity != 0</FilterKey>
+					<FilterCollection>
+						<Filter_0>
+							<FilterKey>BranchCode IN @FiscalYear.BranchCode</FilterKey>
+						</Filter_0>
+					</FilterCollection>
+					<ForEach>FiscalYearScan</ForEach>
+					<ForEachJoin>All</ForEachJoin>
+				</DynamicInv>
+			</SourceCollection>
+		</CurrentInventory>
+		<Voucher>
+			<Columns>Id,IsActive,BranchCode,DocCode,RowId_DocProcess,DocProcessId,DocStatus,Lock</Columns>
+		</Voucher>
+		<DetailTransferred>
+			<ChildKey>ItemId</ChildKey>
+			<ParentKey>ItemId</ParentKey>
+			<Alias>Transferred</Alias>
+			<SelectType>All</SelectType>
+			<Columns>(Transferred.Id + ROW_NUMBER() OVER (ORDER BY Id)) AS Id, Transferred.ItemId, Transferred.Unit, Transferred.Quantity, Transferred.DocGroup, Transferred.DocDate, Transferred.DocNo, Transferred.DocCode</Columns>
+			<Source>DynamicByTransfer, DynamicByTransferHistory</Source>
+			<SourceCollection>
+				<BizDoc>
+					<Name>B30BizDoc</Name>
+					<Columns>BizDocId,DocDate</Columns>
+					<FilterKey>IsActive=True AND BranchCode='{=BRANCH()}'</FilterKey>
+				</BizDoc>
+				<BizDocSO>
+					<Name>B30BizDocSO</Name>
+					<Columns>BizDocId,DocDate</Columns>
+					<FilterKey>IsActive=True AND BranchCode='{=BRANCH()}'</FilterKey>
+				</BizDocSO>
+				<BizDocPO>
+					<Name>B30BizDocPO</Name>
+					<Columns>BizDocId,DocDate</Columns>
+					<FilterKey>IsActive=True AND BranchCode='{=BRANCH()}'</FilterKey>
+				</BizDocPO>
+				<TempDate>
+					<SelectType>All</SelectType>
+					<Source>BizDoc, BizDocSO, BizDocPO</Source>
+					<Columns>DocDate, ROW_NUMBER() OVER (ORDER BY DocDate) AS _rn</Columns>
+					<FilterKey>DocDate IS NOT NULL</FilterKey>
+				</TempDate>
+				<TempDate1>
+					<Source>TempDate</Source>
+					<Columns>DocDate</Columns>
+					<FilterKey>_rn = 1</FilterKey>
+				</TempDate1>
+				<TblDate>
+					<Source>TempDate1</Source>
+					<Columns>DocDate</Columns>
+				</TblDate>
+				<FiscalYear>
+					<Name>B00FiscalYear</Name>
+					<Columns>
+							FiscalYear.BranchCode, FiscalYear.Name, FiscalYear.StartDate, 
+							FiscalYear.EndDate, FiscalYear.FirstUsingDate,
+							IIF({=CONFIG('M_TablePartitionsMethod')} = 0 OR FiscalYear.DBNamePartitioned != '', '', FiscalYear.DataCode) AS DataCode,
+							DBPartitioned, DBNamePartitioned
+					</Columns>
+					<JoinCollection>
+						<Date>
+							<Name>TblDate</Name>
+							<Alias>dd</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>(FiscalYear.StartDate &gt;= dd.DocDate OR (FiscalYear.StartDate &lt; dd.DocDate AND FiscalYear.EndDate &gt;= dd.DocDate))</JoinCondition>
+						</Date>
+					</JoinCollection>
+					<FilterKey>FiscalYear.BranchCode = '{=BRANCH()}' AND FiscalYear.IsActive=True</FilterKey>
+				</FiscalYear>
+				<FiscalYearScan>
+					<Source>FiscalYear</Source>
+					<Columns>DataCode, DBNamePartitioned</Columns>
+					<Group>DataCode, DBNamePartitioned</Group>
+				</FiscalYearScan>
+				<DynamicByTransfer>
+					<Name>vB30StockLedgerALL</Name>
+					<DBNamePartitioned>$DBNamePartitioned</DBNamePartitioned>
+					<DataCode>$DataCode</DataCode>
+					<Columns>
+							DynamicByTransfer.Id, DynamicByTransfer.ItemId, dmvt.Unit, 
+							IIF(DynamicByTransfer.DocGroup = IIF(ISNULL('{=Parent.DocCode}','') = 'SO', '2', '1'), DynamicByTransfer.Quantity, - DynamicByTransfer.Quantity) AS Quantity,
+							DynamicByTransfer.DocGroup, DynamicByTransfer.DocDate, 
+							DynamicByTransfer.DocNo, DynamicByTransfer.DocCode
+					</Columns>
+					<FilterKey>DynamicByTransfer.BranchCode = '{=BRANCH()}' AND CAST(DynamicByTransfer.ItemId AS TEXT)='{=Parent.ItemId}'</FilterKey>
+					<FilterCollection>
+						<Filter_0>
+							<FilterKey>DynamicByTransfer.BizDocId_SO = '{=Parent.BizDocId}'</FilterKey>
+							<Expr>ISNULL('{=Parent.DocCode}','') = 'SO'</Expr>
+						</Filter_0>
+						<Filter_1>
+							<FilterKey>DynamicByTransfer.BizDocId_PO = '{=Parent.BizDocId}'</FilterKey>
+							<Expr>ISNULL('{=Parent.DocCode}','') = 'PO'</Expr>
+						</Filter_1>
+					</FilterCollection>
+					<JoinCollection>
+						<Item>
+							<Name>B20Item</Name>
+							<Alias>dmvt</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>DynamicByTransfer.ItemId = dmvt.Id</JoinCondition>
+						</Item>
+						<Date>
+							<Name>TblDate</Name>
+							<Alias>dd</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>(DynamicByTransfer.DocDate &gt;= dd.DocDate)</JoinCondition>
+						</Date>
+					</JoinCollection>
+					<ForEach>FiscalYearScan</ForEach>
+					<ForEachJoin>All</ForEachJoin>
+				</DynamicByTransfer>
+				<DynamicByTransferHistory>
+					<Name>B30HistoryTrans</Name>
+					<Columns>
+							DynamicByTransferHistory.Id, DynamicByTransferHistory.ItemId, dmvt.Unit, 
+							IIF(dmct.Nh_Ct = IIF(ISNULL('{=Parent.DocCode}','') = 'SO', '2', '1'), DynamicByTransferHistory.Quantity, - DynamicByTransferHistory.Quantity) AS Quantity, 
+							dmct.Nh_ct AS DocGroup, DynamicByTransferHistory.DocDate, 
+							DynamicByTransferHistory.DocNo, DynamicByTransferHistory.DocCode
+					</Columns>
+					<JoinCollection>
+						<Item>
+							<Name>B20Item</Name>
+							<Alias>dmvt</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>DynamicByTransferHistory.ItemId = dmvt.Id</JoinCondition>
+						</Item>
+						<Dmct>
+							<Name>B00Dmct</Name>
+							<Alias>dmct</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>DynamicByTransferHistory.DocCode = dmct.Ma_Ct</JoinCondition>
+						</Dmct>
+						<Date>
+							<Name>TblDate</Name>
+							<Alias>dd</Alias>
+							<JoinType>Inner</JoinType>
+							<JoinCondition>(DynamicByTransferHistory.DocDate &gt;= dd.DocDate)</JoinCondition>
+						</Date>
+					</JoinCollection>
+					<FilterCollection>
+						<Filter_0>
+							<FilterKey>DynamicByTransferHistory.BizDocId_SO = '{=Parent.BizDocId}'</FilterKey>
+							<Expr>ISNULL('{=Parent.DocCode}','') = 'SO'</Expr>
+						</Filter_0>
+						<Filter_1>
+							<FilterKey>DynamicByTransferHistory.BizDocId_PO = '{=Parent.BizDocId}'</FilterKey>
+							<Expr>ISNULL('{=Parent.DocCode}','') = 'PO'</Expr>
+						</Filter_1>
+					</FilterCollection>
+					<FilterKey>DynamicByTransferHistory.BranchCode = '{=BRANCH()}' AND DynamicByTransferHistory.IsActive=True AND CAST(DynamicByTransferHistory.ItemId AS TEXT)='{=Parent.ItemId}'</FilterKey>
+				</DynamicByTransferHistory>
+			</SourceCollection>
+		</DetailTransferred>
+		<AccDoc_Explore>
+			<Name>B30AccDoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDoc</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup, Ct.RowId_VoucherRegister,
+						Ct.DocDate, Ct.DocNo, Ct.DocSerialNo, Ct.Person, Ct.Description, Ct.CustomerId,
+						Ct.BankAccountNo, Ct.BankId, Ct.TerritoryId, Ct.CurrencyCode, Ct.ExchangeRate, Ct.DocStatus, Ct.Posted, 
+						Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt, Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, Ct.ApprovalStatus, 
+						Ct.TotalOriginalAmount0, Ct.TotalAmount0, Ct.TotalOriginalAmount3, Ct.TotalAmount3, Ct.TotalOriginalAmount, Ct.TotalAmount,
+						Ct.DueDate, Ct.PostGL, Ct.PostSL, Ct.BankAccId, Ct.BankNameA, Ct.DocBookingId, Db.Code AS DocBookingNo, Db.DocBookingDate, 
+						DmDt.Name AS CustomerName, Doc.Lock, Doc.IsCancelled, userlist.FullName AS CreatedBy_Name, ba.Description AS BankName,
+						Ct.EBankingId, Ct.EBankingStatus, Ct.EBankingDate, Ct.EBankingState, Ct.UserIdList
+					</Columns>
+					<JoinCollection>
+						<DmCt>
+							<Name>B00DmCt</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocCode = DmCt.Ma_Ct</JoinCondition>
+						</DmCt>
+						<UserList>
+							<Name>B00UserList</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CreatedBy = UserList.Id</JoinCondition>
+						</UserList>
+						<DmDt>
+							<Name>B20Customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CustomerId = DmDt.Id</JoinCondition>
+						</DmDt>
+						<doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = doc.DocStatusKey</JoinCondition>
+						</doc>
+						<Db>
+							<Name>B20DocBooking</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocBookingId = Db.Id</JoinCondition>
+						</Db>
+						<ba>
+							<Name>B20BankAccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.BankAccId = ba.Id</JoinCondition>
+						</ba>
+						<Class>
+							<Name>B20Class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.ApprovalStatus = Class.Code AND ParentCode='ApprovalStatus'</JoinCondition>
+						</Class>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDoc_Explore>
+		<AccDoc_Edit>
+			<!-- Tạm thời làm mẫu ở AccDoc thôi -->
+			<Name>B30AccDoc</Name>
+			<Alias>Ct</Alias>
+			<Columns>
+				Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup, Ct.Ma_Nvu,
+				Ct.FiscalYear, Ct.DocDate, Ct.DocNo, Ct.RowId_VoucherRegister, Ct.Person, Ct.Address,
+				Ct.Description, Ct.CustomerId, Ct.CurrencyCode, Ct.ExchangeRate, Ct.ExchangeRateType,
+				Ct.BankAccountNo, Ct.BankId, Ct.BeneficiaryBankAccId, Ct.EmployeeId, Ct.DeptId, Ct.ProductId, Ct.ExpenseCatgId, Ct.WorkProcessId,
+				Ct.CostCentreId, Ct.BizDocId_PO, Ct.BizDocId_SO, Ct.JobId, 
+				Ct.TotalOriginalAmount0, Ct.TotalAmount0, Ct.TotalOriginalAmount3, Ct.TotalAmount3, Ct.TotalOriginalAmount, Ct.TotalAmount, 
+				Ct.DocStatus, Ct.Posted, Ct.DocumentViewStyle, 
+				Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt, Ct.timestamp, Ct.ModifiedBy AS UserId, 
+				DmDt.Name AS CustomerName, DmDt.Address AS Address_Customer, DmDt.Person AS Person_Customer, DmDt.CustomerType, 
+				DmDt.TaxRegNo AS TaxRegNo_Customer, 
+				Ct.PostGL, Doc.Lock, Doc.Lock AS OriginalLockStatus, Doc.IsCancelled,
+				DmTte.DecimalRound, DmTte.ExchangeRateOperator, DmTte.Id AS Id_Currency, 
+				DmTte.MoneyDiffValue, DmTte.VATDiffValue, DmTte.MoneyDiffValue AS MoneyDiffValue0, DmTte.VATDiffValue AS VATDiffValue0, 
+				DmCt.Ten_Ct AS DocName, DmCt.TaxType_Ct, Ct.TransCode, DmCt.TransTypeCode, ISNULL(DmCt.DocCodeNumbering, Ct.DocCode) AS DocCodeNumbering, DmCt.AutoNumbering, 
+				CAST(DmCt.BankDocument AS TINYINT) AS BankAccount,
+				DmCt.UsingEmployeeId, DmCt.UsingDeptId, DmCt.UsingExpenseCatgId, DmCt.UsingProductId, 
+				DmCt.UsingBizDocId_LC, DmCt.UsingBizDocId_PO, DmCt.UsingBizDocId_SO, DmCt.UsingRemitInfo, 
+				DmCt.UsingTransCode, DmCt.UsingAccount, DmCt.UsingCrspAccount, DmCt.UsingWorkProcessId, DmCt.UsingCostCentreId, DmCt.UsingJobId, DmCt.UsingBizDocId_DA, 
+				DmCt.UsingNoteFactorId, DmCt.UsingCustomFieldId1, DmCt.UsingCustomFieldId2, DmCt.UsingCustomFieldId3, DmCt.UsingCashFlowId, 
+				DmCt.UsingBizDocId_PA, DmCt.UsingBizDocId_AR,	DmCt.UsingBizDocId_G2, DmCt.UsingBizDocId_G3, DmCt.UsingRowId_AtchPurchase, 
+				Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, CAST(Ct.IsDraftData AS TINYINT) AS IsDraftData0, Ct.AttachedDoc, Ct.NoteFactorId, Ct.CustomFieldId1, Ct.CustomFieldId2, Ct.CustomFieldId3,
+				Ct.DocBookingId, CAST(NULL AS DATETIME) AS DocBookingDate, Ct.VNDExchangeRate, Ct.IsAddTax, Ct.BankAccId,	Ct.BeneficiaryBankId, Ct.CashFlowId,
+				Ct.BankAccountNoA, Ct.BankNameA, Ct.CityA, Ct.BankAccountNoB, Ct.BankNameB, Ct.CompanyNameA,
+				Ct.BankBranchNameB, Ct.CityB, Ct.BankAddressB, Ct.BankCountryB, Ct.SwiftCodeB, Ct.CountryB, 
+				Ct.ForwardContractNumber, Ct.PaymentType, Ct.BankCharge, 
+				Ct.EBankingId, Ct.EBankingStatus, Ct.EBankingDate, Ct.EBankingState, Ct.ApprovalStatus, Ct.Loai_PS
+			</Columns>
+			<JoinCollection>
+				<DmCt>
+					<Name>B00DmCt</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.DocCode = DmCt.Ma_Ct</JoinCondition>
+				</DmCt>
+				<DmTte>
+					<Name>B20Currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.CurrencyCode = DmTte.Code</JoinCondition>
+				</DmTte>
+				<DmDt>
+					<Name>B20Customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.CustomerId = DmDt.Id</JoinCondition>
+				</DmDt>
+				<doc>
+					<Name>B00DocStatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.DocStatus = doc.DocStatusKey</JoinCondition>
+				</doc>
+			</JoinCollection>
+		</AccDoc_Edit>
+		<AccDocItem_Explore>
+			<Name>B30AccDocItem</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDocItem</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup, Ct.RowId_VoucherRegister,
+						Ct.DocDate, Ct.DocNo, Ct.DocSerialNo, Ct.Person, Ct.Address, Ct.Description, Ct.CustomerId, Cust.Name AS CustomerName, 
+						Ct.TerritoryId, Ct.CurrencyCode, Ct.ExchangeRate, Ct.DocStatus, Ct.Posted, 
+						Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt,
+						Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, Ct.WarehouseId, Ct.ReceiptWarehouseId, w.Code AS ReceiptWarehouseCode, Ct.ReceiptItemId, Ct.ReceiptQuantity, 
+						Ct.TotalOriginalAmount0, Ct.TotalAmount0, Ct.TotalOriginalAmount3, Ct.TotalAmount3, Ct.TotalOriginalAmount, Ct.TotalAmount,
+						Ct.DueDate, Ct.TaxCode, Ct.TaxRegNo, Ct.TaxRegName, Ct.AtchDocDate, Ct.AtchDocNo, Ct.AtchDocFormNo, Ct.AtchDocSerialNo, 
+						Ct.PostGL, Ct.PostSL, Doc.Lock, Doc.IsCancelled, userlist.FullName AS CreatedBy_Name,
+						Ct.DocBookingId, Db.Code AS DocBookingNo, Db.DocBookingDate, Ct.StatsDocId_WO, Ct.ApprovalStatus, Ct.EInvoiceStatus
+					</Columns>
+					<JoinCollection>
+						<w>
+							<Name>B20Warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.ReceiptWarehouseId = w.Id</JoinCondition>
+						</w>
+						<UserList>
+							<Name>B00UserList</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CreatedBy = UserList.Id</JoinCondition>
+						</UserList>
+						<Cust>
+							<Name>B20Customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CustomerId = Cust.Id</JoinCondition>
+						</Cust>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = Doc.DocStatusKey</JoinCondition>
+						</Doc>
+						<Db>
+							<Name>B20DocBooking</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocBookingId = Db.Id</JoinCondition>
+						</Db>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDocItem_Explore>
+		<AccDocSales_Explore>
+			<Name>B30AccDocSales</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDocSales</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup, Ct.RowId_VoucherRegister,
+							Ct.DocDate, Ct.DocNo, Ct.DocSerialNo, Ct.Person, Ct.Description, Ct.CustomerId, 
+							Ct.TerritoryId, te.Code AS TerritoryCode, Ct.CurrencyCode, Ct.ExchangeRate, Ct.DocStatus, Ct.Posted, 
+							Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt, 
+							Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, Cust.Code AS CustomerCode, Cust.Name AS CustomerName, 
+							Ct.TotalOriginalAmount0, Ct.TotalAmount0, Ct.TotalOriginalAmount3, Ct.TotalAmount3, 
+							Ct.TotalOriginalAmount4, Ct.TotalAmount4, Ct.TotalOriginalAmount, Ct.TotalAmount, Ct.TotalOriginalAmount11, 
+							Ct.WarehouseId, Ct.DueDate, Ct.EInvoiceStatus, Ct.PostGL, 
+							Ct.PostSL, Doc.Lock, Doc.IsCancelled, userlist.FullName AS CreatedBy_Name, 
+							reg.FormNo, reg.SelfPrintVoucher, reg.RowId_Provider,
+							Ct.DocBookingId, Db.Code AS DocBookingNo, Db.DocBookingDate, Ct.EmployeeId,
+							Ct.SalesChannelId, sc.Code AS SalesChannelCode, Ct.ApprovalStatus, Ct.EInvoiceBatchId
+					</Columns>
+					<JoinCollection>
+						<reg>
+							<Name>B20VoucherRegister</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.RowId_VoucherRegister = reg.RowId</JoinCondition>
+						</reg>
+						<UserList>
+							<Name>B00UserList</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CreatedBy = UserList.Id</JoinCondition>
+						</UserList>
+						<Cust>
+							<Name>B20Customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CustomerId = Cust.Id</JoinCondition>
+						</Cust>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = Doc.DocStatusKey</JoinCondition>
+						</Doc>
+						<Db>
+							<Name>B20DocBooking</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocBookingId = Db.Id</JoinCondition>
+						</Db>
+						<te>
+							<Name>B20Territory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>ct.TerritoryId = te.Id</JoinCondition>
+						</te>
+						<sc>
+							<Name>B20SalesChannel</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>ct.SalesChannelId = sc.Id</JoinCondition>
+						</sc>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDocSales_Explore>
+		<AccDocPurchase_Explore>
+			<Name>B30AccDocPurchase</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDocPurchase</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup, Ct.RowId_VoucherRegister,
+						Ct.DocDate, Ct.DocNo, Ct.DocSerialNo, Ct.Person, Ct.Description, Ct.CustomerId, 
+						Ct.TerritoryId, Ct.CurrencyCode, Ct.ExchangeRate, Ct.DocStatus, Ct.Posted, 
+						Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt,
+						Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, Ct.DueDate, Ct.EInvoiceStatus, Ct.PostSL, Ct.PostGL, Ct.DocBookingId, Ct.WarehouseId, 
+						Ct.TotalOriginalAmount0, Ct.TotalAmount0, Ct.TotalOriginalAmount3, 
+						Ct.TotalAmount3, Ct.TotalOriginalAmount4, Ct.TotalAmount4, Ct.TotalOriginalAmount5, Ct.TotalAmount5, Ct.TotalOriginalAmount, Ct.TotalAmount,
+						Cust.Name AS CustomerName, Doc.Lock, Doc.IsCancelled, UserList.FullName AS CreatedBy_Name,
+						Db.Code AS DocBookingNo, Db.DocBookingDate, reg.FormNo, reg.SelfPrintVoucher, Ct.ApprovalStatus
+					</Columns>
+					<JoinCollection>
+						<reg>
+							<Name>B20VoucherRegister</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.RowId_VoucherRegister = reg.RowId</JoinCondition>
+						</reg>
+						<UserList>
+							<Name>B00UserList</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CreatedBy = UserList.Id</JoinCondition>
+						</UserList>
+						<Cust>
+							<Name>B20Customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CustomerId = Cust.Id</JoinCondition>
+						</Cust>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = Doc.DocStatusKey</JoinCondition>
+						</Doc>
+						<Db>
+							<Name>B20DocBooking</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocBookingId = Db.Id</JoinCondition>
+						</Db>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDocPurchase_Explore>
+		<HrmDoc_Explore>
+			<Name>B30HrmDoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30HrmDoc</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>Ct.Id, Ct.BranchCode, Ct.FiscalYear, Ct.HrmDocId, Ct.DocCode, Ct.DocGroup, Ct.DocDate, Ct.DocNo, Ct.DocDate AS Date,
+						Ct.DeptId, Ct.EmployeeId, empl.Code AS EmployeeCode, Ct.StartDate, Ct.EndDate, Ct.Description, 	
+						Ct.DocStatus, Doc.Lock, Doc.PostGL, Doc.PostSL, Doc.IsCancelled, Ct.Posted, Ct.Loai_Ps, Ct.Ws_Id0, Ct.DocumentViewStyle, 
+						Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, empl.Name AS EmployeeName,			
+						Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy AS UserId, Ct.ModifiedAt, Ct.timestamp, userlist.FullName AS CreatedBy_Name, 
+						dept.Code AS DeptCode, dept.Name AS DeptName, Ct.DocType, 
+						Ct.Note, jobpos.Name AS JobPositionName, Ct.SignerId, Ct.RowId_JobPositionSigner, Ct.ManagerId, Ct.IsExtended, Ct.ApprovalStatus
+					</Columns>
+					<JoinCollection>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = Doc.DocStatusKey</JoinCondition>
+						</Doc>
+						<empl>
+							<Name>B20Employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.EmployeeId = empl.Id</JoinCondition>
+						</empl>
+						<dept>
+							<Name>B20Dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DeptId = dept.Id</JoinCondition>
+						</dept>
+						<userlist>
+							<Name>B00UserList</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.CreatedBy = userlist.Id</JoinCondition>
+						</userlist>
+						<jobpos>
+							<Name>B20HrmOther</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.RowId_JobPosition = jobpos.RowId AND jobpos.Type = 'CVU'</JoinCondition>
+						</jobpos>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</HrmDoc_Explore>
+		<HrmDoc_Edit>
+			<Name>B30HrmDoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<Sort>Ct.DocDate DESC, Ct.DocNo DESC</Sort>
+			<SourceCollection>
+				<Ct>
+					<Name>B30HrmDoc</Name>
+					<Columns>
+						Ct.Id, Ct.BranchCode, Ct.FiscalYear, Ct.HrmDocId, Ct.DocCode, Ct.DocGroup, Ct.DocDate, Ct.DocNo, 
+						Ct.DeptId, Ct.EmployeeId, DmNv.Name AS EmployeeName, Ct.StartDate, Ct.EndDate, Ct.Description, 
+						Ct.Posted, Ct.Loai_Ps, Ct.Ws_Id0, Ct.DocumentViewStyle, Ct.RowId_DocProcess, Ct.DocProcessId, Ct.IsDraftData, CAST(Ct.IsDraftData AS TINYINT) AS IsDraftData0,
+						DmCt.Ma_Nvu, DmCt.UsingEmployeeId, DmCt.UsingDeptId, DmCt.Ten_Ct AS DocName, DmCt.Id AS Id_DmCt,
+						ISNULL(DmCt.DocCodeNumbering, Ct.DocCode) AS DocCodeNumbering, DmCt.AutoNumbering,
+						Ct.DocStatus, Doc.PostGL, Doc.IsCancelled, Doc.Lock, Ct.ModifiedBy AS UserId,
+						Ct.IsActive, Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt, Ct.timestamp, Ct.VehicleId AS VehicleId,
+						Ct.DocType, Ct.SignerId, Ct.RowId_JobPositionSigner, Ct.Note, Ct.RowId_JobPosition, Ct.ManagerId, Ct.ApprovalStatus, Ct.IsExtended
+					</Columns>
+					<JoinCollection>
+						<DmCt>
+							<Name>B00DmCt</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocCode = DmCt.Ma_Ct</JoinCondition>
+						</DmCt>
+						<DmNv>
+							<Name>B20Employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.EmployeeId = DmNv.Id</JoinCondition>
+						</DmNv>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.DocStatus = Doc.DocStatusKey</JoinCondition>
+						</Doc>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</HrmDoc_Edit>
+		<AccDocSales_Editor>
+			<Name>B30AccDocSales</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDocSales</Name>
+					<FilterKey>Ct.BranchCode='{=BRANCH()}'</FilterKey>
+					<Columns>ct.id, ct.branchcode, ct.stt, ct.doccode, ct.docgroup, ct.ma_nvu, ct.fiscalyear, ct.docdate, ct.rowid_voucherregister, ct.docno, ct.docserialno, ct.person, ct.address,
+						ct.description, ct.customerid, ct.currencycode, ct.exchangerate, ct.exchangeratetype, ct.duedate, ct.docstatus, ct.posted, ct.documentviewstyle, ct.transcode, ct.territoryid, 
+						ct.taxcode, ct.totaloriginalamount0, ct.totalamount0, ct.totaloriginalamount3, ct.totalamount3, ct.totaloriginalamount4, ct.totalamount4, ct.totaloriginalamount, ct.totalamount, 
+						ct.employeeid, ct.deptid, ct.productid, ct.expensecatgid, ct.bizdocid_po, ct.bizdocid_so, ct.warehouseid, ct.workprocessid, ct.costcentreid, ct.jobid, ct.isactive, ct.createdby, 
+						ct.createdat, ct.modifiedby, ct.modifiedat, ct.timestamp, 
+						(CASE WHEN ct.duedate IS NOT NULL AND ct.duedate &lt;&gt; 0 THEN DATEADD(DAY, ct.duedate, ct.docdate) ELSE CAST(NULL AS DATE) END) AS datedue,
+						ct.postgl, ct.postsl, doc.lock, doc.lock AS originallockstatus, doc.iscancelled, ct.modifiedby AS userid, dmct.transtypecode, dmct.doccodenumbering, dmct.tk_no_ct AS debitaccount,
+						dmct.tk_co_ct AS creditaccount, dmct.taxtype_ct, dmct.docstatus_ct, dmct.usingexpensecatgid, dmct.usingdeptid, dmct.usingwarehouseid, dmct.usingemployeeid, dmct.usingproductid,
+						dmct.usingbizdocid_po, dmct.usingbizdocid_so, dmct.usingworkprocessid, dmct.usingcostcentreid, dmct.usingcheckinvwhennotenough, dmct.usingjobid, dmct.autonumbering, vat.type AS taxtype,
+						vat.priceincludetax, vat.account AS account_vat, ISNULL(vat.rate, 0) AS taxrate, trans.account AS account_trans, trans.outsideaccount, trans.ispostgl, trans.checkexpensecatgid,
+						trans.checkdeptid, trans.checkbizdocid_po, trans.checkbizdocid_so, trans.checkjobid, trans.itemaccounttype, trans.currencysegmenttype, curr.exchangerateoperator, curr.decimalround,
+						curr.id AS id_currency, curr.moneydiffvalue, curr.vatdiffvalue, curr.moneydiffvalue AS moneydiffvalue0, curr.vatdiffvalue AS vatdiffvalue0, curr.segmentaccount1, curr.segmentaccount2,
+						curr.segmentaccount3, ct.rowid_docprocess, ct.docprocessid, ct.einvoicestatus, ct.einvoicedate, ct.einvoiceno, ct.transactionid, ct.reservationcode, ct.einvoice_stt, ct.discountrate,
+						ct.portofloading, ct.portofdischarge, ct.billofladingno, ct.containerno, ct.carriercompanyname, ct.platenumber, ct.loai_ps, ct.ismultibills, ct.taxregno, ct.taxregname, ct.debitaccount3,
+						ct.creditaccount3, ct.totalquantity, ct.customfieldid1, ct.customfieldid2, ct.customfieldid3, dmct.usingcustomfieldid1, dmct.usingcustomfieldid2, dmct.usingcustomfieldid3, ct.docbookingid,
+						CAST(NULL AS DATE) AS docbookingdate, trans.checkcostcentre, ct.vndexchangerate, ct.vndtotalamount0, ct.vndtotalamount3, ct.totaloriginalamount11, ct.totalamount11,
+						ct.einvoicedescription, vr.rowid_provider, ct.notefactorid, dmct.usingnotefactorid, ct.saleschannelid, ct.isdraftdata, ct.approvalstatus, ct.isdraftdata AS isdraftdata0,
+						CAST(0 AS smallint) AS usingitemkind, ct.einvoiceemail, ct.idcardno, ct.idcardtype, ct.buyerbudgetcode, ct.paymentmethod, ct.taxregaddress, ct.discountamount, ct.originaldiscountamount,
+						ct.costallocmethod, ct.EInvoiceBatchId</Columns>
+					<JoinCollection>
+						<dmct>
+							<Name>B00DmCt</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmct.Ma_Ct = Ct.DocCode</JoinCondition>
+						</dmct>
+						<trans>
+							<Name>vB20TransInfo_All</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>trans.transcode = ct.transcode AND (trans.branchcode = ct.branchcode OR trans.branchcode = '')</JoinCondition>
+						</trans>
+						<vat>
+							<Name>B20Tax</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>vat.Code = Ct.TaxCode</JoinCondition>
+						</vat>
+						<doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>doc.DocStatusKey = Ct.DocStatus</JoinCondition>
+						</doc>
+						<curr>
+							<Name>B20Currency</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>curr.Code = Ct.CurrencyCode</JoinCondition>
+						</curr>
+						<vr>
+							<Name>B20VoucherRegister</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>vr.RowId = Ct.RowId_VoucherRegister</JoinCondition>
+						</vr>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDocSales_Editor>
+		<AccDocSales1_Editor>
+			<Source>B30AccDocSales1</Source>
+			<FilterKey>Ct0.BranchCode='{=BRANCH()}'</FilterKey>
+			<Columns>ct0.Id, ct0.branchcode, ct0.stt, ct0.rowid, ct0.builtinorder, ct0.doccode, ct0.docgroup, ct0.docdate, ct0.transcode, ct0.debitaccount, ct0.creditaccount, ct0.debitaccount2, ct0.creditaccount2,
+						ct0.bizdocid_po, ct0.bizdocid_so, ct0.customerid, ct0.expensecatgid, ct0.productid, ct0.deptid, ct0.jobid, ct0.workprocessid, ct0.costcentreid, ct0.employeeid, ct0.territoryid, ct0.warehouseid,
+						ct0.itemid, ct0.unit, ct0.bookingexchangerate, ct0.quantity, CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.originalunitcost, ct0.originalunitcost) ELSE ct0.originalunitcost END AS originalunitcost,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.unitcost, ct0.unitcost) ELSE ct0.unitcost END AS unitcost, ct0.originalunitprice, ct0.unitprice,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.originalamount, ct0.originalamount) ELSE ct0.originalamount END AS originalamount,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.amount, ct0.amount) ELSE ct0.amount END AS amount, ct0.originalamount2, ct0.amount2, ct0.taxcode, ct0.taxrate, vat.type AS taxtype, vat.priceincludetax,
+						vat.account AS account_vat, ct0.originalamount3, ct0.amount3, ct0.debitaccount3, ct0.creditaccount3, ct0.originalamount4, ct0.amount4, ct0.excisetaxrate, ct0.originalamount6, ct0.amount6,
+						ct0.debitaccount6, ct0.creditaccount6, ct0.convertrate9, ct0.quantity9, ct0.originalamount9, ct0.amount9, ct0.envtaxlevel, ct0.originalamount10, ct0.amount10, ct0.debitaccount10, ct0.creditaccount10,
+						ct0.outsideaccount, ct0.discountrate, ct0.gia_tb_tt, ct0.stt_lo_vt, ct0.description,
+						CASE WHEN ISNULL(ct0.description, '') &lt;&gt; '' THEN ct0.description ELSE dmvt.name END AS itemname, ct0.isactive, ct0.createdby, ct0.createdat, ct0.modifiedby, ct0.modifiedat,
+						ct0.timestamp, dmvt.itemtype, dmvt.unit AS unit_item, dmvt.name AS name_item, iteminfo.excisetaxid, iteminfo.envtaxid, iteminfo.weight, iteminfo.shelflife, iteminfo.isitemwithserialno,
+						iteminfo.isitemwithlocation AS isitemwithlocation_item, iteminfo.isitemwithlot, iteminfo.isitemwithcolor, iteminfo.isitemwithsize, iteminfo.isitemwithquality, itemgroup.itemaccount, itemgroup.cogsaccount,
+						itemgroup.salesaccount, itemgroup.salesreturnaccount, itemgroup.itemaccount1, itemgroup.cogsaccount1, itemgroup.salesaccount1, itemgroup.salesreturnaccount1, itemgroup.itemaccount2, itemgroup.cogsaccount2,
+						itemgroup.salesaccount2, itemgroup.salesreturnaccount2, itemgroup.itemaccount3, itemgroup.cogsaccount3, itemgroup.salesaccount3, itemgroup.salesreturnaccount3, wh.allowissuewhennotenough,
+						wh.isitemwithlocation AS isitemwithlocation_wh, ISNULL((iteminfo.isitemwithlocation * wh.isitemwithlocation), 0) AS isitemwithlocation, dmtk_no.productaccount AS productdebitaccount,
+						dmtk_co.productaccount AS productcreditaccount, dmtk_no0.productaccount AS productdebitaccount0, dmtk_co0.productaccount AS productcreditaccount0, ct0.rowid_so, ct0.originaldiscountamount,
+						ct0.discountamount, CAST(iteminfo._physicalinventory AS INT) + ISNULL((iteminfo.isitemwithlocation * wh.isitemwithlocation), 0) AS _physicalinventory, ct0.quantity AS remainphysquantity,
+						vat.actualrate AS taxratetmp, ct0.customfieldid1, ct0.customfieldid2, ct0.customfieldid3, ct0.stt_hbtl, ct0.envtaxrate, ct0.vndamount2, ct0.vndamount3, ct0.bizdocid_io, ct0.rowid_io,
+						ct0.quantity9 AS remainphysquantity9, ct0.itemkind, ct0.notefactorid, ct0.saleschannelid,
+						CASE WHEN ISNULL(WPDrCheck.workprocessrequired, 0) = 0 AND ISNULL(WPCrCheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess,
+						CASE WHEN ISNULL(WPDrCheck_GiaVon.workprocessrequired, 0) = 0 AND ISNULL(WPCrCheck_GiaVon.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess_giavon</Columns>
+			<JoinCollection>
+				<wh>
+					<Name>B20Warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>wh.Id = Ct0.WarehouseId</JoinCondition>
+				</wh>
+				<vat>
+					<Name>B20Tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>vat.Code = Ct0.TaxCode</JoinCondition>
+				</vat>
+				<dmvt>
+					<Name>B20Item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmvt.Id = Ct0.ItemId</JoinCondition>
+				</dmvt>
+				<iteminfo>
+					<Name>B20ItemInfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>iteminfo.ItemId = Ct0.ItemId</JoinCondition>
+				</iteminfo>
+				<itemgroup>
+					<Name>B20ItemGroup</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmvt.ItemGroupId = itemgroup.Id</JoinCondition>
+				</itemgroup>
+				<dmtk_no>
+					<Name>B20ChartOfAccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmtk_no.Code = Ct0.debitaccount2</JoinCondition>
+				</dmtk_no>
+				<dmtk_co>
+					<Name>B20ChartOfAccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmtk_co.Code = Ct0.creditaccount2</JoinCondition>
+				</dmtk_co>
+				<dmtk_no0>
+					<Name>B20ChartOfAccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmtk_no0.Code = Ct0.debitaccount</JoinCondition>
+				</dmtk_no0>
+				<dmtk_co0>
+					<Name>B20ChartOfAccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>dmtk_co0.Code = Ct0.creditaccount</JoinCondition>
+				</dmtk_co0>
+				<fifo>
+					<Name>B30AccDocFifo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>ct0.Stt = fifo.Stt AND ct0.RowId = fifo.RowId_SourceDoc</JoinCondition>
+				</fifo>
+				<WPDrCheck>
+					<Name>B20ZAccountValid</Name>
+					<Columns>WPDrCheck.WorkProcessRequired</Columns>
+					<Alias>WPDrCheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>(Ct0.DebitAccount2 LIKE CONCAT(WPDrCheck.ExpenseAccount, '%')) AND (WPDrCheck.BranchCode = Ct0.BranchCode OR WPDrCheck.BranchCode = '')</FilterKey>
+					<Sort>WPDrCheck.WorkProcessRequired ASC</Sort>
+				</WPDrCheck>
+				<WPCrCheck>
+					<Name>B20ZAccountValid</Name>
+					<Columns>WPCrCheck.WorkProcessRequired</Columns>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>(Ct0.CreditAccount2 LIKE CONCAT(WPCrCheck.ExpenseAccount, '%')) AND (WPCrCheck.BranchCode = Ct0.BranchCode OR WPCrCheck.BranchCode = '')</FilterKey>
+					<Sort>WPCrCheck.WorkProcessRequired ASC</Sort>
+				</WPCrCheck>
+				<WPDrCheck_GiaVon>
+					<Name>B20ZAccountValid</Name>
+					<Columns>WPDrCheck_GiaVon.WorkProcessRequired</Columns>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>(Ct0.DebitAccount LIKE CONCAT(WPDrCheck_GiaVon.ExpenseAccount, '%')) AND (WPDrCheck_GiaVon.BranchCode = Ct0.BranchCode OR WPDrCheck_GiaVon.BranchCode = '')</FilterKey>
+					<Sort>WPDrCheck_GiaVon.WorkProcessRequired ASC</Sort>
+				</WPDrCheck_GiaVon>
+				<WPCrCheck_GiaVon>
+					<Name>B20ZAccountValid</Name>
+					<Columns>WPCrCheck_GiaVon.WorkProcessRequired</Columns>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>(Ct0.CreditAccount LIKE CONCAT(WPCrCheck_GiaVon.ExpenseAccount, '%')) AND (WPCrCheck_GiaVon.BranchCode = Ct0.BranchCode OR WPCrCheck_GiaVon.BranchCode = '')</FilterKey>
+					<Sort>WPCrCheck_GiaVon.WorkProcessRequired ASC</Sort>
+				</WPCrCheck_GiaVon>
+			</JoinCollection>
+		</AccDocSales1_Editor>
+		<AccDocSales1_Editor_NewCheck>
+			<Source>ct0</Source>
+			<Columns>*</Columns>
+			<SourceCollection>
+				<ct0temp>
+					<Source>B30AccDocSales1</Source>
+					<Columns>*</Columns>
+					<FilterKey>BranchCode='{=BRANCH()}' AND Stt IN @Ct.Stt</FilterKey>
+				</ct0temp>
+				<ct0>
+					<Source>ct0temp</Source>
+					<Alias>ct0</Alias>
+					<Columns>ct0.Id, ct0.branchcode, ct0.stt, ct0.rowid, ct0.builtinorder, ct0.doccode, ct0.docgroup, ct0.docdate, ct0.transcode, ct0.debitaccount, ct0.creditaccount, ct0.debitaccount2, ct0.creditaccount2,
+						ct0.bizdocid_po, ct0.bizdocid_so, ct0.customerid, ct0.expensecatgid, ct0.productid, ct0.deptid, ct0.jobid, ct0.workprocessid, ct0.costcentreid, ct0.employeeid, ct0.territoryid, ct0.warehouseid,
+						ct0.itemid, ct0.unit, ct0.bookingexchangerate, ct0.quantity, CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.originalunitcost, ct0.originalunitcost) ELSE ct0.originalunitcost END AS originalunitcost,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.unitcost, ct0.unitcost) ELSE ct0.unitcost END AS unitcost, ct0.originalunitprice, ct0.unitprice,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.originalamount, ct0.originalamount) ELSE ct0.originalamount END AS originalamount,
+						CASE WHEN ct0.gia_tb_tt = 1 THEN ISNULL(fifo.amount, ct0.amount) ELSE ct0.amount END AS amount, ct0.originalamount2, ct0.amount2, ct0.taxcode, ct0.taxrate, vat.type AS taxtype, vat.priceincludetax,
+						vat.account AS account_vat, ct0.originalamount3, ct0.amount3, ct0.debitaccount3, ct0.creditaccount3, ct0.originalamount4, ct0.amount4, ct0.excisetaxrate, ct0.originalamount6, ct0.amount6,
+						ct0.debitaccount6, ct0.creditaccount6, ct0.convertrate9, ct0.quantity9, ct0.originalamount9, ct0.amount9, ct0.envtaxlevel, ct0.originalamount10, ct0.amount10, ct0.debitaccount10, ct0.creditaccount10,
+						ct0.outsideaccount, ct0.discountrate, ct0.gia_tb_tt, ct0.stt_lo_vt, ct0.description,
+						CASE WHEN ISNULL(ct0.description, '') &lt;&gt; '' THEN ct0.description ELSE dmvt.name END AS itemname, ct0.isactive, ct0.createdby, ct0.createdat, ct0.modifiedby, ct0.modifiedat,
+						ct0.timestamp, dmvt.itemtype, dmvt.unit AS unit_item, dmvt.name AS name_item, iteminfo.excisetaxid, iteminfo.envtaxid, iteminfo.weight, iteminfo.shelflife, iteminfo.isitemwithserialno,
+						iteminfo.isitemwithlocation AS isitemwithlocation_item, iteminfo.isitemwithlot, iteminfo.isitemwithcolor, iteminfo.isitemwithsize, iteminfo.isitemwithquality, itemgroup.itemaccount, itemgroup.cogsaccount,
+						itemgroup.salesaccount, itemgroup.salesreturnaccount, itemgroup.itemaccount1, itemgroup.cogsaccount1, itemgroup.salesaccount1, itemgroup.salesreturnaccount1, itemgroup.itemaccount2, itemgroup.cogsaccount2,
+						itemgroup.salesaccount2, itemgroup.salesreturnaccount2, itemgroup.itemaccount3, itemgroup.cogsaccount3, itemgroup.salesaccount3, itemgroup.salesreturnaccount3, wh.allowissuewhennotenough,
+						wh.isitemwithlocation AS isitemwithlocation_wh, ISNULL((iteminfo.isitemwithlocation * wh.isitemwithlocation), 0) AS isitemwithlocation, dmtk_no.productaccount AS productdebitaccount,
+						dmtk_co.productaccount AS productcreditaccount, dmtk_no0.productaccount AS productdebitaccount0, dmtk_co0.productaccount AS productcreditaccount0, ct0.rowid_so, ct0.originaldiscountamount,
+						ct0.discountamount, CAST(iteminfo._physicalinventory AS INT) + ISNULL((iteminfo.isitemwithlocation * wh.isitemwithlocation), 0) AS _physicalinventory, ct0.quantity AS remainphysquantity,
+						vat.actualrate AS taxratetmp, ct0.customfieldid1, ct0.customfieldid2, ct0.customfieldid3, ct0.stt_hbtl, ct0.envtaxrate, ct0.vndamount2, ct0.vndamount3, ct0.bizdocid_io, ct0.rowid_io,
+						ct0.quantity9 AS remainphysquantity9, ct0.itemkind, ct0.notefactorid, ct0.saleschannelid,
+						CASE WHEN ISNULL(WPDrCheck.workprocessrequired, 0) = 0 AND ISNULL(WPCrCheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess,
+						CASE WHEN ISNULL(WPDrCheck_GiaVon.workprocessrequired, 0) = 0 AND ISNULL(WPCrCheck_GiaVon.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess_giavon</Columns>
+					<JoinCollection>
+						<wh>
+							<Name>B20Warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>wh.Id = Ct0.WarehouseId</JoinCondition>
+						</wh>
+						<vat>
+							<Name>B20Tax</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>vat.Code = Ct0.TaxCode</JoinCondition>
+						</vat>
+						<dmvt>
+							<Name>B20Item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmvt.Id = Ct0.ItemId</JoinCondition>
+						</dmvt>
+						<iteminfo>
+							<Name>B20ItemInfo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>iteminfo.ItemId = Ct0.ItemId</JoinCondition>
+						</iteminfo>
+						<itemgroup>
+							<Name>B20ItemGroup</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmvt.ItemGroupId = itemgroup.Id</JoinCondition>
+						</itemgroup>
+						<dmtk_no>
+							<Name>B20ChartOfAccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmtk_no.Code = Ct0.debitaccount2</JoinCondition>
+						</dmtk_no>
+						<dmtk_co>
+							<Name>B20ChartOfAccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmtk_co.Code = Ct0.creditaccount2</JoinCondition>
+						</dmtk_co>
+						<dmtk_no0>
+							<Name>B20ChartOfAccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmtk_no0.Code = Ct0.debitaccount</JoinCondition>
+						</dmtk_no0>
+						<dmtk_co0>
+							<Name>B20ChartOfAccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>dmtk_co0.Code = Ct0.creditaccount</JoinCondition>
+						</dmtk_co0>
+						<fifo>
+							<Name>B30AccDocFifo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>ct0.Stt = fifo.Stt AND ct0.RowId = fifo.RowId_SourceDoc</JoinCondition>
+						</fifo>
+						<WPDrCheck>
+							<Name>B20ZAccountValid</Name>
+							<Columns>WPDrCheck.WorkProcessRequired</Columns>
+							<Alias>WPDrCheck</Alias>
+							<Limit>1</Limit>
+							<JoinType>OuterApply</JoinType>
+							<FilterKey>(Ct0.DebitAccount2 LIKE CONCAT(WPDrCheck.ExpenseAccount, '%')) AND (WPDrCheck.BranchCode = Ct0.BranchCode OR WPDrCheck.BranchCode = '')</FilterKey>
+							<Sort>WPDrCheck.WorkProcessRequired ASC</Sort>
+						</WPDrCheck>
+						<WPCrCheck>
+							<Name>B20ZAccountValid</Name>
+							<Columns>WPCrCheck.WorkProcessRequired</Columns>
+							<Limit>1</Limit>
+							<JoinType>OuterApply</JoinType>
+							<FilterKey>(Ct0.CreditAccount2 LIKE CONCAT(WPCrCheck.ExpenseAccount, '%')) AND (WPCrCheck.BranchCode = Ct0.BranchCode OR WPCrCheck.BranchCode = '')</FilterKey>
+							<Sort>WPCrCheck.WorkProcessRequired ASC</Sort>
+						</WPCrCheck>
+						<WPDrCheck_GiaVon>
+							<Name>B20ZAccountValid</Name>
+							<Columns>WPDrCheck_GiaVon.WorkProcessRequired</Columns>
+							<Limit>1</Limit>
+							<JoinType>OuterApply</JoinType>
+							<FilterKey>(Ct0.DebitAccount LIKE CONCAT(WPDrCheck_GiaVon.ExpenseAccount, '%')) AND (WPDrCheck_GiaVon.BranchCode = Ct0.BranchCode OR WPDrCheck_GiaVon.BranchCode = '')</FilterKey>
+							<Sort>WPDrCheck_GiaVon.WorkProcessRequired ASC</Sort>
+						</WPDrCheck_GiaVon>
+						<WPCrCheck_GiaVon>
+							<Name>B20ZAccountValid</Name>
+							<Columns>WPCrCheck_GiaVon.WorkProcessRequired</Columns>
+							<Limit>1</Limit>
+							<JoinType>OuterApply</JoinType>
+							<FilterKey>(Ct0.CreditAccount LIKE CONCAT(WPCrCheck_GiaVon.ExpenseAccount, '%')) AND (WPCrCheck_GiaVon.BranchCode = Ct0.BranchCode OR WPCrCheck_GiaVon.BranchCode = '')</FilterKey>
+							<Sort>WPCrCheck_GiaVon.WorkProcessRequired ASC</Sort>
+						</WPCrCheck_GiaVon>
+					</JoinCollection>
+				</ct0>
+			</SourceCollection>
+		</AccDocSales1_Editor_NewCheck>
+		<AccDocPurchase_EditReturn>
+			<Source>B30accdocpurchase</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.branchcode, Ct.stt, Ct.doccode, Ct.docgroup, Ct.ma_nvu,
+					Ct.fiscalyear, Ct.docdate, Ct.rowid_voucherregister, Ct.docno, Ct.docserialno, Reg.formno AS docformno,
+					Ct.person, Ct.address, Ct.description, Ct.customerid, Ct.currencycode, Ct.exchangerate,
+					Ct.exchangeratetype, Ct.duedate, Ct.docstatus, Ct.posted, Ct.documentviewstyle, Ct.transcode,
+					Ct.taxcode, Ct.employeeid, Ct.deptid, Ct.productid, Ct.expensecatgid, Ct.bizdocid_po,
+					Ct.bizdocid_so, Ct.statsdocid_wo, Ct.jobid, Ct.warehouseid, Ct.workprocessid, Ct.costcentreid,
+					Ct.totaloriginalamount0, Ct.totalamount0, Ct.totaloriginalamount, Ct.totalamount, Ct.totaloriginalamount3, Ct.totalamount3,
+					Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat, Ct.timestamp,
+					Ct.modifiedby AS userid, CASE WHEN Ct.duedate IS NOT NULL AND Ct.duedate &lt;&gt; 0 THEN DATEADD(DAY, Ct.duedate, Ct.docdate) ELSE CAST(NULL AS DATE) END AS datedue,
+					DmCt.taxtype_ct, DmCt.doccodenumbering, DmCt.autonumbering, DmCt.tk_no_ct AS debitaccount,
+					DmCt.tk_co_ct AS creditaccount, DmCt.usingemployeeid, DmCt.usingdeptid, DmCt.usingexpensecatgid, DmCt.usingproductid, DmCt.usingbizdocid_lc,
+					DmCt.usingbizdocid_po, DmCt.usingbizdocid_so, DmCt.usingstatsdocid_wo, DmCt.usingwarehouseid, DmCt.usingjobid, DmCt.transtypecode,
+					DmCt.usingworkprocessid, DmCt.usingcostcentreid, DmCt.exchangeratetype_ct, DmCt.usingcheckinvwhennotenough, Trans.isimport, Trans.outsideaccount,
+					Trans.account AS account_trans, Trans.ispostgl, Trans.checkexpensecatgid, Trans.checkdeptid, Trans.checkbizdocid_po, Trans.checkbizdocid_so,
+					Trans.checkjobid, Trans.itemaccounttype, Trans.currencysegmenttype, Vat.type AS taxtype, Vat.priceincludetax, Vat.account AS account_vat,
+					Vat.rate AS taxrate, Curr.exchangerateoperator, Curr.decimalround, Curr.id AS id_currency, Curr.moneydiffvalue, Curr.vatdiffvalue,
+					Curr.moneydiffvalue AS moneydiffvalue0, Curr.vatdiffvalue AS vatdiffvalue0, Curr.segmentaccount1, Curr.segmentaccount2, Curr.segmentaccount3, Ct.ismultibills,
+					Ct.rowid_docprocess, Ct.docprocessid, Ct.einvoicestatus, Ct.einvoicedate, Ct.einvoiceno, Ct.transactionid,
+					Ct.reservationcode, Ct.einvoice_stt, Ct.postgl, Ct.postsl, Doc.lock, Doc.lock AS originallockstatus,
+					Doc.iscancelled, Ct.totalquantity, Ct.customfieldid1, Ct.customfieldid2, Ct.customfieldid3, DmCt.usingcustomfieldid1,
+					DmCt.usingcustomfieldid2, DmCt.usingcustomfieldid3, Ct.docbookingid, CAST(NULL AS DATE) AS docbookingdate, Trans.checkcostcentre, Ct.vndexchangerate,
+					Ct.vndtotalamount0, Ct.vndtotalamount3, Ct.einvoicedescription, Ct.notefactorid, DmCt.usingnotefactorid, Ct.contactperson,
+					Ct.contactperson1, Ct.attacheddoc, Ct.isdraftdata, Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0, Vr.rowid_provider,
+					Ct.einvoiceemail, 0 AS usingitemkind, Ct.idcardno, Ct.idcardtype, Ct.buyerbudgetcode, Ct.paymentmethod,
+					Ct.taxregaddress, Ct.invoicetype, Ct.voucherregister
+			</Columns>
+			<FilterKey>Ct.doccode = 'XT'</FilterKey>
+			<JoinCollection>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>DmCt.ma_ct = Ct.doccode</JoinCondition>
+				</DmCt>
+				<Trans>
+					<Name>Vb20transinfo_all</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Trans.transcode = Ct.transcode AND (Trans.branchcode = Ct.branchcode OR Trans.branchcode = '')</JoinCondition>
+				</Trans>
+				<Vat>
+					<Name>B20tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Vat.code = Ct.taxcode</JoinCondition>
+				</Vat>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Doc.docstatuskey = Ct.docstatus</JoinCondition>
+				</Doc>
+				<Curr>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.currencycode = Curr.code</JoinCondition>
+				</Curr>
+				<Reg>
+					<Name>B20voucherregister</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.rowid_voucherregister = Reg.rowid</JoinCondition>
+				</Reg>
+				<Vr>
+					<Name>B20voucherregister</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Vr.rowid = Ct.rowid_voucherregister</JoinCondition>
+				</Vr>
+			</JoinCollection>
+		</AccDocPurchase_EditReturn>
+		<AccDocPurchase2_Edit>
+			<Source>B30accdocpurchase2</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.stt, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+					Ct0.docgroup, Ct0.docdate, Ct0.transcode, Ct0.debitaccount, Ct0.creditaccount, Ct0.bizdocid_po,
+					Ct0.bizdocid_so, Ct0.customerid, Ct0.expensecatgid, Ct0.productid, Ct0.deptid, Ct0.jobid,
+					Ct0.employeeid, Ct0.territoryid, Ct0.warehouseid, Ct0.itemid, Ct0.unit, Ct0.bookingexchangerate,
+					Ct0.quantity, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalunitcost, Ct0.originalunitcost) ELSE Ct0.originalunitcost END AS originalunitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.unitcost, Ct0.unitcost) ELSE Ct0.unitcost END AS unitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount) ELSE Ct0.originalamount END AS originalamount, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount) ELSE Ct0.amount END AS amount, Ct0.taxcode,
+					Ct0.taxrate, Ct0.debitaccount3, Ct0.creditaccount3, Ct0.originalamount3, Ct0.amount3, Ct0.convertrate9,
+					Ct0.quantity9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount9) ELSE Ct0.originalamount9 END AS originalamount9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount9) ELSE Ct0.amount9 END AS amount9, Ct0.outsideaccount, Ct0.gia_tb_tt, Ct0.stt_lo_vt,
+					Ct0.description, Ct0.workprocessid, Ct0.costcentreid, Ct0.rowid_purchase, Ct0.isactive, Ct0.createdby,
+					Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, CASE WHEN ISNULL(Ct0.description, '') &lt;&gt; '' THEN Ct0.description WHEN Item.einvoicename &lt;&gt; '' THEN Item.einvoicename ELSE Item.name END AS itemname, CASE WHEN Item.einvoicename &lt;&gt; '' THEN Item.einvoicename ELSE Item.name END AS name_item,
+					Item.unit AS unit_item, Item.itemtype AS originalitemtype, Item.itemtype, Iteminfo.weight, Iteminfo.isitemwithserialno, Iteminfo.isitemwithlocation AS isitemwithlocation_item,
+					Iteminfo.isitemwithlot, Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize, Iteminfo.isitemwithquality, Iteminfo.envtaxid, Iteminfo.spec AS spec_item,
+					Itemgroup.itemaccount, Itemgroup.cogsaccount, Itemgroup.salesaccount, Itemgroup.salesreturnaccount, Itemgroup.itemaccount1, Itemgroup.cogsaccount1,
+					Itemgroup.salesaccount1, Itemgroup.salesreturnaccount1, Itemgroup.itemaccount2, Itemgroup.cogsaccount2, Itemgroup.salesaccount2, Itemgroup.salesreturnaccount2,
+					Itemgroup.itemaccount3, Itemgroup.cogsaccount3, Itemgroup.salesaccount3, Itemgroup.salesreturnaccount3, Wh.allowissuewhennotenough, Wh.isitemwithlocation AS isitemwithlocation_wh,
+					ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS isitemwithlocation, Iteminfo._physicalinventory + ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS _physicalinventory, Ct0.quantity AS remainphysquantity, Dracc.productaccount AS productdebitaccount, Cracc.productaccount AS productcreditaccount, Ct0.customfieldid1,
+					Ct0.customfieldid2, Ct0.customfieldid3, Ct0.vndamount2, Ct0.vndamount3, Ct0.quantity9 AS remainphysquantity9, Ct0.notefactorid,
+					Tax.actualrate AS taxratetmp, Tax.type AS taxtype, Tax.priceincludetax, Tax.account AS account_vat, Tax.deduction AS deductiontax, Ct0.atchdocorder,
+					Ct0.atchdocitemname, CASE WHEN ISNULL(Wpdrcheck.workprocessrequired, 0) = 0 AND ISNULL(Wpcrcheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess, Ct0.spec, Ct0.remark, Ct0.itemkind, Ct0.atchdocno
+			</Columns>
+			<JoinCollection>
+				<Wh>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+				</Wh>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+				</Iteminfo>
+				<Itemgroup>
+					<Name>B20itemgroup</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Item.itemgroupid = Itemgroup.id</JoinCondition>
+				</Itemgroup>
+				<Dracc>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.debitaccount = Dracc.code</JoinCondition>
+				</Dracc>
+				<Cracc>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.creditaccount = Cracc.code</JoinCondition>
+				</Cracc>
+				<Fifo>
+					<Name>B30accdocfifo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.stt = Fifo.stt AND Ct0.rowid = Fifo.rowid_sourcedoc</JoinCondition>
+				</Fifo>
+				<Tax>
+					<Name>B20tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.taxcode = Tax.code</JoinCondition>
+				</Tax>
+				<Wpdrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpdrcheck.Workprocessrequired</Columns>
+					<Alias>Wpdrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Debitaccount LIKE CONCAT(Wpdrcheck.Expenseaccount, '%') AND (Wpdrcheck.Branchcode = Ct0.Branchcode OR Wpdrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpdrcheck.Workprocessrequired ASC</Sort>
+				</Wpdrcheck>
+				<Wpcrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpcrcheck.Workprocessrequired</Columns>
+					<Alias>Wpcrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Creditaccount LIKE CONCAT(Wpcrcheck.Expenseaccount, '%') AND (Wpcrcheck.Branchcode = Ct0.Branchcode OR Wpcrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpcrcheck.Workprocessrequired ASC</Sort>
+				</Wpcrcheck>
+			</JoinCollection>
+		</AccDocPurchase2_Edit>
+		<AccDocPhys_Edit>
+			<Source>B30accdocinventoryphys</Source>
+			<Alias>Phys</Alias>
+			<Columns>
+					Phys.id, Phys.branchcode, Phys.builtinorder, Phys.docgroup, Phys.doccode, Phys.docdate,
+					Phys.stt, Phys.rowid, Phys.rowid_sourcedoc, Phys.warehouseid, B20warehouse.code AS warehousecode, Phys.itemid,
+					B20item.code AS itemcode, B20item.name AS itemname, Phys.unit, B20iteminfo.shelflife, B20iteminfo.isitemwithserialno, B20iteminfo.isitemwithlocation,
+					B20iteminfo.isitemwithlot, B20iteminfo.isitemwithcolor, B20iteminfo.isitemwithsize, B20iteminfo.isitemwithquality, Phys.itemlotcode, B20itemlot.name AS itemlotname,
+					B20itemlot.receiptdate, B20itemlot.id AS id_itemlot, B20itemlotdetail.mfgdate, B20itemlotdetail.expirydate, Phys.locationid, B20location.code AS locationcode,
+					B20location.name AS locationname, B20location.warehouseid AS warehouseid_location, Phys.itemserialno, Phys.quantity, Phys.colorcode, Phys.sizecode,
+					Phys.itemqualitycode, Phys.transcode, Phys.employeeid, Phys.deptid, Phys.newlocationid, B20location1.code AS newlocationcode,
+					B20location1.name AS newlocationname, Phys.jobid, Phys.quantity9, Phys.convertrate9, Phys.isactive, Phys.createdby,
+					Phys.createdat, Phys.modifiedby, Phys.modifiedat, Phys.timestamp
+			</Columns>
+			<JoinCollection>
+				<B20warehouse>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.warehouseid = B20warehouse.id</JoinCondition>
+				</B20warehouse>
+				<B20item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.itemid = B20item.id</JoinCondition>
+				</B20item>
+				<B20iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.itemid = B20iteminfo.itemid</JoinCondition>
+				</B20iteminfo>
+				<B20location>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.locationid = B20location.id</JoinCondition>
+				</B20location>
+				<B20location1>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.newlocationid = B20location1.id</JoinCondition>
+				</B20location1>
+				<B20itemlot>
+					<Name>B20itemlot</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.itemlotcode = B20itemlot.code</JoinCondition>
+				</B20itemlot>
+				<B20itemlotdetail>
+					<Name>B20itemlotdetail</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Phys.itemlotcode = B20itemlotdetail.itemlotcode AND Phys.itemid = B20itemlotdetail.itemid</JoinCondition>
+				</B20itemlotdetail>
+			</JoinCollection>
+		</AccDocPhys_Edit>
+		<AccDocPhys_EditLR>
+			<Source>B30accdocinventoryphys</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.builtinorder, Ct0.docgroup, Ct0.doccode, Ct0.docdate,
+					Ct0.stt, Ct0.rowid, Ct0.rowid_sourcedoc, Ct0.warehouseid, B20warehouse.code AS warehousecode, Ct0.itemid,
+					B20item.code AS itemcode, B20item.name AS itemname, Ct0.unit, B20iteminfo.shelflife, B20iteminfo.isitemwithserialno, B20iteminfo.isitemwithlocation,
+					B20iteminfo.isitemwithlot, B20iteminfo.isitemwithcolor, B20iteminfo.isitemwithsize, B20iteminfo.isitemwithquality, Ct0.itemlotcode, B20itemlot.name AS itemlotname,
+					B20itemlot.receiptdate, B20itemlot.id AS id_itemlot, B20itemlotdetail.mfgdate, B20itemlotdetail.expirydate, Ct0.locationid, B20location.code AS locationcode,
+					B20location.name AS locationname, B20location.warehouseid AS warehouseid_location, Ct0.itemserialno, Ct0.quantity, Ct0.colorcode, Ct0.sizecode,
+					Ct0.itemqualitycode, Ct0.transcode, Ct0.employeeid, Ct0.deptid, Ct0.newlocationid, B20location1.code AS newlocationcode,
+					B20location1.name AS newlocationname, Ct0.jobid, Ct0.quantity9, Ct0.convertrate9, Ct0.isactive, Ct0.createdby,
+					Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp
+			</Columns>
+			<JoinCollection>
+				<B20warehouse>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.warehouseid = B20warehouse.id</JoinCondition>
+				</B20warehouse>
+				<B20item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = B20item.id</JoinCondition>
+				</B20item>
+				<B20iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = B20iteminfo.itemid</JoinCondition>
+				</B20iteminfo>
+				<B20location>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.locationid = B20location.id</JoinCondition>
+				</B20location>
+				<B20location1>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.newlocationid = B20location1.id</JoinCondition>
+				</B20location1>
+				<B20itemlot>
+					<Name>B20itemlot</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemlotcode = B20itemlot.code</JoinCondition>
+				</B20itemlot>
+				<B20itemlotdetail>
+					<Name>B20itemlotdetail</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemlotcode = B20itemlotdetail.itemlotcode AND Ct0.itemid = B20itemlotdetail.itemid</JoinCondition>
+				</B20itemlotdetail>
+			</JoinCollection>
+		</AccDocPhys_EditLR>
+		<AccDocItem_Edit>
+			<Source>B30accdocitem</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.branchcode, Ct.stt, Ct.doccode, Ct.docgroup, Ct.fiscalyear,
+					Ct.docdate, Ct.rowid_voucherregister, Ct.docno, Ct.docserialno, Ct.person, Ct.address,
+					Ct.description, Ct.customerid, Ct.currencycode, Ct.exchangerate, Ct.exchangeratetype, Ct.duedate,
+					Ct.docstatus, Ct.posted, Ct.documentviewstyle, Ct.receiptwarehouseid, Ct.receiptitemid, Ct.receiptquantity,
+					Ct.transcode, Ct.taxcode, Ct.employeeid, Ct.deptid, Ct.jobid, Ct.productid,
+					Ct.expensecatgid, Ct.bizdocid_po, Ct.bizdocid_so, Ct.statsdocid_wo, Ct.warehouseid, Ct.workprocessid,
+					Ct.costcentreid, Ct.totaloriginalamount0, Ct.totalamount0, Ct.totaloriginalamount, Ct.totalamount, Ct.totaloriginalamount3,
+					Ct.totalamount3, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+					Ct.timestamp, Ct.modifiedby AS userid, IIF(Ct.duedate &lt;&gt; 0, DATEADD(d, Ct.duedate, Ct.docdate), NULL) AS datedue, DmCt.ma_nvu, DmCt.ct_hd, DmCt.taxtype_ct,
+					DmCt.doccodenumbering, DmCt.tk_no_ct AS debitaccount, DmCt.tk_co_ct AS creditaccount, DmCt.usingemployeeid, DmCt.usingdeptid, DmCt.usingexpensecatgid,
+					DmCt.usingproductid, DmCt.usingbizdocid_lc, DmCt.usingbizdocid_po, DmCt.usingbizdocid_so, DmCt.usingstatsdocid_wo, DmCt.usingwarehouseid,
+					DmCt.usingjobid, DmCt.transtypecode, DmCt.usingworkprocessid, DmCt.usingcostcentreid, DmCt.exchangeratetype_ct, DmCt.usingcheckinvwhennotenough,
+					DmCt.autonumbering, Trans.isimport, Trans.outsideaccount, Trans.account AS account_trans, Trans.ispostgl, Trans.checkexpensecatgid,
+					Trans.checkdeptid, Trans.checkbizdocid_po, Trans.checkbizdocid_so, Trans.checkjobid, Trans.itemaccounttype, Trans.currencysegmenttype,
+					Vat.type AS taxtype, Vat.priceincludetax, Vat.account AS account_vat, ISNULL(Vat.rate, 0) AS taxrate, Curr.exchangerateoperator, Curr.decimalround,
+					Curr.id AS id_currency, Curr.moneydiffvalue, Curr.vatdiffvalue, Curr.moneydiffvalue AS moneydiffvalue0, Curr.vatdiffvalue AS vatdiffvalue0, Curr.segmentaccount1,
+					Curr.segmentaccount2, Curr.segmentaccount3, Ct.rowid_docprocess, Ct.docprocessid, Ct.postgl, Ct.postsl,
+					Doc.lock, Doc.lock AS originallockstatus, Doc.iscancelled, Ct.ismultibills, Ct.taxregno, Ct.taxregname,
+					Ct.debitaccount3, Ct.creditaccount3, Ct.atchdocdate, Ct.atchdocno, Ct.atchdocformno, Ct.atchdocserialno,
+					Ct.totalquantity, Ct.customfieldid1, Ct.customfieldid2, Ct.customfieldid3, DmCt.usingcustomfieldid1, DmCt.usingcustomfieldid2,
+					DmCt.usingcustomfieldid3, Ct.docbookingid, CAST(NULL AS DATE) AS docbookingdate, Trans.checkcostcentre, Ct.priorworkprocessid, Ct.transporterid,
+					Ct.contractdate, Item.unit AS receiptitemunit, Ct.notefactorid, DmCt.usingnotefactorid, Ct.bizdocid_itr, Ct.isdraftdata,
+					Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0, Ct.internalcommandno, Ct.internalcommandsubject, Ct.transportcontractcode, Ct.shipvia,
+					Vr.rowid_provider, Ct.einvoicestatus, Ct.einvoicedate, Ct.einvoiceno, Ct.einvoice_stt, NULL AS statsdocid_rm,
+					NULL AS statsdocid_md
+			</Columns>
+			<JoinCollection>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>DmCt.ma_ct = Ct.doccode</JoinCondition>
+				</DmCt>
+				<Trans>
+					<Name>Vb20transinfo_all</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Trans.transcode = Ct.transcode AND (Trans.branchcode = Ct.branchcode OR Trans.branchcode = '')</JoinCondition>
+				</Trans>
+				<Vat>
+					<Name>B20tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Vat.code = Ct.taxcode</JoinCondition>
+				</Vat>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Doc.docstatuskey = Ct.docstatus</JoinCondition>
+				</Doc>
+				<Curr>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.currencycode = Curr.code</JoinCondition>
+				</Curr>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.receiptitemid = Item.id</JoinCondition>
+				</Item>
+				<Vr>
+					<Name>B20voucherregister</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Vr.rowid = Ct.rowid_voucherregister</JoinCondition>
+				</Vr>
+			</JoinCollection>
+		</AccDocItem_Edit>
+		<AccDocItem2_Edit>
+			<Source>B30accdocitem2</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.stt, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+					Ct0.docgroup, Ct0.docdate, Ct0.transcode, Ct0.debitaccount, Ct0.creditaccount, Ct0.bizdocid_po,
+					Ct0.bizdocid_so, Ct0.statsdocid_wo, Ct0.rowid_wo, Ct0.customerid, Ct0.expensecatgid, Ct0.productid,
+					Ct0.deptid, Ct0.jobid, Ct0.employeeid, Ct0.territoryid, Ct0.warehouseid, Ct0.itemid,
+					Ct0.unit, Ct0.bookingexchangerate, Ct0.quantity, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalunitcost, Ct0.originalunitcost) ELSE Ct0.originalunitcost END AS originalunitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.unitcost, Ct0.unitcost) ELSE Ct0.unitcost END AS unitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount) ELSE Ct0.originalamount END AS originalamount,
+					CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount) ELSE Ct0.amount END AS amount, Ct0.taxcode, Ct0.taxrate, Ct0.debitaccount3, Ct0.creditaccount3, Ct0.originalamount3,
+					Ct0.amount3, Ct0.convertrate9, Ct0.quantity9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount9) ELSE Ct0.originalamount9 END AS originalamount9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount9) ELSE Ct0.amount9 END AS amount9, Ct0.outsideaccount,
+					Ct0.gia_tb_tt, Ct0.stt_lo_vt, Ct0.description, Ct0.workprocessid, Ct0.costcentreid, Ct0.isactive,
+					Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, CASE WHEN ISNULL(Ct0.description, '') &lt;&gt; '' THEN Ct0.description ELSE Item.name END AS itemname,
+					Item.name AS name_item, Item.unit AS unit_item, Item.itemtype AS originalitemtype, Item.itemtype, Item.itemgroupid, Iteminfo.weight,
+					Iteminfo.isitemwithserialno, Iteminfo.isitemwithlocation AS isitemwithlocation_item, Iteminfo.isitemwithlot, Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize, Iteminfo.isitemwithquality,
+					Iteminfo.envtaxid, Itemgroup.itemaccount, Itemgroup.cogsaccount, Itemgroup.salesaccount, Itemgroup.salesreturnaccount, Itemgroup.itemaccount1,
+					Itemgroup.cogsaccount1, Itemgroup.salesaccount1, Itemgroup.salesreturnaccount1, Itemgroup.itemaccount2, Itemgroup.cogsaccount2, Itemgroup.salesaccount2,
+					Itemgroup.salesreturnaccount2, Itemgroup.itemaccount3, Itemgroup.cogsaccount3, Itemgroup.salesaccount3, Itemgroup.salesreturnaccount3, Wh.allowissuewhennotenough,
+					Wh.isitemwithlocation AS isitemwithlocation_wh, ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS isitemwithlocation, Iteminfo._physicalinventory + ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS _physicalinventory, Ct0.quantity AS remainphysquantity, DmTkco.productaccount AS productcreditaccount, Ct0.customfieldid1,
+					Ct0.customfieldid2, Ct0.customfieldid3, Ct0.bizdocid_io, Ct0.rowid_io, Ct0.quantity9 AS remainphysquantity9, Ct0.notefactorid,
+					Ct0.stt_ita, CASE WHEN ISNULL(Wpdrcheck.workprocessrequired, 0) = 0 AND ISNULL(Wpcrcheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess, Ct0.statsdocid_md, Ct0.rowid_md
+			</Columns>
+			<JoinCollection>
+				<Wh>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+				</Wh>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+				</Iteminfo>
+				<Itemgroup>
+					<Name>B20itemgroup</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Item.itemgroupid = Itemgroup.id</JoinCondition>
+				</Itemgroup>
+				<DmTkco>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.creditaccount = DmTkco.code</JoinCondition>
+				</DmTkco>
+				<Fifo>
+					<Name>B30accdocfifo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.stt = Fifo.stt AND Ct0.rowid = Fifo.rowid_sourcedoc</JoinCondition>
+				</Fifo>
+				<Wpdrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpdrcheck.Workprocessrequired</Columns>
+					<Alias>Wpdrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Debitaccount LIKE CONCAT(Wpdrcheck.Expenseaccount, '%') AND (Wpdrcheck.Branchcode = Ct0.Branchcode OR Wpdrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpdrcheck.Workprocessrequired ASC</Sort>
+				</Wpdrcheck>
+				<Wpcrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpcrcheck.Workprocessrequired</Columns>
+					<Alias>Wpcrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Creditaccount LIKE CONCAT(Wpcrcheck.Expenseaccount, '%') AND (Wpcrcheck.Branchcode = Ct0.Branchcode OR Wpcrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpcrcheck.Workprocessrequired ASC</Sort>
+				</Wpcrcheck>
+			</JoinCollection>
+		</AccDocItem2_Edit>
+		<QcDoc_Explore>
+			<Name>B30qcdoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct>
+					<Name>B30qcdoc</Name>
+					<Columns>
+						Ct.id, Ct.parentid, Ct.isgroup, Ct.branchcode, Ct.qcdocid, Ct.doccode,
+						Ct.docdate, Ct.docno, Ct.description, Ct.employeeid, Ct.filename, Ct.bizdocid_io,
+						Ct.bizdocid_rc, Ct.statsdocid_wo, Ct.problemdescription, Ct.deptid, Ct.detectiondeptid, Ct.handlingcost,
+						Ct.solution, Ct.preventionsolution, Ct.conclusion, Ct.customerid, Ct.estimatedcompletiondate, Ct.docstatus,
+						Ct.classcode1, Ct.classcode2, Ct.classcode3, Ct.closed, Ct.ws_id0, Ct.rowid_docprocess,
+						Ct.docprocessid, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+						Ct.timestamp, Ct.itemid, Ct.quantity, Ct.quantity9, Ct.unit, Ct.convertrate9,
+						Ct.cancellationlocation, Ct.cancellationmethod, Employee.code AS employeecode, Employee.name AS employeename, DmDt.name AS customername, DmDt.code AS customercode,
+						Doc.lock, Doc.postgl, Doc.postsl, Doc.iscancelled, DmBpdetec.name AS detectiondeptname, DmBp.code AS deptcode,
+						DmBp.name AS deptname, DmVt.code AS itemcode, DmVt.name AS itemname, Ct.qctype, Ct.lotcode, CASE WHEN Ct.bizdocid_io &lt;&gt; '' THEN Ct.bizdocid_io ELSE CASE WHEN Ct.bizdocid_rc &lt;&gt; '' THEN Ct.bizdocid_rc ELSE Ct.statsdocid_wo END END AS docid_sourcedoc,
+						Userlist.fullname AS createdby_name, Ct.completiondate, Wp.code AS workprocesscode, Ct.workprocessid, Ct.productionprocessid, Pp.code AS productionprocesscode,
+						Ct.factoryid, Fac.code AS factorycode, Ct.productionlineid, Pl.code AS productionlinecode, Ct.approvalstatus
+					</Columns>
+					<JoinCollection>
+						<Employee>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.employeeid = Employee.id</JoinCondition>
+						</Employee>
+						<DmDt>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.customerid = DmDt.id</JoinCondition>
+						</DmDt>
+						<Doc>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+						</Doc>
+						<DmBp>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deptid = DmBp.id</JoinCondition>
+						</DmBp>
+						<DmBpdetec>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.detectiondeptid = DmBpdetec.id</JoinCondition>
+						</DmBpdetec>
+						<DmVt>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.itemid = DmVt.id</JoinCondition>
+						</DmVt>
+						<Userlist>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.createdby = Userlist.id</JoinCondition>
+						</Userlist>
+						<Wp>
+							<Name>B20workprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.workprocessid = Wp.id</JoinCondition>
+						</Wp>
+						<Pp>
+							<Name>B20productionprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.productionprocessid = Pp.id</JoinCondition>
+						</Pp>
+						<Fac>
+							<Name>B20factory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.factoryid = Fac.id</JoinCondition>
+						</Fac>
+						<Pl>
+							<Name>B20productionline</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.productionlineid = Pl.id</JoinCondition>
+						</Pl>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</QcDoc_Explore>
+		<QCDoc_Editor>
+			<Name>B30qcdoc</Name>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.parentid, Ct.isgroup, Ct.branchcode, Ct.qcdocid, Ct.doccode,
+					Ct.docdate, Ct.docno, Ct.description, Ct.employeeid, Ct.filename, Ct.bizdocid_io,
+					Ct.bizdocid_rc, Ct.statsdocid_wo, Ct.problemdescription, Ct.deptid, Ct.detectiondeptid, Ct.handlingcost,
+					Ct.solution, Ct.preventionsolution, Ct.conclusion, Ct.customerid, Ct.itemid, Ct.quantity9,
+					Ct.quantity, Ct.convertrate9, Ct.unit, DmVt.unit AS unit_item, Ct.estimatedcompletiondate, Ct.cancellationlocation,
+					Ct.cancellationmethod, Ct.lotcode, Ct.docstatus, Ct.classcode1, Ct.classcode2, Ct.classcode3,
+					Ct.closed, Ct.ws_id0, Ct.rowid_docprocess, Ct.docprocessid, Ct.isactive, Ct.createdby,
+					Ct.modifiedby AS userid, Ct.createdat, Ct.modifiedby, Ct.modifiedat, Ct.timestamp, Doc.lock,
+					Doc.iscancelled, Doc.postgl, DmCt.ma_nvu, DmCt.nh_ct, DmCt.ct_hd, DmCt.transtypecode,
+					DmCt.usingestimatedtimedelivery, DmCt.autonumbering, DmCt.usingstatsdocid_wo, DmCt.usingworkprocessid, DmCt.usingshiftid, Ct.qctype,
+					Ct.completiondate, Ct.workprocessid, Ct.shiftid, Ct.productionprocessid, Ct.productionlineid, Ct.factoryid,
+					Ct.isdraftdata, Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0, DmCt.usingproductionprocessid
+			</Columns>
+			<JoinCollection>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+				<DmVt>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.itemid = DmVt.id</JoinCondition>
+				</DmVt>
+			</JoinCollection>
+		</QCDoc_Editor>
+		<QCDocChecklist_Explore>
+			<Name>B30qcdocchecklist</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Qcdoc1>
+					<Name>B30qcdoc</Name>
+					<Alias>Qcdoc1</Alias>
+					<Columns>rowid, docno</Columns>
+					<JoinCollection>
+						<Detail>
+							<Name>B30qcdocdetail</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Qcdoc1.qcdocid = Detail.qcdocid</JoinCondition>
+						</Detail>
+					</JoinCollection>
+				</Qcdoc1>
+				<Ct>
+					<Name>B30qcdocchecklist</Name>
+					<Columns>
+						Ct.id, Ct.parentid, Ct.isgroup, Ct.branchcode, Ct.qcdocid, Ct.doccode,
+						Ct.docdate, Ct.docno, Ct.description, Ct.employeeid, Ct.customerid, Ct.filename,
+						Ct.startdate, Ct.enddate, Ct.issample, Ct.resulttypesample, Ct.itemid, Ct.unit,
+						Ct.convertrate9, Ct.quantityorder, Ct.quantitysample, Ct.quantity9, Ct.totalquantityok, Ct.totalquantityng,
+						Ct.qcdocid_q1, Ct.qcdocid_q2, Ct.qcdocid_q3, Ct.rowid_sourcedoc, Ct.problemdescription, Ct.deptid,
+						Ct.docstatus, Ct.classcode1, Ct.classcode2, Ct.classcode3, Ct.ws_id0, Ct.rowid_docprocess,
+						Ct.docprocessid, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+						Ct.timestamp, Employee.code AS employeecode, Employee.name AS employeename, DmDt.name AS customername, DmDt.code AS customercode, Doc.lock,
+						Doc.postgl, Doc.postsl, Doc.iscancelled, DmVt.code AS itemcode, DmVt.name AS itemname, Qcdochdr.docno AS qcdochdr_docno,
+						CASE WHEN Ct.qcdocid_q1 &lt;&gt; '' THEN Ct.qcdocid_q1 ELSE (CASE WHEN Ct.qcdocid_q2 &lt;&gt; '' THEN Ct.qcdocid_q2 ELSE Ct.qcdocid_q3 END) END AS qcdocid_sourcedoc, 
+						Ct.workprocessid, Wp.code AS workprocesscode, Userlist.fullname AS createdby_name, Ct.qcitemgroupchecklistid, Ct.qcitemsamplingid,
+						Ct.issample_revoke, Samp.code AS qcitemsamplingcode, Chk.code AS qcitemgroupchecklistcode, Ct.statsdocid_wo, Ct.shiftid, s.code AS shiftcode,
+						Ct.productionprocessid, Ct.productionlineid, Ct.factoryid, Pl.code AS productionlinecode, Fac.code AS factorycode, Pp.code AS productionprocesscode,
+						Ct.bizdocid_so, Ct.approvalstatus
+					</Columns>
+					<JoinCollection>
+						<Employee>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.employeeid = Employee.id</JoinCondition>
+						</Employee>
+						<DmDt>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.customerid = DmDt.id</JoinCondition>
+						</DmDt>
+						<Doc>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+						</Doc>
+						<DmVt>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.itemid = DmVt.id</JoinCondition>
+						</DmVt>
+						<Qcdochdr>
+							<Source>Qcdoc1</Source>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Qcdochdr.rowid = Ct.rowid_sourcedoc</JoinCondition>
+						</Qcdochdr>
+						<Userlist>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.createdby = Userlist.id</JoinCondition>
+						</Userlist>
+						<Samp>
+							<Name>B20qcitemsampling</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Samp.id = Ct.qcitemsamplingid</JoinCondition>
+						</Samp>
+						<Chk>
+							<Name>B20qcitemgroupchecklist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Chk.id = Ct.qcitemgroupchecklistid</JoinCondition>
+						</Chk>
+						<s>
+							<Name>B20hrmshift</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>s.id = Ct.shiftid</JoinCondition>
+						</s>
+						<Wp>
+							<Name>B20workprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.workprocessid = Wp.id</JoinCondition>
+						</Wp>
+						<Fac>
+							<Name>B20factory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.factoryid = Fac.id</JoinCondition>
+						</Fac>
+						<Pp>
+							<Name>B20productionprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.productionprocessid = Pp.id</JoinCondition>
+						</Pp>
+						<Pl>
+							<Name>B20productionline</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.productionlineid = Pl.id</JoinCondition>
+						</Pl>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</QCDocChecklist_Explore>
+		<QCDocChecklist_Editor>
+			<Source>B30qcdocchecklist</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.parentid, Ct.isgroup, Ct.branchcode, Ct.qcdocid, Ct.doccode,
+					Ct.docdate, Ct.docno, Ct.description, Ct.employeeid, Ct.customerid, Ct.startdate,
+					Ct.enddate, Ct.issample, Ct.resulttypesample, Ct.itemid, Ct.unit, DmVt.unit AS unit_item,
+					Ct.convertrate9, Ct.quantityorder, Ct.quantitysample, Ct.quantity9, Ct.totalquantityok, Ct.totalquantityng,
+					Ct.qcdocid_q1, Ct.qcdocid_q2, Ct.qcdocid_q3, Ct.rowid_sourcedoc, Ct.problemdescription, Ct.deptid,
+					Ct.docstatus, Ct.classcode1, Ct.classcode2, Ct.classcode3, Ct.ws_id0, Ct.rowid_docprocess,
+					Ct.docprocessid, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+					Ct.timestamp, Ct.modifiedby AS userid, Doc.lock, Doc.iscancelled, Doc.postgl, DmCt.ma_nvu,
+					DmCt.nh_ct, DmCt.ct_hd, DmCt.transtypecode, DmCt.usingestimatedtimedelivery, DmCt.autonumbering, Ct.qctype,
+					Ct.workprocessid, Ct.qcitemgroupchecklistid, Ct.qcitemsamplingid, Ct.issample_revoke, DmVt.qcitemgroupid, Ct.statsdocid_wo,
+					Ct.shiftid, Ct.productionprocessid, Ct.productionlineid, Ct.factoryid, Ct.bizdocid_so, Ct.isdraftdata,
+					Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0
+			</Columns>
+			<JoinCollection>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+				<DmVt>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.itemid = DmVt.id</JoinCondition>
+				</DmVt>
+			</JoinCollection>
+		</QCDocChecklist_Editor>
+		<QCDocChecklistDetail_Explore>
+			<Name>B30qcdocchecklistdetail</Name>
+			<Source>Ct0</Source>
+			<Columns>Ct0.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct0>
+					<Name>B30qcdocchecklistdetail</Name>
+					<Columns>
+						Ct0.id, Ct0.parentid, Ct0.isgroup, Ct0.qcdocid, Ct0.rowid, Ct0.builtinorder,
+						Ct0.docdate, Ct0.itemid, Ct0.description, Ct0.qcchecklistid, Ct0.qcaqlid, Ct0.qcmethodtestid,
+						Meth.name AS qcmethodtestname, Ct0.upperlimit, Ct0.lowerlimit, Ct0.aqldescription, Ct0.actuallowerlimit, Ct0.actualupperlimit,
+						Ct0.actualaqldescription, Ct0.actualresult, Ct0.employeeid, Ct0.resulttype, Ct0.remark, Ct0.isactive,
+						Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, Chklist.code AS qcchecklistcode,
+						Chklist.name AS qcchecklistname, Aql.code AS qcaqlcode, Aql.name AS qcaqlname, DmNv.code AS employeecode, DmNv.name AS employeename, Ct0.aqlunit,
+						Ct0.tolerancetype, Ct0.tolerance, Ct0.tolerancerate, Ct0.qcmethodtest, Ct0.resultdescription, Ct0.resultvalue,
+						Meth.code AS qcmethodtestcode, Class.name AS tolerancetypename
+					</Columns>
+					<JoinCollection>
+						<Chklist>
+							<Name>B20qcchecklist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.qcchecklistid = Chklist.id</JoinCondition>
+						</Chklist>
+						<Aql>
+							<Name>B20qcaql</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.qcaqlid = Aql.id</JoinCondition>
+						</Aql>
+						<DmNv>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.employeeid = DmNv.id</JoinCondition>
+						</DmNv>
+						<Meth>
+							<Name>B20qcmethodtest</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.qcmethodtestid = Meth.id</JoinCondition>
+						</Meth>
+						<Class>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.tolerancetype = Class.code AND Class.parentcode = 'QCToleranceType'</JoinCondition>
+						</Class>
+					</JoinCollection>
+				</Ct0>
+			</SourceCollection>
+		</QCDocChecklistDetail_Explore>
+		<QCDocChecklistDetail_Editor>
+			<Source>B30qcdocchecklistdetail</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.parentid, Ct0.isgroup, Ct0.qcdocid, Ct0.rowid, Ct0.builtinorder,
+					Ct0.docdate, Ct0.remark, Ct0.itemid, Ct0.description, Ct0.qcchecklistid, Ct0.qcaqlid,
+					Ct0.qcmethodtestid, Meth.name AS qcmethodtestname, Ct0.upperlimit, Ct0.lowerlimit, Ct0.aqldescription, Ct0.aqlunit,
+					Ct0.actuallowerlimit, Ct0.actualupperlimit, Ct0.actualaqldescription, Ct0.actualresult, Ct0.employeeid, Ct0.resulttype,
+					Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp,
+					Chklist.name AS qcchecklistname, Aql.code, DmNv.name AS employeename, Aql.unit, Ct0.tolerancetype, Ct0.tolerance,
+					Ct0.tolerancerate, Ct0.qcmethodtest, Ct0.resultdescription, Ct0.resultvalue, Ct0.statsdocid_wo, Ct0.shiftid,
+					Ct0.workprocessid, Ct0.productionprocessid, Ct0.productionlineid, Ct0.factoryid, Ct0.bizdocid_so
+			</Columns>
+			<JoinCollection>
+				<Chklist>
+					<Name>B20qcchecklist</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.qcchecklistid = Chklist.id</JoinCondition>
+				</Chklist>
+				<Aql>
+					<Name>B20qcaql</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.qcaqlid = Aql.id</JoinCondition>
+				</Aql>
+				<DmNv>
+					<Name>B20employee</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.employeeid = DmNv.id</JoinCondition>
+				</DmNv>
+				<Meth>
+					<Name>B20qcmethodtest</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.qcmethodtestid = Meth.id</JoinCondition>
+				</Meth>
+			</JoinCollection>
+		</QCDocChecklistDetail_Editor>
+		<QCDocChecklistStatistic_Explore>
+			<Name>B30qcdoccheckliststatistic</Name>
+			<Source>Statistic</Source>
+			<Columns>Statistic.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Statistic>
+					<Name>B30qcdoccheckliststatistic</Name>
+					<Columns>
+						Statistic.id, Statistic.parentid, Statistic.isgroup, Statistic.qcdocid, Statistic.rowid, Statistic.builtinorder,
+						Statistic.docdate, Statistic.itemid, Statistic.description, Statistic.unit, Statistic.quantity, Statistic.convertrate9,
+						Statistic.quantity9, Statistic.qcissueid, Statistic.resulttype, Statistic.remark, Statistic.isactive, Statistic.createdby,
+						Statistic.createdat, Statistic.modifiedby, Statistic.modifiedat, Statistic.timestamp, Issue.code AS qcissuecode, Issue.name AS qcissuename,
+						Statistic.qcsolutionid, Sl.code AS qcsolutioncode, Sl.name AS qcsolutionname
+					</Columns>
+					<JoinCollection>
+						<Issue>
+							<Name>B20qcissue</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Statistic.qcissueid = Issue.id</JoinCondition>
+						</Issue>
+						<Sl>
+							<Name>B20qcsolution</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Statistic.qcsolutionid = Sl.id</JoinCondition>
+						</Sl>
+					</JoinCollection>
+				</Statistic>
+			</SourceCollection>
+		</QCDocChecklistStatistic_Explore>
+		<QCDocChecklistStatistic_Editor>
+			<Source>B30qcdoccheckliststatistic</Source>
+			<Alias>Statistic</Alias>
+			<Columns>
+					Statistic.id, Statistic.parentid, Statistic.isgroup, Statistic.qcdocid, Statistic.rowid, Statistic.builtinorder,
+					Statistic.docdate, Statistic.itemid, Statistic.description, Statistic.unit, Statistic.quantity, Statistic.convertrate9,
+					Statistic.quantity9, Statistic.qcissueid, Statistic.resulttype, Statistic.remark, Statistic.isactive, Statistic.createdby,
+					Statistic.createdat, Statistic.modifiedby, Statistic.modifiedat, Statistic.timestamp, Statistic.qctype, Statistic.qcsolutionid,
+					B20qcissue.code AS qcissuecode, B20qcissue.name AS qcissuename, B20qcsolution.code AS qcsolutioncode, B20qcsolution.name AS qcsolutionname
+			</Columns>
+			<JoinCollection>
+				<B20qcissue>
+					<Name>B20qcissue</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Statistic.qcissueid = B20qcissue.id</JoinCondition>
+				</B20qcissue>
+				<B20qcsolution>
+					<Name>B20qcsolution</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Statistic.qcsolutionid = B20qcsolution.id</JoinCondition>
+				</B20qcsolution>
+			</JoinCollection>
+		</QCDocChecklistStatistic_Editor>
+		<AccDocOther_Edit>
+			<Source>B30accdocother</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.stt, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+					Ct0.docdate, Ct0.transcode, Ct0.description, ISNULL(Ct0.description, Ct.description) AS description0, Ct0.debitbizdocid_po, Ct0.debitbizdocid_so,
+					Ct0.debitcustomerid, Ct0.debitexpensecatgid, Ct0.debitproductid, Ct0.debitdeptid, Ct0.debitbizdocid_lc, Ct0.debitemployeeid,
+					Ct0.debitjobid, Ct0.debitduedate, Ct0.stt_cd_htt_no, Ct0.debitcurrencycode, Ct0.debitexchangerate, Ct0.debitbookingexchangerate,
+					1 AS debitexchangerate_currency, DmTteno.exchangerateoperator AS debitexchangerateoperator, DmTteno.decimalround AS debitdecimalround, DmTteno.id AS debitid_currency, Ct0.debitoriginalamount9, Ct0.debitoriginalamount,
+					Ct0.creditbizdocid_po, Ct0.creditbizdocid_so, Ct0.creditcustomerid, Ct0.creditexpensecatgid, Ct0.creditproductid, Ct0.creditdeptid,
+					Ct0.creditbizdocid_lc, Ct0.creditemployeeid, Ct0.creditjobid, Ct0.creditduedate, Ct0.stt_cd_htt_co, Ct0.debitworkprocessid,
+					Ct0.creditworkprocessid, Ct0.debitcostcentreid, Ct0.creditcostcentreid, Ct0.creditcurrencycode, Ct0.creditexchangerate, Ct0.creditbookingexchangerate,
+					1 AS creditexchangerate_currency, DmTteco.exchangerateoperator AS creditexchangerateoperator, DmTteco.decimalround AS creditdecimalround, DmTteco.id AS creditid_currency, Ct0.creditoriginalamount9, Ct0.creditoriginalamount,
+					Ct0.debitaccount, Ct0.creditaccount, Ct0.amount9, Ct0.amount, Ct0.debitaccount7, Ct0.creditaccount7,
+					Ct0.amount7, Ct0.ismulticurrency, Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby,
+					Ct0.modifiedat, Ct0.timestamp, Ct0.debitbizdocid_g2, Ct0.creditbizdocid_g2, Ct0.debitbizdocid_g3, Ct0.creditbizdocid_g3,
+					Ct0.debitcustomfieldid1, Ct0.debitcustomfieldid2, Ct0.debitcustomfieldid3, Ct0.creditcustomfieldid1, Ct0.creditcustomfieldid2, Ct0.creditcustomfieldid3,
+					Dr.classcode3 AS debitprepayaccount, Cr.classcode3 AS creditprepayaccount, Ct0.creditbizdocid_pa, Ct0.debitbizdocid_pa, Ct0.creditbizdocid_ar, Ct0.debitbizdocid_ar,
+					Ct0.rowid_applyprepay, Ct0.debitnotefactorid, Ct0.creditnotefactorid, Ct0.isprepayment, CASE WHEN ISNULL(Debitwpcheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkdebitworkprocess, CASE WHEN ISNULL(Creditwpcheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkcreditworkprocess
+			</Columns>
+			<JoinCollection>
+				<Ct>
+					<Name>B30accdoc</Name>
+					<JoinType>Inner</JoinType>
+					<JoinCondition>Ct.stt = Ct0.stt</JoinCondition>
+				</Ct>
+				<DmTteno>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>DmTteno.code = Ct0.debitcurrencycode</JoinCondition>
+				</DmTteno>
+				<DmTteco>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>DmTteco.code = Ct0.creditcurrencycode</JoinCondition>
+				</DmTteco>
+				<Dr>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Dr.code = Ct0.debitaccount</JoinCondition>
+				</Dr>
+				<Cr>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Cr.code = Ct0.creditaccount</JoinCondition>
+				</Cr>
+				<Debitwpcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Debitwpcheck.Workprocessrequired</Columns>
+					<Alias>Debitwpcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Debitaccount LIKE CONCAT(Debitwpcheck.Expenseaccount, '%') AND (Debitwpcheck.Branchcode = Ct0.Branchcode OR Debitwpcheck.Branchcode = '')</FilterKey>
+					<Sort>Debitwpcheck.Workprocessrequired ASC</Sort>
+				</Debitwpcheck>
+				<Creditwpcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Creditwpcheck.Workprocessrequired</Columns>
+					<Alias>Creditwpcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Creditaccount LIKE CONCAT(Creditwpcheck.Expenseaccount, '%') AND (Creditwpcheck.Branchcode = Ct0.Branchcode OR Creditwpcheck.Branchcode = '')</FilterKey>
+					<Sort>Creditwpcheck.Workprocessrequired ASC</Sort>
+				</Creditwpcheck>
+			</JoinCollection>
+		</AccDocOther_Edit>
+		<AccDocAtchE3_Edit>
+			<Source>B30accdocatche3</Source>
+			<Alias>AtchDocE3</Alias>
+			<Columns>
+					id, stt, rowid, rowid_sourcedoc, branchcode, doccode,
+					docdate, atchdocdate, atchdocno, atchdocformno, atchdocserialno, description,
+					account, customerid, employeeid, duedate, atchdoctype, originaldueamount,
+					dueamount, originalamountbeforetax, amountbeforetax, taxcode, taxrate, debitaccount,
+					creditaccount, originalamount, amount, taxregno, taxregname, quantity,
+					unit, isactive, createdby, createdat, modifiedby, modifiedat,
+					einvoicelink, einvoicekey, currencycode, exchangerate, posted, vndamount,
+					vndamountbeforetax, bizdocid_lc, bizdocid_po, bizdocid_so, bizdocid_da, bizdocid_pa,
+					bizdocid_g2, bizdocid_g3, expensecatgid, productid, workprocessid, costcentreid,
+					deptid, jobid, cashflowid, customfieldid1, customfieldid2, customfieldid3,
+					notefactorid, builtinorder, atchdocorder, itemname, unitcost, originalunitcost
+			</Columns>
+			<FilterKey>atchdoctype = 'E3'</FilterKey>
+		</AccDocAtchE3_Edit>
+		<FileStore>
+			<Name>B20FileStore</Name>
+			<Alias>AtchFile</Alias>
+			<Columns>
+					AtchFile.id, AtchFile.builtinorder, AtchFile.parentid, AtchFile.isgroup, AtchFile.stt, AtchFile.filename,
+					AtchFile.filepath, AtchFile.filetypeid, AtchFile.description, AtchFile.doccode, AtchFile.isactive, AtchFile.createdby,
+					AtchFile.createdat, AtchFile.modifiedby, AtchFile.modifiedat, AtchFile.timestamp, Ft.name AS filetypename, NULL AS _filecontent,
+					AtchFile.rowid, AtchFile.filename AS filenametmp, AtchFile.originalfilename, AtchFile.filesize, AtchFile.lastuploaded, AtchFile.filenamewithoutextension,
+					AtchFile.fileextension, AtchFile.isesign, AtchFile.type, AtchFile.iswebportal
+			</Columns>
+			<JoinCollection>
+				<Ft>
+					<Name>B20FileType</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ft.id = AtchFile.filetypeid</JoinCondition>
+				</Ft>
+			</JoinCollection>
+		</FileStore>
+		<BizDoc_Edit>
+			<Source>B30bizdoc</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.parentid, Ct.isgroup, Ct.branchcode, Ct.bizdocid, Ct.parentbizdocid,
+					Ct.doccode, Ct.docno, Ct.docdate, Ct.currencycode, Ct.contactid, Ct.contactperson,
+					Ct.exchangerate, Ct.exchangeratetype, DmTte.exchangerateoperator, DmTte.decimalround, DmTte.id AS id_currency, DmTte.moneydiffvalue,
+					DmTte.vatdiffvalue, DmTte.moneydiffvalue AS moneydiffvalue0, DmTte.vatdiffvalue AS vatdiffvalue0, Ct.customerid, Ct.employeeid, Ct.employeeid2,
+					Ct.address, Ct.description, Ct.transcode, Ct.costcentreid, Ct.territoryid, Ct.warehouseid,
+					Ct.territoryidlist, Ct.warehouseidlist, Ct.paymenttermscode, Ct.freighttermscode, Ct.shipviacode, Ct.portofloading,
+					Ct.fobpointcode, Ct.finisheddate, Ct.handoverdate, Ct.confirmeddate, Ct.duedate, CASE WHEN Ct.duedate &gt;= 0 THEN DATEADD(DAY, Ct.duedate, Ct.docdate) ELSE CAST(NULL AS DATE) END AS datedue,
+					Ct.docstatus, Doc.lock, Doc.iscancelled, Doc.postgl, Ct.estimatedcompletiondate, Ct.effectivedate,
+					Ct.deptid, Ct.totaloriginalamount0, Ct.totaloriginalamount3, Ct.totaloriginalamount, Ct.totalamount0, Ct.totalamount3,
+					Ct.totalamount, Ct.classcode1, Ct.classcode2, Ct.classcode3, Ct.isactive, Ct.createdby,
+					Ct.createdat, Ct.modifiedby, Ct.modifiedat, Ct.timestamp, Ct.modifiedby AS userid, DmCt.ma_nvu,
+					DmCt.nh_ct, DmCt.ct_hd, DmCt.transtypecode, DmCt.usingestimatedtimedelivery, DmCt.usingbizdocid_so, DmCt.usingbizdocid_po,
+					Ct.documentviewstyle, Ct.discounttypecode, Ct.programtypecode, Ct.discountpromocode, Ct.isgoldenhour, Ct.isweekly,
+					Ct.isbirthday, Ct.priority, Ct.discountrate, Ct.discountamount, Ct.originaldiscountamount, Ct.closed,
+					Ct.closeddate, Ct.loanamount, Ct.loanoriginalamount, Ct.loancontracttype, Ct.multiplefile, Schedules.keyphone,
+					Ct.conditionpayment, Ct.conditionwarranty, Ct.conditionother, Ct.isdataimported, DmCt.autonumbering, Ct.rowid_docprocess,
+					Ct.docprocessid, Ct.ordertypeid, Ct.itemcatgid, Ct.parentbizdocid1, Ct.transtype, Ct.bankid,
+					Ct.beneficiarycustomerid, Ct.bizdocid_g1, Ct.bizdocid_cr, Ct.paymenttype, Ct.payerid, Ct.attacheddoc,
+					Ct.periodtypecode, Ct.quarter, Ct.businessterm, Ct.discountpolicy, Ct.count, Ct.bizdocid_rpa,
+					Ct.isdelivery, Ct.receiptbranchcode, Ct.deliverybranchcode, Ct.receiptemployeeid, Ct.receiptwarehouseid, Ct.receiptaddress,
+					Ct.ismobiledoc, Ct.tradeterms, Ct.note, Ct.saleschannelid, Ct.isdraftdata, Ct.approvalstatus,
+					Ct.isdraftdata AS isdraftdata0, Ct.iswpsend, Ct.iswpdoc, Ct.wpcreatedby, Ct.promotiongroup ,Ct.pricekind, Ct.expirationdate, Ct.customerkind, Ct.scopetype, Ct.discounttype, Ct.classify
+			</Columns>
+			<JoinCollection>
+				<DmTte>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.currencycode = DmTte.code</JoinCondition>
+				</DmTte>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+				<Schedules>
+					<Name>B20schedules</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.bizdocid = Schedules.keyupdate</JoinCondition>
+				</Schedules>
+			</JoinCollection>
+		</BizDoc_Edit>
+		<BizDocDetail_Edit>
+			<Source>B30bizdocdetail</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.isgroup, Ct0.parentid, Ct0.bizdocid, Ct0.builtinorder, Ct0.itemid,
+					Ct0.unit, Ct0.spec, Ct0.docdate, Ct.docno, Ct0.requestdate, Ct0.rowid,
+					Ct0.customerid, Ct0.parentrowid, Cus.name AS customername, Ct0.description, Ct0.costcentreid, Ct0.quantity,
+					Ct0.quantity9, Ct0.convertrate9, Ct0.equivalentquantity, Ct0.transferedquantity, Ct0.unitcost, Ct0.originalunitcost,
+					Ct0.originalamount, Ct0.amount, Ct0.originalamount3, Ct0.amount3, Ct0.originalamount9, Ct0.amount9,
+					rtrim(Item.code) AS code_item, CASE WHEN ISNULL(Ct0.description, '') &lt;&gt; '' THEN Ct0.description ELSE Item.name END AS itemname, Item.name AS name_item, Item.unit AS unit_item, Info.spec AS spec_item, Ct0.estimatedtimedelivery,
+					Ct0.taxcode, Tax.rate AS taxrate, Tax.type AS taxtype, Tax.priceincludetax, Ct0.estimatedcompletiondesign, Ct0.estimatedconfirmdesign,
+					Ct0.estimatedquotationdate, Ct0.remark, Ct0.isgiftitem, Ct0.warehouseid, Ct0.rowid_price, Ct0.originalunitcost AS unitprice_price,
+					Ct0.bizdocid_so, Ct0.statsdocid_wo, Ct0.bizdocid_po, Ct0.mfgleadtime, Ct0.stt_hd, Ct0.stt_nm,
+					Ct0.discountamount, Ct0.originaldiscountamount, Ct0.productid, Ct0.factoryid, Ct0.machineid, Ct0.purchaseemployeeid,
+					Ct0.requiredquantity, Ct0.note, Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby,
+					Ct0.modifiedat, Ct0.timestamp, Ct0.standardprice, Ct0.latestunitprice, Ct0.currentquantity, Ct0.priority,
+					Ct0.statsdocid_pp, Ct0.crmtransid, Info.itempurchasepricetypeid, Ct0.bizdocid_pr, Ct0.quotetype, Ct0.coeff,
+					Ct0.paidamount, Ct0.settlementamount, Ct0.bizdocid_ar, Ct0.rowid_atchpurchase, Ct0.bizdocid_lc
+			</Columns>
+			<JoinCollection>
+				<Ct>
+					<Name>B30bizdoc</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.bizdocid = Ct.bizdocid</JoinCondition>
+				</Ct>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Tax>
+					<Name>B20tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.taxcode = Tax.code</JoinCondition>
+				</Tax>
+				<Info>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Info.itemid = Ct0.itemid</JoinCondition>
+				</Info>
+				<Cus>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Cus.id = Ct0.customerid</JoinCondition>
+				</Cus>
+			</JoinCollection>
+		</BizDocDetail_Edit>
+		<BizDocPriceTableDealer_Edit>
+			<Source>B30BizDocPriceTableDealer</Source>
+			<Alias>detail</Alias>
+			<Columns>
+					detail.id, detail.parentid, detail.isgroup, detail.bizdocid, detail.branchcode, detail.builtinorder,
+					detail.docdate, detail.effectivedate, detail.rowid, detail.currencycode, detail.customerlevelid, B20customerlevel.name AS customerlevelname,
+					detail.customerid, B20customer.name AS customername, detail.territoryid, detail.itemid, detail.description, CASE WHEN ISNULL(detail.description, '') &lt;&gt; '' THEN detail.description ELSE Dm.name END AS itemname,
+					Dm.name AS name_item, detail.unit, detail.originalstandardprice, detail.standardprice, detail.currentprice, detail.originalaftertaxprice, detail.aftertaxprice, detail.taxcode, vat.rate AS taxrate, vat.type AS taxtype, vat.priceincludetax, detail.originalamount3, detail.amount3, detail.lastreceiptunitcost, detail.averageunitcost,
+					detail.profitrate, detail.isactive, detail.createdby, detail.createdat, detail.modifiedby, detail.modifiedat,
+					detail.timestamp,detail.discountrate,detail.originaldiscountprice,detail.discountprice
+			</Columns>
+			<JoinCollection>
+				<Dm>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>detail.itemid = Dm.id</JoinCondition>
+				</Dm>
+				<B20customer>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>detail.customerid = B20customer.id</JoinCondition>
+				</B20customer>
+				<B20customerlevel>
+					<Name>B20customerlevel</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>detail.customerlevelid = B20customerlevel.id</JoinCondition>
+				</B20customerlevel>
+				<vat>
+					<Name>B20Tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>vat.Code = detail.TaxCode</JoinCondition>
+				</vat>
+			</JoinCollection>
+		</BizDocPriceTableDealer_Edit>
+		<BizDocApprovedPrice_Edit>
+			<Source>B30bizdocapprovedprice</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.bizdocid, Ct0.builtinorder, Ct0.itemid, Ct0.unit, Ct0.docdate,
+					Ct0.branchcode, Ct0.rowid, Ct0.currencycode, Ct0.exchangerate, Ct0.exchangeratetype, DmTte.exchangerateoperator,
+					DmTte.decimalround, DmTte.id AS id_currency, Ct0.description, Item.name AS itemname, Item.name AS name_item, Item.unit AS unit_item,
+					Ct0.vendorid1, Cust1.code AS vendorcode1, Cust1.name AS vendorname1, Ct0.originalunitcost1, Ct0.vendorid2, Cust2.code AS vendorcode2,
+					Cust2.name AS vendorname2, Ct0.originalunitcost2, Ct0.vendorid3, Cust3.code AS vendorcode3, Cust3.name AS vendorname3, Ct0.originalunitcost3,
+					Ct0.bizdocid_rpa, Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat,
+					Ct0.timestamp
+			</Columns>
+			<JoinCollection>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<DmTte>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.currencycode = DmTte.code</JoinCondition>
+				</DmTte>
+				<Cust1>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.vendorid1 = Cust1.id</JoinCondition>
+				</Cust1>
+				<Cust2>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.vendorid2 = Cust2.id</JoinCondition>
+				</Cust2>
+				<Cust3>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.vendorid3 = Cust3.id</JoinCondition>
+				</Cust3>
+			</JoinCollection>
+		</BizDocApprovedPrice_Edit>
+		<Budget_Edit>
+			<Source>B30budget</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.parentid, Ct.stt, Ct.isgroup, Ct.branchcode, Ct.currencycode,
+					Ct.exchangerate, Ct.isrevisedbudget, Ct.doccode, Ct.budgetdate, Ct.budgetcode, Ct.budgettypecode,
+					Ct.budgetstylecode, Ct.originalbudgetamount, Ct.budgetamount, Ct.deptid, Ct.territoryid, Ct.rowid_docprocess,
+					Ct.docprocessid, Ct.docstatus, Doc.postgl, Doc.lock, Doc.iscancelled, Ct.saleschannelid,
+					Ct.description, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+					Ct.timestamp, Ct.modifiedby AS userid, 1 AS exchangeratetype, 1 AS exchangerate_currency, Curr.exchangerateoperator, Curr.decimalround,
+					Curr.id AS id_currency, Curr.moneydiffvalue, Curr.vatdiffvalue, Curr.moneydiffvalue AS moneydiffvalue0, Curr.vatdiffvalue AS vatdiffvalue0, a.name AS budgetname,
+					a.name_english AS budgetname_english, a.name_japanese AS budgetname_japanese, a.name_chinese AS budgetname_chinese, a.name_korean AS budgetname_korean, b.name AS budgetstylename, b.name_english AS budgetstylename_english,
+					b.name_japanese AS budgetstylename_japanese, b.name_chinese AS budgetstylename_chinese, b.name_korean AS budgetstylename_korean, b.name_custom AS budgetstylename_custom, a.name_custom AS budgetname_custom,
+					CASE
+						WHEN Ct.budgetstylecode = '1' THEN FORMAT(CAST(Ct.effectivedate AS DATE), 'MM/yyyy') 
+						WHEN Ct.budgetstylecode = '2' THEN CONCAT('0', q.code, '/', FORMAT(CAST(Ct.effectivedate AS DATE), 'yyyy')) 
+						WHEN Ct.budgetstylecode = '3' THEN FORMAT(CAST(Ct.effectivedate AS DATE), 'yyyy') 
+					ELSE NULL END AS budgetperiod,
+					Ct.quarter, q.name AS quartername, q.name_english AS quartername_english, q.name_japanese AS quartername_japanese, q.name_chinese AS quartername_chinese, q.name_korean AS quartername_korean,
+					Ct.startdate, Ct.employeeid, e.code AS employeecode, e.name AS employeename, Ct.effectivedate, Ct.finisheddate,
+					Ct.parentstt, Ct.factoryid, Ct.productionlineid, Ct.productionprocessid, Ct.bizdocid_so, Ct.customerid,
+					CONCAT(Ct.budgetcode, ' - ', ISNULL(Ct.description, '')) AS docinfo, DmCt.autonumbering, DmCt.usingstatsdocid_wo, DmCt.usingdeptid, DmCt.usingemployeeid, DmCt.usingproductionprocessid,
+					DmCt.usingbizdocid_so, DmCt.usingshiftid, DmCt.usingproductionlineid, DmCt.usingfactoryid, DmCt.usingcustomerid, DmCt.usingproductid,
+					DmCt.usingjobid, DmCt.usingterritoryid, DmCt.usingsaleschannelid, Dept.code AS deptcode, Ter.code AS territorycode, Ct.isdraftdata,
+					Ct.approvalstatus, Sc.code AS saleschannelcode, Ct.isdraftdata AS isdraftdata0
+			</Columns>
+			<JoinCollection>
+				<e>
+					<Name>B20employee</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.employeeid = e.id</JoinCondition>
+				</e>
+				<Curr>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.currencycode = Curr.code</JoinCondition>
+				</Curr>
+				<a>
+					<Name>B20class</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.budgettypecode = a.code AND a.parentcode = 'BUDGET_Loai_Kh'</JoinCondition>
+				</a>
+				<b>
+					<Name>B20class</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.budgetstylecode = b.code AND b.parentcode = 'CTXC_Ky_Pb'</JoinCondition>
+				</b>
+				<q>
+					<Name>B20class</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.quarter = q.code AND q.parentcode = 'Quarter'</JoinCondition>
+				</q>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Doc.docstatuskey = Ct.docstatus</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+				<Dept>
+					<Name>B20dept</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.deptid = Dept.id</JoinCondition>
+				</Dept>
+				<Ter>
+					<Name>B20territory</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.territoryid = Ter.id</JoinCondition>
+				</Ter>
+				<Sc>
+					<Name>B20saleschannel</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.saleschannelid = Sc.id</JoinCondition>
+				</Sc>
+			</JoinCollection>
+		</Budget_Edit>
+		<Budget_Explore>
+			<Name>B30budget</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct>
+					<Name>B30budget</Name>
+					<Columns>
+						Ct.id, Ct.parentid, Ct.stt, Ct.isgroup, Ct.branchcode, Ct.currencycode,
+						Ct.exchangerate, Ct.isrevisedbudget, Ct.doccode, Ct.budgetdate, Ct.budgetcode, Ct.budgettypecode,
+						Ct.budgetstylecode, Ct.originalbudgetamount, Ct.budgetamount, Ct.deptid, Ct.territoryid, Ct.rowid_docprocess,
+						Ct.docprocessid, Ct.docstatus, Doc.postgl, Doc.lock, Doc.iscancelled, Ct.saleschannelid,
+						Ct.description, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+						Ct.timestamp, Ct.modifiedby AS userid, 1 AS exchangeratetype, 1 AS exchangerate_currency, Curr.exchangerateoperator, Curr.decimalround,
+						Curr.id AS id_currency, Curr.moneydiffvalue, Curr.vatdiffvalue, Curr.moneydiffvalue AS moneydiffvalue0, Curr.vatdiffvalue AS vatdiffvalue0, a.name AS budgetname,
+						a.name_english AS budgetname_english, a.name_japanese AS budgetname_japanese, a.name_chinese AS budgetname_chinese, a.name_korean AS budgetname_korean, b.name AS budgetstylename, b.name_english AS budgetstylename_english,
+						b.name_japanese AS budgetstylename_japanese, b.name_chinese AS budgetstylename_chinese, b.name_korean AS budgetstylename_korean, b.name_custom AS budgetstylename_custom, a.name_custom AS budgetname_custom, 
+						CASE
+							WHEN Ct.budgetstylecode = '1' THEN FORMAT(CAST(Ct.effectivedate AS DATE), 'MM/yyyy') 
+							WHEN Ct.budgetstylecode = '2' THEN CONCAT('0', q.code, '/', FORMAT(CAST(Ct.effectivedate AS DATE), 'yyyy')) 
+							WHEN Ct.budgetstylecode = '3' THEN FORMAT(CAST(Ct.effectivedate AS DATE), 'yyyy') 
+						ELSE NULL END AS budgetperiod,
+						Ct.quarter, q.name AS quartername, q.name_english AS quartername_english, q.name_japanese AS quartername_japanese, q.name_chinese AS quartername_chinese, q.name_korean AS quartername_korean,
+						Ct.startdate, Ct.employeeid, e.code AS employeecode, e.name AS employeename, Ct.effectivedate, Ct.finisheddate,
+						Ct.parentstt, Ct.factoryid, Ct.productionlineid, Ct.productionprocessid, Ct.bizdocid_so, Ct.customerid,
+						CONCAT(Ct.budgetcode, ' - ', ISNULL(Ct.description, '')) AS docinfo, DmCt.autonumbering, DmCt.usingstatsdocid_wo, DmCt.usingdeptid, DmCt.usingemployeeid, DmCt.usingproductionprocessid,
+						DmCt.usingbizdocid_so, DmCt.usingshiftid, DmCt.usingproductionlineid, DmCt.usingfactoryid, DmCt.usingcustomerid, DmCt.usingproductid,
+						DmCt.usingjobid, DmCt.usingterritoryid, DmCt.usingsaleschannelid, Dept.code AS deptcode, Ter.code AS territorycode, Ct.isdraftdata,
+						Ct.approvalstatus, Sc.code AS saleschannelcode, Ct.isdraftdata AS isdraftdata0
+					</Columns>
+					<JoinCollection>
+						<e>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.employeeid = e.id</JoinCondition>
+						</e>
+						<Curr>
+							<Name>B20currency</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.currencycode = Curr.code</JoinCondition>
+						</Curr>
+						<a>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.budgettypecode = a.code AND a.parentcode = 'BUDGET_Loai_Kh'</JoinCondition>
+						</a>
+						<b>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.budgetstylecode = b.code AND b.parentcode = 'CTXC_Ky_Pb'</JoinCondition>
+						</b>
+						<q>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.quarter = q.code AND q.parentcode = 'Quarter'</JoinCondition>
+						</q>
+						<Doc>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Doc.docstatuskey = Ct.docstatus</JoinCondition>
+						</Doc>
+						<DmCt>
+							<Name>B00dmct</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+						</DmCt>
+						<Dept>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deptid = Dept.id</JoinCondition>
+						</Dept>
+						<Ter>
+							<Name>B20territory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.territoryid = Ter.id</JoinCondition>
+						</Ter>
+						<Sc>
+							<Name>B20saleschannel</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.saleschannelid = Sc.id</JoinCondition>
+						</Sc>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</Budget_Explore>
+		<BudgetDetail_Edit>
+			<Source>B30budgetdetail</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.stt, Ct0.builtinorder, Ct0.isgroup, Ct0.account, Ct0.customerid,
+					Ct0.itemid, Ct0.quantity, Ct0.amount, Ct0.originalamount, Ct0.deptid, Ct0.expensecatgid,
+					Ct0.jobid, Ct0.bizdocid_po, Ct0.bizdocid_so, Ct0.productid, Ct0.employeeid, Bud.branchcode,
+					Bud.budgettypecode, Cus.name AS customername, Item.name AS itemname, Bud.budgetcode, Class.name AS budgetname, Bud.budgetdate,
+					Bud.currencycode, Bud.description, Emp.name AS employeename, Dept.name AS deptname, Expense.name AS expensecatgname, Ct0.cashflowid,
+					Cash.name AS cashflowname, Item.name AS name_item, Ct0.unit, Info.spec AS spec_item, Ct0.spec, Ct0.convertrate9,
+					Ct0.productclassid1, Ct0.productclassid2, Ct0.productclassid3, Ct0.quantity1, Ct0.quantity2, Ct0.quantity3,
+					Ct0.quantity4, Ct0.quantity5, Ct0.quantity6, Ct0.quantity7, Ct0.quantity8, Ct0.quantity9,
+					Ct0.quantity10, Ct0.quantity11, Ct0.quantity12, Ct0.factoryid, Ct0.productionlineid, Ct0.productionprocessid,
+					Ct0.estimatecompletedate, Ct0.estimatedtimedelivery, Item.unit AS unit_item, Ct0.stt_parent, Ct0.accumulatedquantity, Ct0.isactive,
+					Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, Ct0.bizdocid_c2,
+					Ct0.itemcatgid, Ct0.saleschannelid, Ct0.territoryid, Ct0.rowid_so, Ct0.crspaccount, Ct0.notefactorid
+			</Columns>
+			<JoinCollection>
+				<Bud>
+					<Name>B30budget</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.stt = Bud.stt</JoinCondition>
+				</Bud>
+				<Class>
+					<Name>B20class</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Bud.budgettypecode = Class.code AND Class.parentcode = 'BUDGET_Loai_Kh'</JoinCondition>
+				</Class>
+				<Cus>
+					<Name>B20customer</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.customerid = Cus.id</JoinCondition>
+				</Cus>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Info>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Info.itemid = Ct0.itemid</JoinCondition>
+				</Info>
+				<Dept>
+					<Name>B20dept</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.deptid = Dept.id</JoinCondition>
+				</Dept>
+				<Expense>
+					<Name>B20expensecatg</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.expensecatgid = Expense.id</JoinCondition>
+				</Expense>
+				<Emp>
+					<Name>B20employee</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.employeeid = Emp.id</JoinCondition>
+				</Emp>
+				<Cash>
+					<Name>B20cashflow</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.cashflowid = Cash.id</JoinCondition>
+				</Cash>
+			</JoinCollection>
+		</BudgetDetail_Edit>
+		<BudgetDetail_Explore>
+			<Name>B30budgetdetail</Name>
+			<Source>Ct0</Source>
+			<Columns>Ct0.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct0>
+					<Name>B30budgetdetail</Name>
+					<Columns>
+					Ct0.id, Bud.id AS pid, Ct0.stt, Ct0.builtinorder, Ct0.isgroup, Ct0.account,
+					Ct0.customerid, Ct0.itemid, Ct0.unit, Ct0.convertrate9, Ct0.quantity, Ct0.amount,
+					Ct0.originalamount, Ct0.deptid, Ct0.expensecatgid, Ct0.bizdocid_po, Ct0.bizdocid_so, Ct0.productid,
+					Ct0.employeeid, Ct0.jobid, Job.code AS jobcode, Job.name AS jobname, Bud.branchcode, Bud.budgettypecode,
+					Cus.code AS customercode, Cus.name AS customername, Item.code AS itemcode, Item.name AS itemname, Ct0.spec, 
+					CONCAT(rtrim(Biz1.docno), (CASE WHEN rtrim(Biz1.docno) &lt;&gt; '' THEN ' - ' ELSE '' END), Biz1.description) AS des_po,
+					CONCAT(rtrim(Biz2.docno), (CASE WHEN rtrim(Biz2.docno) &lt;&gt; '' THEN ' - ' ELSE '' END), Biz2.description) AS des_so, 
+					CONCAT(rtrim(C2.docno), (CASE WHEN rtrim(C2.docno) &lt;&gt; '' THEN ' - ' ELSE '' END), C2.description) AS des_c2, Bud.budgetcode, Class.name AS budgetname, Bud.doccode, Bud.budgetdate,
+					Bud.currencycode, Bud.description, Ct0.territoryid, Ter.name AS territoryname, Emp.code AS employeecode, Emp.name AS employeename,
+					Dept.name AS deptname, Dept.code AS deptcode, Expense.code AS expensecatgcode, Expense.name AS expensecatgname, p.code AS productcode, p.name AS productcostinfo,
+					Bud.budgetstylecode, Class2.name AS budgetstylename, Bud.quarter, Bud.effectivedate, Bud.finisheddate, Ct0.cashflowid,
+					Cash.name AS cashflowname, Bud.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat,
+					Ct0.timestamp, Class2.name_english AS budgetstylename_english, Class2.name_japanese AS budgetstylename_japanese, Class2.name_chinese AS budgetstylename_chinese, Class2.name_korean AS budgetstylename_korean, Class2.name_custom AS budgetstylename_custom,
+					CONCAT(FORMAT(CAST(Bud.BudgetDate AS DATE), 'MM/yyyy')) AS _groupname, Ct0.estimatecompletedate, Ct0.estimatedtimedelivery, Ct0.productclassid1, Pc1.code AS productclasscode1, Pc1.name AS productclassname1,
+					Ct0.productclassid2, Pc2.code AS productclasscode2, Pc2.name AS productclassname2, Ct0.productclassid3, Pc3.code AS productclasscode3, Pc3.name AS productclassname3,
+					Ct0.quantity1, Ct0.quantity2, Ct0.quantity3, Ct0.quantity4, Ct0.quantity5, Ct0.quantity6,
+					Ct0.quantity7, Ct0.quantity8, Ct0.quantity9, Ct0.quantity10, Ct0.quantity11, Ct0.quantity12,
+					Ct0.factoryid, f.code AS factorycode, f.name AS factoryname, Ct0.productionlineid, Pl.code AS productionlinecode, Pl.name AS productionlinename,
+					Ct0.productionprocessid, Pp.code AS productionprocesscode, Pp.name AS productionprocessname, Ct0.stt_parent, Ct0.accumulatedquantity, Ct0.bizdocid_c2,
+					Ct0.itemcatgid, Ic.code AS itemcatgcode, Ct0.saleschannelid, '' AS saleschannelcode, Sc.name AS saleschannelname, Nf.code AS notefactorcode,
+					Ct0.crspaccount
+					</Columns>
+					<JoinCollection>
+						<Bud>
+							<Name>B30budget</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.stt = Bud.stt</JoinCondition>
+						</Bud>
+						<Class>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Bud.budgettypecode = Class.code AND Class.parentcode = 'BUDGET_Loai_Kh'</JoinCondition>
+						</Class>
+						<Class2>
+							<Name>B20class</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Bud.budgetstylecode = Class2.code AND Class2.parentcode = 'CTXC_Ky_Pb'</JoinCondition>
+						</Class2>
+						<Cus>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.customerid = Cus.id</JoinCondition>
+						</Cus>
+						<Item>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+						</Item>
+						<Itemgroup>
+							<Name>B20itemgroup</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Item.itemgroupid = Itemgroup.id</JoinCondition>
+						</Itemgroup>
+						<Biz1>
+							<Name>B30bizdocpo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.bizdocid_po = Biz1.bizdocid</JoinCondition>
+						</Biz1>
+						<Biz2>
+							<Name>B30bizdocso</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.bizdocid_so = Biz2.bizdocid</JoinCondition>
+						</Biz2>
+						<C2>
+							<Name>B30bizdoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.bizdocid_c2 = C2.bizdocid</JoinCondition>
+						</C2>
+						<Dept>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.deptid = Dept.id</JoinCondition>
+						</Dept>
+						<Expense>
+							<Name>B20expensecatg</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.expensecatgid = Expense.id</JoinCondition>
+						</Expense>
+						<Emp>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.employeeid = Emp.id</JoinCondition>
+						</Emp>
+						<p>
+							<Name>B20product</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.productid = p.id</JoinCondition>
+						</p>
+						<Job>
+							<Name>B20job</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.jobid = Job.id</JoinCondition>
+						</Job>
+						<Cash>
+							<Name>B20cashflow</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.cashflowid = Cash.id</JoinCondition>
+						</Cash>
+						<f>
+							<Name>B20factory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>f.id = Ct0.factoryid</JoinCondition>
+						</f>
+						<Pl>
+							<Name>B20productionline</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pl.id = Ct0.productionlineid</JoinCondition>
+						</Pl>
+						<Pp>
+							<Name>B20productionprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pp.id = Ct0.productionprocessid</JoinCondition>
+						</Pp>
+						<Pc1>
+							<Name>B20productclass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pc1.id = Ct0.productclassid1</JoinCondition>
+						</Pc1>
+						<Pc2>
+							<Name>B20productclass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pc2.id = Ct0.productclassid2</JoinCondition>
+						</Pc2>
+						<Pc3>
+							<Name>B20productclass</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pc3.id = Ct0.productclassid3</JoinCondition>
+						</Pc3>
+						<Ic>
+							<Name>B20itemcatg</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemcatgid = Ic.id</JoinCondition>
+						</Ic>
+						<Ter>
+							<Name>B20territory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.territoryid = Ter.id</JoinCondition>
+						</Ter>
+						<Sc>
+							<Name>B20saleschannel</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.saleschannelid = Sc.id</JoinCondition>
+						</Sc>
+						<Nf>
+							<Name>B20notefactor</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.notefactorid = Nf.id</JoinCondition>
+						</Nf>
+					</JoinCollection>
+				</Ct0>
+			</SourceCollection>
+		</BudgetDetail_Explore>
+		<StatsDocItem_Edit>
+			<Source>B30statsdocitem</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.branchcode, Ct.fiscalyear, Ct.statsdocid, Ct.docgroup, Ct.doccode,
+					Ct.ma_nvu, Ct.docdate, Ct.docno, Ct.person, Ct.address, Ct.transcode, Ct.currencycode, Ct.exchangerate, Ct.exchangeratetype, DmTte.exchangerateoperator,
+					DmTte.decimalround, DmTte.id AS id_currency, DmTte.moneydiffvalue,
+					DmTte.vatdiffvalue, DmTte.moneydiffvalue AS moneydiffvalue0, DmTte.vatdiffvalue AS vatdiffvalue0,
+					Ct.customerid, Ct.deptid, Ct.factoryid, Ct.machineid, Ct.statsdocid_wo, Ct.workprocessid,
+					Ct.employeeid, Ct.warehouseid, Ct.receiptwarehouseid, Ct.driver, Ct.vehicleid, Ct.shiftid, Ct.totalquantity, Ct.description,
+					Ct.modifiedby AS userid, DmCt.transtypecode, DmCt.id AS id_dmct, ISNULL(DmCt.doccodenumbering, Ct.doccode) AS doccodenumbering, DmCt.autonumbering, DmCt.usingstatsdocid_wo,
+					DmCt.usingdeptid, DmCt.usingemployeeid, DmCt.usingwarehouseid, DmCt.usingworkprocessid, DmCt.usingcheckinvwhennotenough, DmCt.usingproductionprocessid,
+					DmCt.usingbizdocid_so, DmCt.usingshiftid, DmCt.usingproductionlineid, DmCt.usingreceiptwarehouseid, DmCt.usingfactoryid, DmCt.usingmachineid,
+					Doc.postgl, Doc.postsl, Doc.lock, Doc.lock AS originallockstatus, Doc.iscancelled, Ct.documentviewstyle,
+					Ct.docstatus, Ct.posted, Ct.loai_ps, Ct.ws_id0, Ct.rowid_docprocess, Ct.docprocessid,
+					Ct.receiptstatsdocid_wo, Ct.productionprocessid, Ct.productionlineid, Ct.bizdocid_so, Ct.itemid0, Ct.managerid,
+					Ct.starttime, Ct.endtime, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby,
+					Ct.modifiedat, Ct.timestamp, Ct.isdraftdata, Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0, Doc.PostSL AS PrevPostSL, '{=USER()}' AS UserName,
+					Ct.BizDocId_RC,ct.bizdocid_do
+			</Columns>
+			<JoinCollection>
+				<DmTte>
+					<Name>B20currency</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.currencycode = DmTte.code</JoinCondition>
+				</DmTte>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+			</JoinCollection>
+		</StatsDocItem_Edit>
+		<StatsDocItem_Explore>
+			<Name>B30statsdocitem</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct>
+					<Name>B30statsdocitem</Name>
+					<Columns>
+						Ct.id, Ct.branchcode, Ct.fiscalyear, Ct.statsdocid, Ct.docgroup, Ct.doccode,
+						Ct.ma_nvu, Ct.docdate, Ct.docno, Ct.person, Ct.address, Ct.transcode,
+						Ct.customerid, Ct.deptid, Ct.statsdocid_wo, Ct.workprocessid, Ct.employeeid, Ct.warehouseid,
+						Wh.code AS warehousecode, Ct.receiptwarehouseid, Rw.code AS receiptwarehousecode, Rw.name AS receiptwarehousename, 
+						Ct.driver, Ct.factoryid, Fac.code AS factorycode,
+						Fac.name AS factoryname, Ct.machineid, Machine.code AS machinecode, Machine.name AS machinename, Ct.shiftid, Hrmshift.code AS shiftcode,
+						Hrmshift.name AS shiftname, Ct.receiptstatsdocid_wo, IIF(ISNULL(w.docno, '') &lt;&gt; '', 
+						CONCAT(w.docno, ' - ', w.description), '') AS receiptwoinfo,Cust.code AS customercode, Cust.name AS customername, Ct.totalquantity, Ct.description,
+						Ct.documentviewstyle, Ct.docstatus, Ct.posted, Ct.loai_ps, Ct.ws_id0, Userlist.fullname AS createdname, Modi.fullname AS modifiedname,
+						Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat, Ct.timestamp,Ct.bizdocid_rc,rc.DocNo as DocNo_RC,
+						Ct.rowid_docprocess, Ct.docprocessid, Doc.postsl, Doc.lock,
+						IIF(ISNULL(W1.docno, '') &lt;&gt; '', CONCAT(W1.docno, ' - ', W1.description), '') AS statsdocwoinfo, Emp.name AS managername, Ct.approvalstatus,
+						ct.bizdocid_do, DO.DocNo as DocNo_DO 
+					</Columns>
+					<JoinCollection>
+						<Doc>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+						</Doc>
+						<Cust>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.customerid = Cust.id</JoinCondition>
+						</Cust>
+						<Userlist>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.createdby = Userlist.id</JoinCondition>
+						</Userlist>
+						<Modi>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition> ct.ModifiedBy = Modi.Id</JoinCondition>
+						</Modi>
+						<Fac>
+							<Name>B20factory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.factoryid = Fac.id</JoinCondition>
+						</Fac>
+						<Machine>
+							<Name>B20machine</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.machineid = Machine.id</JoinCondition>
+						</Machine>
+						<Hrmshift>
+							<Name>B20hrmshift</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.shiftid = Hrmshift.id</JoinCondition>
+						</Hrmshift>
+						<Empl>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.employeeid = Empl.id</JoinCondition>
+						</Empl>
+						<w>
+							<Name>B30statsdoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>w.statsdocid = Ct.receiptstatsdocid_wo</JoinCondition>
+						</w>
+						<W1>
+							<Name>B30statsdoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>W1.statsdocid = Ct.statsdocid_wo</JoinCondition>
+						</W1>
+						<Rw>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Rw.id = Ct.receiptwarehouseid</JoinCondition>
+						</Rw>
+						<Wh>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Wh.id = Ct.warehouseid</JoinCondition>
+						</Wh>
+						<Emp>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.managerid = Emp.id</JoinCondition>
+						</Emp>
+						<RC>
+							<Name>B30BizDoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.bizdocid_rc = RC.bizdocid</JoinCondition>
+						</RC>
+						<DO>
+							<Source>B30BizDoc</Source>
+							<Alias>DO</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.bizdocid_do = DO.bizdocid</JoinCondition>
+						</DO>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</StatsDocItem_Explore>
+		<StatsDocInventory_Edit>
+			<Source>B30statsdocinventory</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+				Ct0.id, Ct0.branchcode, Ct0.statsdocid, Ct0.rowid, Ct0.builtinorder, Ct0.doccode, Ct0.docdate, Ct0.docgroup, Ct0.isactive, Ct0.createdby,
+				Ct0.transcode, Ct0.workprocessid, Ct0.shiftid, Ct0.employeeid, Ct0.warehouseid, Ct0.factoryid, Ct0.machineid, M.code as machinecode, Ct0.deptid, Ct0.customerid, Ct0.description, 
+				Ct0.itemid, case when isnull(Ct0.description, '') &lt;&gt; '' then Ct0.description else Item.name end as itemname, Item.code as itemcode, Item.name as name_item, Item.unit as unit_item,
+				Item.itemtype as originalitemtype, Item.itemtype, Item.itemgroupid, Ct0.unit, Ct0.quantity9, Ct0.convertrate9, Ct0.quantity, Ct0.remark,
+				Ct0.statsdocid_wo, Wo.docno as docno_wo, Ct0.bizdocid_do, Ct0.bizdocid_rc, Rc.docno as docno_rc, Ct0.bizdocid_so, So.docno as docno_so, Ct0.bizdocid_po, Po.docno as docno_po,
+				Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, Wh.code as warehousecode, Wh.allowissuewhennotenough,
+				Wh.isitemwithlocation as isitemwithlocation_wh, isnull((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) as isitemwithlocation, Iteminfo.weight, Iteminfo.isitemwithserialno, Iteminfo.isitemwithlocation as isitemwithlocation_item, Iteminfo.isitemwithlot,
+				Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize, Iteminfo.isitemwithquality, Iteminfo._physicalinventory + isnull((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) as _physicalinventory, Ct0.quantity as remainphysquantity, Ct0.quantity9 as remainphysquantity9,
+				Ct0.itemid0, Ct0.productionprocessid, Ct0.productionlineid, Ct0.statsdocid_md, Ct0.rowid_md, Ct0.openquantity, Ct0.receiptquantity, Ct0.issuequantity, Ct0.closequantity, Ct0.receiptwarehouseid,
+				Ct0.receiptstatsdocid_wo, Process.code as productionprocesscode, Line.code as productionlinecode, Hrmshift.code as shiftcode, Hrmshift.name as shiftname, Rw.code as receiptwarehousecode,
+				Rw.name as receiptwarehousename, Iteminfo.shelflife, concat(So.docno, ' - ', So.description) as docinfo_so, Item0.code as itemcode0, Ct0.locationid,
+				Ct0.purchaseunitprice, Ct0.timediscount, Ct0.invoiceunitprice, Ct0.originalunitcost, Ct0.receiptdate_eo, Ct0.discountrate_eo, Ct0.isspeakerbom, Ct0.speakerbomtype, Ct0.speakerbomid, Ct0.speakerbomcode,
+				Ct0.rowid_do, Ct0.originalamount9, Ct0.amount9, Ct0.originalamount3, Ct0.amount3, Ct0.taxcode, Vat.rate as taxrate, Vat.type as taxtype, Vat.priceincludetax, Ct0.atchdocdate, Ct0.atchdocno, Ct0.atchdocformno, Ct0.closeddate
+			
+			</Columns>
+			<JoinCollection>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+				</Iteminfo>
+				<Wh>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+				</Wh>
+				<Rw>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Rw.id = Ct0.receiptwarehouseid</JoinCondition>
+				</Rw>
+				<Process>
+					<Name>B20productionprocess</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.productionprocessid = Process.id</JoinCondition>
+				</Process>
+				<Line>
+					<Name>B20productionline</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.productionlineid = Line.id</JoinCondition>
+				</Line>
+				<Hrmshift>
+					<Name>B20hrmshift</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.shiftid = Hrmshift.id</JoinCondition>
+				</Hrmshift>
+				<Wo>
+					<Name>B30statsdoc</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Wo.statsdocid = Ct0.statsdocid_wo</JoinCondition>
+				</Wo>
+				<So>
+					<Name>B30bizdocso</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>So.bizdocid = Ct0.bizdocid_so</JoinCondition>
+				</So>
+				<Po>
+					<Name>B30bizdocpo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Po.bizdocid = Ct0.bizdocid_po</JoinCondition>
+				</Po>
+				<m>
+					<Name>B20machine</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>m.id = Ct0.machineid</JoinCondition>
+				</m>
+				<Item0>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid0 = Item0.id</JoinCondition>
+				</Item0>
+				<RC>
+					<Name>B30bizdoc</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>So.bizdocid = Ct0.bizdocid_rc</JoinCondition>
+				</RC>
+				<DO>
+					<Name>B30bizdoc</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.bizdocid_do = DO.bizdocid</JoinCondition>
+				</DO>
+				<vat>
+					<Name>B20Tax</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>vat.Code = Ct0.TaxCode</JoinCondition>
+				</vat>
+			</JoinCollection>
+		</StatsDocInventory_Edit>
+		<StatsDocInventory_Explore>
+			<Name>B30statsdocinventory</Name>
+			<Source>Ct0</Source>
+			<Columns>Ct0.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct0>
+					<Name>B30statsdocinventory</Name>
+					<Columns>
+						Ct0.id, Ct0.branchcode, Ct0.statsdocid, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+						Ct0.docdate, Ct0.docgroup, Ct0.transcode, Ct0.workprocessid, Ct0.shiftid, Ct0.employeeid,
+						Ct0.warehouseid, Ct0.factoryid, Ct0.machineid, m.code AS machinecode, Ct0.deptid, Ct0.itemid,
+						Ct0.customerid, Ct0.description, CASE WHEN ISNULL(Ct0.description, '') &lt;&gt; '' THEN Ct0.description ELSE Item.name END AS itemname, Item.code AS itemcode, Item.name AS name_item, Item.unit AS unit_item,
+						Item.itemtype AS originalitemtype, Item.itemtype, Item.itemgroupid, Ct0.unit, Ct0.quantity9, Ct0.convertrate9,
+						Ct0.quantity, Ct0.remark, Ct0.statsdocid_wo, Wo.docno AS docno_wo, Ct0.isactive, Ct0.createdby,
+						Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, Wh.code AS warehousecode, Wh.allowissuewhennotenough,
+						Wh.isitemwithlocation AS isitemwithlocation_wh, ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS isitemwithlocation, Iteminfo.weight, Iteminfo.isitemwithserialno, Iteminfo.isitemwithlocation AS isitemwithlocation_item, Iteminfo.isitemwithlot,
+						Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize, Iteminfo.isitemwithquality, Iteminfo._physicalinventory + ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS _physicalinventory, Ct0.quantity AS remainphysquantity, Ct0.quantity9 AS remainphysquantity9,
+						Ct0.itemid0, Ct0.productionprocessid, Ct0.productionlineid, Ct0.bizdocid_so, So.docno AS docno_so, Ct0.statsdocid_md,
+						Ct0.rowid_md, Ct0.openquantity, Ct0.receiptquantity, Ct0.issuequantity, Ct0.closequantity, Ct0.receiptwarehouseid,
+						Ct0.receiptstatsdocid_wo, Process.code AS productionprocesscode, Line.code AS productionlinecode, Hrmshift.code AS shiftcode, Hrmshift.name AS shiftname, Rw.code AS receiptwarehousecode,
+						Rw.name AS receiptwarehousename, Iteminfo.shelflife, IIF(ISNULL(So.docno, '') &lt;&gt; '', CONCAT(So.docno, ' - ', So.description), '') AS docinfo_so, Item0.code AS itemcode0,
+						rc.DocNo as DocNo_RC,ct0.bizdocid_do,ct0.rowid_do,Ct0.bizdocid_rc,d0.DocNo as DocNo_DO,vehicle.code as vehiclecode,vehicle.name as vehiclename,ISNULL(ct0.itemserialno,'') AS itemserialno
+					</Columns>
+					<JoinCollection>
+						<Item>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+						</Item>
+						<Iteminfo>
+							<Name>B20iteminfo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+						</Iteminfo>
+						<Wh>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+						</Wh>
+						<Rw>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Rw.id = Ct0.receiptwarehouseid</JoinCondition>
+						</Rw>
+						<Process>
+							<Name>B20productionprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.productionprocessid = Process.id</JoinCondition>
+						</Process>
+						<Line>
+							<Name>B20productionline</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.productionlineid = Line.id</JoinCondition>
+						</Line>
+						<Hrmshift>
+							<Name>B20hrmshift</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.shiftid = Hrmshift.id</JoinCondition>
+						</Hrmshift>
+						<Wo>
+							<Name>B30statsdoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Wo.statsdocid = Ct0.statsdocid_wo</JoinCondition>
+						</Wo>
+						<So>
+							<Name>B30bizdocso</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>So.bizdocid = Ct0.bizdocid_so</JoinCondition>
+						</So>
+						<m>
+							<Name>B20machine</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>m.id = Ct0.machineid</JoinCondition>
+						</m>
+						<Item0>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid0 = Item0.id</JoinCondition>
+						</Item0>
+						<rc>
+							<Name>B30BizDoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.bizdocid_rc = rc.bizdocid</JoinCondition>
+						</rc>
+						<d0>
+							<Name>B30BizDoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.bizdocid_do = d0.bizdocid</JoinCondition>
+						</d0>
+						<vehicle>
+							<Name>B20vehicle</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>d0.vehicleid = vehicle.id</JoinCondition>
+						</vehicle>
+					</JoinCollection>
+				</Ct0>
+			</SourceCollection>
+		</StatsDocInventory_Explore>
+		<StatsDocItemPhys_Edit>
+			<Source>B30statsdocitemphys</Source>
+			<Alias>phys</Alias>
+			<Columns>
+					phys.id, phys.branchcode, phys.builtinorder, phys.docgroup, phys.doccode, phys.docdate,
+					phys.statsdocid, phys.rowid, phys.rowid_sourcedoc, phys.warehouseid, w.code AS warehousecode, phys.itemid,
+					b.code AS itemcode, b.name AS itemname, phys.unit, i.shelflife, i.isitemwithserialno, i.isitemwithlocation,
+					i.isitemwithlot, phys.itemlotcode, c.name AS itemlotname, c.receiptdate, c.id AS id_itemlot, f.mfgdate,
+					f.expirydate, phys.locationid, d.code AS locationcode, d.name AS locationname, d.warehouseid AS warehouseid_location, phys.itemserialno,
+					phys.quantity, phys.transcode, phys.employeeid, phys.deptid, phys.newlocationid, n.code AS newlocationcode,
+					n.name AS newlocationname, phys.jobid, phys.quantity9, phys.convertrate9, phys.isactive, phys.createdby,
+					phys.createdat, phys.modifiedby, phys.modifiedat, phys.timestamp, phys.colorcode, phys.sizecode,
+					phys.itemqualitycode, phys.statusnote, phys.filename
+			</Columns>
+			<JoinCollection>
+				<w>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.warehouseid = w.id</JoinCondition>
+				</w>
+				<b>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.itemid = b.id</JoinCondition>
+				</b>
+				<i>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.itemid = i.itemid</JoinCondition>
+				</i>
+				<d>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.locationid = d.id</JoinCondition>
+				</d>
+				<n>
+					<Name>B20location</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.newlocationid = n.id</JoinCondition>
+				</n>
+				<c>
+					<Name>B20itemlot</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.itemlotcode = c.code</JoinCondition>
+				</c>
+				<f>
+					<Name>B20itemlotdetail</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>phys.itemlotcode = f.itemlotcode AND phys.itemid = f.itemid</JoinCondition>
+				</f>
+			</JoinCollection>
+		</StatsDocItemPhys_Edit>
+		<StatsDocItemPhys_Explore>
+			<Name>B30statsdocitemphys</Name>
+			<Source>phys</Source>
+			<Columns>phys.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<phys>
+					<Name>B30statsdocitemphys</Name>
+					<Columns>
+						phys.id, phys.branchcode, phys.builtinorder, phys.docgroup, phys.doccode, phys.docdate,
+						phys.statsdocid, phys.rowid, phys.rowid_sourcedoc, phys.warehouseid, w.code AS warehousecode, phys.itemid,
+						b.code AS itemcode, b.name AS itemname, phys.unit, i.shelflife, i.isitemwithserialno, i.isitemwithlocation,
+						i.isitemwithlot, phys.itemlotcode, c.name AS itemlotname, c.receiptdate, c.id AS id_itemlot, f.mfgdate,
+						f.expirydate, phys.locationid, d.code AS locationcode, d.name AS locationname, d.warehouseid AS warehouseid_location, phys.itemserialno,
+						phys.quantity, phys.transcode, phys.employeeid, phys.deptid, phys.newlocationid, n.code AS newlocationcode,
+						n.name AS newlocationname, phys.jobid, phys.quantity9, phys.convertrate9, phys.isactive, phys.createdby,
+						phys.createdat, phys.modifiedby, phys.modifiedat, phys.timestamp, phys.colorcode, phys.sizecode, phys.itemqualitycode, phys.statusnote, phys.filename
+					</Columns>
+					<JoinCollection>
+						<w>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.warehouseid = w.id</JoinCondition>
+						</w>
+						<b>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.itemid = b.id</JoinCondition>
+						</b>
+						<i>
+							<Name>B20iteminfo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.itemid = i.itemid</JoinCondition>
+						</i>
+						<d>
+							<Name>B20location</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.locationid = d.id</JoinCondition>
+						</d>
+						<n>
+							<Name>B20location</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.newlocationid = n.id</JoinCondition>
+						</n>
+						<c>
+							<Name>B20itemlot</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.itemlotcode = c.code</JoinCondition>
+						</c>
+						<f>
+							<Name>B20itemlotdetail</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>phys.itemlotcode = f.itemlotcode AND phys.itemid = f.itemid</JoinCondition>
+						</f>
+					</JoinCollection>
+				</phys>
+			</SourceCollection>
+		</StatsDocItemPhys_Explore>
+		<AssetDoc_Trans>
+			<Source>B30assetdoc</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.parentid, Ct.isgroup, DmTs.branchcode, Ct.docdate, Ct.docno,
+					Ct.docgroup, Ct.assetid, DmTs.code AS assetcode, Ct.equityid, DmNv.name AS equityname, DmNv.code AS equitycode,
+					Ct.originalcost, Ct.depreciation, Ct.originalcost - Ct.depreciation AS netbookvalue, Ct.amountfordepr, Ct.depramountbeginofyear, Ct.isdepradjusted,
+					Ct.deprdebitaccount, DmTkno.name AS deprdebitaccountname, DmTkno.productaccount AS productdebitaccount, Ct.workprocessid, Workprocess.code AS workprocesscode, Ct.deprcreditaccount,
+					DmTkco.name AS deprcreditaccountname, Ct.olddeptid, DmBp1.name AS olddeptname, Ct.deptid, DmBp.code AS deptcode, DmBp.name AS deptname,
+					Ct.expensecatgid, DmKm.code AS expensecatgcode, DmKm.name AS expensecatgname, Ct.productid, B20product.name AS productname, Ct.costcentreid,
+					Costcentre.code AS costcentrecode, Costcentre.name AS costcentrename, Ct.assettransid, DmTgts.code AS assettranscode, ISNULL(DmTgts.name, '') AS assettransname, DmTgts.istransferdept,
+					Ct.assettranstype, ISNULL(Transtype.name, '') AS assettranstypename, Ct.quantity, Ct.usefulmonth, Ct.usefulmonth AS usefulmonthtmp, Ct.productioncapacity,
+					Ct.productioncapacity AS productioncapacitytmp, DmTs.type, DmTsgroup.code AS parentassetcode, DmTsgroup.name AS parentassetname, DmTs.allocatebycapacity, Ct.deprallocationrate,
+					Ct.description, Ct.employeeid, Empl.code AS employeecode, DmTs.name, Ct.loai_ps, Ct.customfieldid1,
+					Ct.customfieldid2, Ct.customfieldid3, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby,
+					Ct.modifiedat, Ct.timestamp, Ct.notefactorid, Ct.builtinorder
+			</Columns>
+			<FilterKey>Ct.assettranstype NOT IN ('KHAUHAO', 'GIAMTAISAN') AND Ct.deprallocationrate = 0</FilterKey>
+			<JoinCollection>
+				<DmTs>
+					<Name>B20asset</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.assetid = DmTs.id AND DmTs.isactive = true</JoinCondition>
+				</DmTs>
+				<DmTsgroup>
+					<Name>B20asset</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>DmTs.parentid = DmTsgroup.id AND DmTsgroup.isactive = true</JoinCondition>
+				</DmTsgroup>
+				<DmNv>
+					<Name>B20equity</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.equityid = DmNv.id</JoinCondition>
+				</DmNv>
+				<DmTkno>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.deprdebitaccount = DmTkno.code</JoinCondition>
+				</DmTkno>
+				<DmTkco>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.deprcreditaccount = DmTkco.code</JoinCondition>
+				</DmTkco>
+				<DmBp>
+					<Name>B20dept</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.deptid = DmBp.id</JoinCondition>
+				</DmBp>
+				<DmBp1>
+					<Name>B20dept</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.olddeptid = DmBp1.id</JoinCondition>
+				</DmBp1>
+				<Empl>
+					<Name>B20employee</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.employeeid = Empl.id</JoinCondition>
+				</Empl>
+				<Costcentre>
+					<Name>B20costcentre</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.costcentreid = Costcentre.id</JoinCondition>
+				</Costcentre>
+				<DmKm>
+					<Name>B20expensecatg</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.expensecatgid = DmKm.id</JoinCondition>
+				</DmKm>
+				<B20product>
+					<Name>B20product</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.productid = B20product.id</JoinCondition>
+				</B20product>
+				<DmTgts>
+					<Name>B20assettrans</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.assettransid = DmTgts.id</JoinCondition>
+				</DmTgts>
+				<Transtype>
+					<Name>B20assettranstype</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.assettranstype = Transtype.code</JoinCondition>
+				</Transtype>
+				<Workprocess>
+					<Name>B20workprocess</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.workprocessid = Workprocess.id</JoinCondition>
+				</Workprocess>
+			</JoinCollection>
+		</AssetDoc_Trans>
+		<AssetDoc_Trans_Explorer>
+			<Name>B30assetdoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct>
+					<Name>B30assetdoc</Name>
+					<Columns>
+					Ct.id, Ct.parentid, Ct.isgroup, DmTs.branchcode, Ct.docdate, Ct.docno,
+					Ct.docgroup, Ct.assetid, DmTs.code AS assetcode, Ct.equityid, DmNv.name AS equityname, DmNv.code AS equitycode,
+					Ct.originalcost, Ct.depreciation, Ct.originalcost - Ct.depreciation AS netbookvalue, Ct.amountfordepr, Ct.depramountbeginofyear, Ct.isdepradjusted,
+					Ct.deprdebitaccount, DmTkno.name AS deprdebitaccountname, DmTkno.productaccount AS productdebitaccount, Ct.workprocessid, Workprocess.code AS workprocesscode, Ct.deprcreditaccount,
+					DmTkco.name AS deprcreditaccountname, Ct.olddeptid, DmBp1.name AS olddeptname, Ct.deptid, DmBp.code AS deptcode, DmBp.name AS deptname,
+					Ct.expensecatgid, DmKm.code AS expensecatgcode, DmKm.name AS expensecatgname, Ct.productid, B20product.name AS productname, Ct.costcentreid,
+					Costcentre.code AS costcentrecode, Costcentre.name AS costcentrename, Ct.assettransid, DmTgts.code AS assettranscode, ISNULL(DmTgts.name, '') AS assettransname, DmTgts.istransferdept,
+					Ct.assettranstype, ISNULL(Transtype.name, '') AS assettranstypename, Ct.quantity, Ct.usefulmonth, Ct.usefulmonth AS usefulmonthtmp, Ct.productioncapacity,
+					Ct.productioncapacity AS productioncapacitytmp, DmTs.type, DmTsgroup.code AS parentassetcode, DmTsgroup.name AS parentassetname, DmTs.allocatebycapacity, Ct.deprallocationrate,
+					Ct.description, Ct.employeeid, Empl.code AS employeecode, DmTs.name, Ct.loai_ps, Ct.customfieldid1,
+					Ct.customfieldid2, Ct.customfieldid3, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby,
+					Ct.modifiedat, Ct.timestamp, Ct.notefactorid, Ct.builtinorder
+			</Columns>
+					<JoinCollection>
+						<DmTs>
+							<Name>B20asset</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.assetid = DmTs.id AND DmTs.isactive = true</JoinCondition>
+						</DmTs>
+						<DmTsgroup>
+							<Name>B20asset</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>DmTs.parentid = DmTsgroup.id AND DmTsgroup.isactive = true</JoinCondition>
+						</DmTsgroup>
+						<DmNv>
+							<Name>B20equity</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.equityid = DmNv.id</JoinCondition>
+						</DmNv>
+						<DmTkno>
+							<Name>B20chartofaccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deprdebitaccount = DmTkno.code</JoinCondition>
+						</DmTkno>
+						<DmTkco>
+							<Name>B20chartofaccount</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deprcreditaccount = DmTkco.code</JoinCondition>
+						</DmTkco>
+						<DmBp>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deptid = DmBp.id</JoinCondition>
+						</DmBp>
+						<DmBp1>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.olddeptid = DmBp1.id</JoinCondition>
+						</DmBp1>
+						<Empl>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.employeeid = Empl.id</JoinCondition>
+						</Empl>
+						<Costcentre>
+							<Name>B20costcentre</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.costcentreid = Costcentre.id</JoinCondition>
+						</Costcentre>
+						<DmKm>
+							<Name>B20expensecatg</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.expensecatgid = DmKm.id</JoinCondition>
+						</DmKm>
+						<B20product>
+							<Name>B20product</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.productid = B20product.id</JoinCondition>
+						</B20product>
+						<DmTgts>
+							<Name>B20assettrans</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.assettransid = DmTgts.id</JoinCondition>
+						</DmTgts>
+						<Transtype>
+							<Name>B20assettranstype</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.assettranstype = Transtype.code</JoinCondition>
+						</Transtype>
+						<Workprocess>
+							<Name>B20workprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.workprocessid = Workprocess.id</JoinCondition>
+						</Workprocess>
+					</JoinCollection>
+					<FilterKey>Ct.assettranstype NOT IN ('KHAUHAO', 'GIAMTAISAN') AND Ct.deprallocationrate = 0</FilterKey>
+				</Ct>
+			</SourceCollection>
+		</AssetDoc_Trans_Explorer>
+		<AccDocItem_EditITA>
+			<Source>Ct</Source>
+			<Alias>Ct</Alias>
+			<Columns>Ct.*</Columns>
+			<SourceCollection>
+				<Ct>
+					<Name>B30AccDocItem</Name>
+					<FilterKey>Ct.DocCode = 'ITA'</FilterKey>
+					<Columns>
+					Ct.Id, Ct.BranchCode, Ct.Stt, Ct.DocCode, Ct.DocGroup,
+					Ct.FiscalYear, Ct.DocDate, Ct.RowId_VoucherRegister, Ct.DocNo, Ct.DocSerialNo,
+					Ct.Person, Ct.Address, Ct.Description, Ct.CustomerId, Ct.CurrencyCode,
+					Ct.ExchangeRate, Ct.ExchangeRateType, Ct.DueDate, Ct.DocStatus, Ct.Posted,
+					Ct.DocumentViewStyle, Ct.ReceiptBranchCode, Ct.ReceiptWarehouseId, Ct.ReceiptItemId, Ct.ReceiptQuantity,
+					Ct.TransCode, Ct.TaxCode, Ct.EmployeeId, Ct.DeptId, Ct.JobId,
+					Ct.ProductId, Ct.ExpenseCatgId, Ct.BizDocId_PO, Ct.BizDocId_SO, Ct.StatsDocId_WO,
+					Ct.WarehouseId, Ct.WorkProcessId, Ct.CostCentreId, Ct.TotalOriginalAmount0, Ct.TotalAmount0,
+					Ct.TotalOriginalAmount, Ct.TotalAmount, Ct.TotalOriginalAmount3, Ct.TotalAmount3, Ct.IsActive,
+					Ct.CreatedBy, Ct.CreatedAt, Ct.ModifiedBy, Ct.ModifiedAt, Ct.timestamp,
+					Ct.ModifiedBy AS UserId, Dmct.Ma_Nvu, Dmct.Ct_Hd, Dmct.TaxType_Ct, Dmct.DocCodeNumbering,
+					Dmct.Tk_No_Ct AS DebitAccount, Dmct.Tk_Co_Ct AS CreditAccount, Dmct.UsingEmployeeId, Dmct.UsingDeptId, Dmct.UsingExpenseCatgId,
+					Dmct.UsingProductId, Dmct.UsingBizDocId_LC, Dmct.UsingBizDocId_PO, Dmct.UsingBizDocId_SO, Dmct.UsingStatsDocId_WO,
+					Dmct.UsingWarehouseId, Dmct.UsingJobId, Dmct.TransTypeCode, Dmct.UsingWorkProcessId, Dmct.UsingCostCentreId,
+					Dmct.ExchangeRateType_Ct, Dmct.UsingCheckInvWhenNotEnough, Dmct.AutoNumbering, Trans.IsImport, Trans.OutsideAccount,
+					Trans.Account AS Account_Trans, Trans.IsPostGL, CAST(0 AS SMALLINT) AS CheckExpenseCatgId, CAST(0 AS SMALLINT) AS CheckDeptId, CAST(0 AS SMALLINT) AS CheckBizDocId_PO,
+					CAST(0 AS SMALLINT) AS CheckBizDocId_SO, CAST(0 AS SMALLINT) AS CheckJobId, Trans.ItemAccountType, Trans.CurrencySegmentType, Vat.Type AS TaxType,
+					Vat.PriceIncludeTax, Vat.Account AS Account_VAT, ISNULL(Vat.Rate, 0) AS TaxRate, Curr.ExchangeRateOperator, Curr.DecimalRound,
+					Curr.Id AS Id_Currency, Curr.MoneyDiffValue, Curr.VatDiffValue, Curr.MoneyDiffValue AS MoneyDiffValue0, Curr.VatDiffValue AS VatDiffValue0,
+					Curr.SegmentAccount1, Curr.SegmentAccount2, Curr.SegmentAccount3, Ct.RowId_DocProcess, Ct.DocProcessId,
+					Ct.PostGL, Ct.PostSL, Doc.Lock, Doc.Lock AS OriginalLockStatus, Doc.IsCancelled,
+					Ct.IsMultiBills, Ct.TaxRegNo, Ct.TaxRegName, Ct.DebitAccount3, Ct.CreditAccount3,
+					Ct.AtchDocDate, Ct.AtchDocNo, Ct.AtchDocFormNo, Ct.AtchDocSerialNo, Ct.TotalQuantity,
+					Ct.CustomFieldId1, Ct.CustomFieldId2, Ct.CustomFieldId3, Dmct.UsingCustomFieldId1, Dmct.UsingCustomFieldId2,
+					Dmct.UsingCustomFieldId3, Ct.DocBookingId, CAST(NULL AS DATETIME) AS DocBookingDate, CAST(0 AS SMALLINT) AS CheckCostCentre, Ct.PriorWorkProcessId,
+					Ct.TransporterId, Ct.ContractDate, item.Unit AS ReceiptItemUnit, Ct.Tel, Ct.ShipVia,
+					Ct.IsDraftData, Ct.ApprovalStatus, Ct.IsDraftData AS IsDraftData0, Ct.NoteFactorId, Dmct.UsingNoteFactorId,
+					Ct.BizDocId_ITR, Itr.ReceiptWarehouseId AS ReceiptWarehouseId_ITR, Itr.ReceiptAddress AS ReceiptAddress_ITR, Itr.ReceiptBranchCode AS ReceiptBranchCode_ITR, Itr.ReceiptEmployeeId AS ReceiptEmployeeId_ITR,
+					Itr.WarehouseId AS WarehouseId_ITR, Itr.Address AS Address_ITR, Itr.DeliveryBranchCode AS DeliveryBranchCode_ITR, Itr.EmployeeId AS EmployeeId_ITR
+				</Columns>
+					<JoinCollection>
+						<Itr>
+							<Name>B30BizDoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Itr.BizDocId = Ct.BizDocId_ITR</JoinCondition>
+						</Itr>
+						<Dmct>
+							<Name>B00DmCt</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Dmct.Ma_Ct = Ct.DocCode</JoinCondition>
+						</Dmct>
+						<Trans>
+							<Name>vB20TransInfo_All</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Trans.TransCode = Ct.TransCode AND (Trans.BranchCode = Ct.BranchCode OR ISNULL(Trans.BranchCode, '') = '')</JoinCondition>
+						</Trans>
+						<Vat>
+							<Name>B20Tax</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Vat.Code = Ct.TaxCode</JoinCondition>
+						</Vat>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Doc.DocStatusKey = Ct.DocStatus</JoinCondition>
+						</Doc>
+						<Curr>
+							<Name>B20Currency</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Curr.Code = Ct.CurrencyCode</JoinCondition>
+						</Curr>
+						<Item>
+							<Name>B20Item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Item.Id = Ct.ReceiptItemId</JoinCondition>
+						</Item>
+					</JoinCollection>
+				</Ct>
+				<PX>
+					<Name>B30AccDocItem</Name>
+					<Alias>PX</Alias>
+					<Columns>PX.Id, Detail.Stt_ITA, ROW_NUMBER() OVER(PARTITION BY Detail.Stt_ITA ORDER BY Detail.Stt_ITA) AS RowNum</Columns>
+					<FilterKey>PX.DocCode = 'PX' AND PX.IsActive=True AND Doc.IsCancelled = 0</FilterKey>
+					<JoinCollection>
+						<Detail>
+							<Name>B30AccDocItem2</Name>
+							<Alias>Detail</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>PX.Stt=Detail.Stt</JoinCondition>
+						</Detail>
+						<Doc>
+							<Name>B00DocStatus</Name>
+							<Alias>Doc</Alias>
+							<JoinType>Left</JoinType>
+							<JoinCondition>PX.DocStatus=Doc.DocStatusKey</JoinCondition>
+						</Doc>
+					</JoinCollection>
+				</PX>
+			</SourceCollection>
+			<JoinCollection>
+				<PX>
+					<Source>PX</Source>
+					<JoinType>Left</JoinType>
+					<JoinCondition>PX.Stt_ITA=Ct.Stt AND PX.RowNum=1</JoinCondition>
+				</PX>
+			</JoinCollection>
+		</AccDocItem_EditITA>
+		<AccDocItem_ExploreITA>
+			<Name>B30accdocitem</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct>
+					<Name>B30accdocitem</Name>
+					<Columns>
+						Ct.id, Ct.branchcode, Ct.stt, Ct.doccode, Ct.docgroup, Ct.rowid_voucherregister,
+						Ct.docdate, Ct.docno, Ct.docserialno, Ct.person, Ct.address, Ct.description,
+						Ct.customerid, Ct.territoryid, Ct.currencycode, Ct.exchangerate, Ct.docstatus, Ct.posted,
+						Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat, Ct.rowid_docprocess,
+						Ct.docprocessid, Itr.receiptwarehouseid, Rw.code AS receiptwarehousecode, Rw.name AS receiptwarehousename, Ct.receiptitemid, Ct.receiptquantity,
+						Cust.name AS customername, Ct.totaloriginalamount0, Ct.totalamount0, Ct.totaloriginalamount3, Ct.totalamount3, Ct.totaloriginalamount,
+						Ct.totalamount, Ct.duedate, Ct.taxcode, Ct.taxregno, Ct.taxregname, Ct.atchdocdate,
+						Ct.atchdocno, Ct.atchdocformno, Ct.atchdocserialno, Ct.postgl, Ct.postsl, Doc.lock,
+						Doc.iscancelled, Userlist.fullname AS createdby_name, Ct.docbookingid, Db.code AS docbookingno, Db.docbookingdate, Ct.warehouseid,
+						w.code AS warehousecode, w.name AS warehousename, Ct.receiptbranchcode, Ct.bizdocid_itr, Empl.name AS employeename_itr, Empl.code AS employeecode_itr,
+						Itr.receiptwarehouseid AS receiptwarehouseid_itr, Itr.receiptaddress AS receiptaddress_itr, Itr.receiptbranchcode AS receiptbranchcode_itr, Itr.receiptemployeeid AS receiptemployeeid_itr, 
+						Itr.warehouseid AS warehouseid_itr, Itr.address AS address_itr,
+						Itr.deliverybranchcode AS deliverybranchcode_itr, Itr.employeeid AS employeeid_itr, Itrw.code AS warehousecode_itr, Itrw.name AS warehousename_itr, Itr.docno AS docno_itr, Itrrw.code AS receiptwarehousecode_itr,
+						Itrrw.name AS receiptwarehousename_itr, Itre.code AS receiptemployeecode_itr, Itre.name AS receiptemployeename_itr, Ct.transporterid, t.code AS transportercode, t.name AS transportername,
+						Ct.tel, Ct.shipvia, CONCAT(Ct.doccode, ': ', Ct.docno, ' - ', Ct.description) AS docinfo, Doc.docstatusname, Ct.approvalstatus
+					</Columns>
+					<FilterKey>Ct.doccode = 'ITA'</FilterKey>
+					<JoinCollection>
+						<Itr>
+							<Name>B30bizdoc</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Itr.bizdocid = Ct.bizdocid_itr</JoinCondition>
+						</Itr>
+						<Cust>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.customerid = Cust.id</JoinCondition>
+						</Cust>
+						<Doc>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+						</Doc>
+						<Userlist>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.createdby = Userlist.id</JoinCondition>
+						</Userlist>
+						<Rw>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.receiptwarehouseid = Rw.id</JoinCondition>
+						</Rw>
+						<Db>
+							<Name>B20docbooking</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docbookingid = Db.id</JoinCondition>
+						</Db>
+						<Empl>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Empl.id = Itr.employeeid</JoinCondition>
+						</Empl>
+						<w>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>w.id = Ct.warehouseid</JoinCondition>
+						</w>
+						<t>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>t.id = Ct.transporterid</JoinCondition>
+						</t>
+						<Itrw>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Itrw.id = Itr.warehouseid</JoinCondition>
+						</Itrw>
+						<Itre>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Itre.id = Itr.receiptemployeeid</JoinCondition>
+						</Itre>
+						<Itrrw>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Itrrw.id = Itr.receiptwarehouseid</JoinCondition>
+						</Itrrw>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</AccDocItem_ExploreITA>
+		<AccDocItem3_Explore>
+			<Name>B30accdocitem3</Name>
+			<Source>Ct0</Source>
+			<Columns>Ct0.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct0>
+					<Name>B30accdocitem3</Name>
+					<Columns>
+						Ct0.id, Ct0.stt, Ct0.rowid, Ct0.builtinorder, Ct0.docdate, Ct0.branchcode,
+						Ct0.transcode, Ct0.debitaccount, Ct0.creditaccount, Ct0.bizdocid_po, Ct0.bizdocid_so, Ct0.statsdocid_wo,
+						Ct0.customerid, Ct0.expensecatgid, Ct0.productid, Ct0.deptid, Dept.name AS deptname, Ct0.employeeid,
+						Ct0.territoryid, Ct0.workprocessid, Wp.code AS workprocesscode, Ct0.warehouseid, Wh.code AS warehousecode, Ct0.itemid,
+						Item.code AS itemcode, CASE WHEN Ct0.description &lt;&gt; '' THEN Ct0.description ELSE Item.name END AS description, Ct0.unit, Ct0.quantity, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalunitcost, Ct0.originalunitcost) ELSE Ct0.originalunitcost END AS originalunitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.unitcost, Ct0.unitcost) ELSE Ct0.unitcost END AS unitcost,
+						CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount) ELSE Ct0.originalamount END AS originalamount, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount) ELSE Ct0.amount END AS amount, Ct0.originalamount3, Ct0.amount3, Ct0.convertrate9, Ct0.quantity9,
+						CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount9) ELSE Ct0.originalamount9 END AS originalamount9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount9) ELSE Ct0.amount9 END AS amount9, Iteminfo.isitemwithserialno, Iteminfo.isitemwithlot, Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize,
+						Iteminfo.isitemwithquality, ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS isitemwithlocation, ISNULL((Iteminfo.isitemwithlocation * Whrc.isitemwithlocation), 0) AS isitemwithnewlocation, Iteminfo._physicalinventory + ISNULL(Iteminfo.isitemwithlocation * (ISNULL(Wh.isitemwithlocation, 0) + ISNULL(Whrc.isitemwithlocation, 0)), 0) AS _physicalinventory, Ct0.gia_tb_tt, Ct0.isactive,
+						Ct0.createdby, Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.doccode, FORMAT(CAST(Ct0.docdate AS DATE), 'MM/yyyy') AS period,
+						Pro.code AS productcode, Ct0.priorworkprocessid, Wppri.code AS priorworkprocesscode, Ct0.receiptwarehouseid
+					</Columns>
+					<JoinCollection>
+						<Wh>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+						</Wh>
+						<Whrc>
+							<Name>B20warehouse</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.receiptwarehouseid = Whrc.id</JoinCondition>
+						</Whrc>
+						<Item>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+						</Item>
+						<Iteminfo>
+							<Name>B20iteminfo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+						</Iteminfo>
+						<Fifo>
+							<Name>B30accdocfifo</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.stt = Fifo.stt AND Ct0.rowid = Fifo.rowid_sourcedoc</JoinCondition>
+						</Fifo>
+						<Dept>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Dept.id = Ct0.deptid</JoinCondition>
+						</Dept>
+						<Pro>
+							<Name>B20product</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Pro.id = Ct0.productid</JoinCondition>
+						</Pro>
+						<Wp>
+							<Name>B20workprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.workprocessid = Wp.id</JoinCondition>
+						</Wp>
+						<Wppri>
+							<Name>B20workprocess</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.priorworkprocessid = Wppri.id</JoinCondition>
+						</Wppri>
+					</JoinCollection>
+				</Ct0>
+			</SourceCollection>
+		</AccDocItem3_Explore>
+		<AccDocItem3_Edit>
+			<Source>B30accdocitem3</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.stt, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+					Ct0.docgroup, Ct0.docdate, Ct0.transcode, Ct0.debitaccount, Ct0.creditaccount, Ct0.bizdocid_po,
+					Ct0.bizdocid_so, Ct0.statsdocid_wo, Ct0.customerid, Ct0.expensecatgid, Ct0.productid, Ct0.deptid,
+					Ct0.jobid, Ct0.employeeid, Ct0.territoryid, Ct0.warehouseid, Ct0.itemid, Ct0.unit,
+					Ct0.bookingexchangerate, Ct0.quantity, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalunitcost, Ct0.originalunitcost) ELSE Ct0.originalunitcost END AS originalunitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.unitcost, Ct0.unitcost) ELSE Ct0.unitcost END AS unitcost, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount) ELSE Ct0.originalamount END AS originalamount, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount) ELSE Ct0.amount END AS amount,
+					Ct0.taxcode, Ct0.taxrate, Ct0.debitaccount3, Ct0.creditaccount3, Ct0.originalamount3, Ct0.amount3,
+					Ct0.convertrate9, Ct0.quantity9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.originalamount, Ct0.originalamount9) ELSE Ct0.originalamount9 END AS originalamount9, CASE WHEN Ct0.gia_tb_tt = 1 THEN ISNULL(Fifo.amount, Ct0.amount9) ELSE Ct0.amount9 END AS amount9, Ct0.outsideaccount, Ct0.gia_tb_tt,
+					Ct0.stt_lo_vt, Ct0.description, Ct0.workprocessid, Ct0.costcentreid, Ct0.isactive, Ct0.createdby,
+					Ct0.createdat, Ct0.modifiedby, Ct0.modifiedat, Ct0.timestamp, CASE WHEN ISNULL(Ct0.description, '') &lt;&gt; '' THEN Ct0.description ELSE Item.name END AS itemname, Item.name AS name_item,
+					Item.unit AS unit_item, Item.itemtype AS originalitemtype, Item.itemtype, Item.itemgroupid, Iteminfo.weight, Iteminfo.isitemwithserialno,
+					Iteminfo.isitemwithlocation AS isitemwithlocation_item, Iteminfo.isitemwithlot, Iteminfo.isitemwithcolor, Iteminfo.isitemwithsize, Iteminfo.isitemwithquality, Iteminfo.envtaxid,
+					Itemgroup.itemaccount, Itemgroup.cogsaccount, Itemgroup.salesaccount, Itemgroup.salesreturnaccount, Itemgroup.itemaccount1, Itemgroup.cogsaccount1,
+					Itemgroup.salesaccount1, Itemgroup.salesreturnaccount1, Itemgroup.itemaccount2, Itemgroup.cogsaccount2, Itemgroup.salesaccount2, Itemgroup.salesreturnaccount2,
+					Itemgroup.itemaccount3, Itemgroup.cogsaccount3, Itemgroup.salesaccount3, Itemgroup.salesreturnaccount3, Wh.allowissuewhennotenough, Wh.isitemwithlocation AS isitemwithlocation_wh,
+					ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS isitemwithlocation, Iteminfo._physicalinventory + ISNULL((Iteminfo.isitemwithlocation * Wh.isitemwithlocation), 0) AS _physicalinventory, Ct0.quantity AS remainphysquantity, DmTkno.productaccount AS productdebitaccount, DmTkco.productaccount AS productcreditaccount, Ct0.customfieldid1,
+					Ct0.customfieldid2, Ct0.customfieldid3, Ct0.priorworkprocessid, Ct0.quantity9 AS remainphysquantity9, Ct0.notefactorid, Ct0.rowid_itr,
+					CASE WHEN ISNULL(Wpdrcheck.workprocessrequired, 0) = 0 AND ISNULL(Wpcrcheck.workprocessrequired, 0) = 0 THEN 0 ELSE 1 END AS checkworkprocess, Ct0.requestquantity, Ct0.spec, Ct0.receiptwarehouseid
+			</Columns>
+			<JoinCollection>
+				<Wh>
+					<Name>B20warehouse</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.warehouseid = Wh.id</JoinCondition>
+				</Wh>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Iteminfo>
+					<Name>B20iteminfo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Iteminfo.itemid</JoinCondition>
+				</Iteminfo>
+				<Itemgroup>
+					<Name>B20itemgroup</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Item.itemgroupid = Itemgroup.id</JoinCondition>
+				</Itemgroup>
+				<DmTkno>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.debitaccount = DmTkno.code</JoinCondition>
+				</DmTkno>
+				<DmTkco>
+					<Name>B20chartofaccount</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.creditaccount = DmTkco.code</JoinCondition>
+				</DmTkco>
+				<Fifo>
+					<Name>B30accdocfifo</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.stt = Fifo.stt AND Ct0.rowid = Fifo.rowid_sourcedoc</JoinCondition>
+				</Fifo>
+				<Wpdrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpdrcheck.Workprocessrequired</Columns>
+					<Alias>Wpdrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Debitaccount LIKE CONCAT(Wpdrcheck.Expenseaccount, '%') AND (Wpdrcheck.Branchcode = Ct0.Branchcode OR Wpdrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpdrcheck.Workprocessrequired ASC</Sort>
+				</Wpdrcheck>
+				<Wpcrcheck>
+					<Name>B20zaccountvalid</Name>
+					<Columns>Wpcrcheck.Workprocessrequired</Columns>
+					<Alias>Wpcrcheck</Alias>
+					<Limit>1</Limit>
+					<JoinType>OuterApply</JoinType>
+					<FilterKey>Ct0.Creditaccount LIKE CONCAT(Wpcrcheck.Expenseaccount, '%') AND (Wpcrcheck.Branchcode = Ct0.Branchcode OR Wpcrcheck.Branchcode = '')</FilterKey>
+					<Sort>Wpcrcheck.Workprocessrequired ASC</Sort>
+				</Wpcrcheck>
+			</JoinCollection>
+		</AccDocItem3_Edit>
+		<MacDoc_Edit>
+			<Source>B30macdoc</Source>
+			<Alias>Ct</Alias>
+			<Columns>
+					Ct.id, Ct.branchcode, Ct.macdocid, Ct.doccode, Ct.transcode, Ct.docdate,
+					Ct.fromdate, Ct.todate, Ct.docno, Ct.factoryid, Ct.customerid, Ct.employeeid,
+					Ct.shiftid, Ct.deptid, Ct.description, Ct.docstatus, Ct.machinestatusid, Ct.errortime,
+					Ct.errordescription, Ct.ws_id0, Ct.documentviewstyle, Ct.rowid_docprocess, Ct.docprocessid, Ct.machineid,
+					Ct.plantype, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+					Ct.timestamp, Ct.modifiedby AS userid, Doc.iscancelled, Doc.postgl, Doc.postsl, Doc.lock,
+					DmCt.ma_nvu, DmCt.nh_ct, DmCt.transtypecode, DmCt.autonumbering, Ct.result, Ct.macdocid_m5,
+					Ct.rowid_m5, Ct.macdocid_sourcedoc, Ct.rowid_sourcedoc, Ct.isdraftdata, Ct.approvalstatus, Ct.isdraftdata AS isdraftdata0
+			</Columns>
+			<JoinCollection>
+				<Doc>
+					<Name>B00docstatus</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.docstatus = Doc.docstatuskey</JoinCondition>
+				</Doc>
+				<DmCt>
+					<Name>B00dmct</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct.doccode = DmCt.ma_ct</JoinCondition>
+				</DmCt>
+			</JoinCollection>
+		</MacDoc_Edit>
+		<MacDoc_Explore>
+			<Name>B30macdoc</Name>
+			<Source>Ct</Source>
+			<Columns>Ct.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Type>
+					<Name>B20class</Name>
+					<Columns>code, name, name_english AS planname_english, name_japanese AS planname_japanese, name_chinese AS planname_chinese, name_korean AS planname_korean</Columns>
+				</Type>
+				<Ct>
+					<Name>B30macdoc</Name>
+					<Columns>
+						Ct.id, Ct.branchcode, Ct.macdocid, Ct.doccode, Ct.transcode, Ct.docdate,
+						Ct.fromdate, Ct.todate, Ct.docno, Ct.factoryid, Ct.customerid, Ct.employeeid,
+						e.code AS employeecode, e.name AS employeename, Ct.deptid, Ct.description, Ct.docstatus, Ct.errortime,
+						Ct.errordescription, Ct.ws_id0, Ct.documentviewstyle, Ct.rowid_docprocess, Ct.docprocessid, Ct.machineid,
+						Ct.machinestatusid, Ct.plantype, Plantype.name AS planname, Plantype.planname_english, Plantype.planname_japanese, Plantype.planname_chinese,
+						Plantype.planname_korean, Ct.isactive, Ct.createdby, Ct.createdat, Ct.modifiedby, Ct.modifiedat,
+						Ct.timestamp, Ds.postsl, Ds.postgl, Ds.lock, Ds.iscancelled, u.username AS createdby_name,
+						Dept.name AS deptname, Dept.code AS deptcode, Fac.code AS factorycode, Fac.name AS factoryname, Ct.result, Ma.code AS machinecode,
+						Ma.name AS machinename, Ma.warrantydate, Ma.endwarrantydate, Ct.approvalstatus
+					</Columns>
+					<JoinCollection>
+						<Ds>
+							<Name>B00docstatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.docstatus = Ds.docstatuskey</JoinCondition>
+						</Ds>
+						<u>
+							<Name>B00userlist</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.createdby = u.id</JoinCondition>
+						</u>
+						<Dept>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.deptid = Dept.id</JoinCondition>
+						</Dept>
+						<Fac>
+							<Name>B20factory</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.factoryid = Fac.id</JoinCondition>
+						</Fac>
+						<Ma>
+							<Name>B20machine</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct.machineid = Ma.id</JoinCondition>
+						</Ma>
+						<e>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>e.id = Ct.employeeid</JoinCondition>
+						</e>
+						<Plantype>
+							<Source>Type</Source>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Plantype.code = Ct.plantype</JoinCondition>
+						</Plantype>
+					</JoinCollection>
+				</Ct>
+			</SourceCollection>
+		</MacDoc_Explore>
+		<MacDocDetail_Edit>
+			<Source>B30macdocdetail</Source>
+			<Alias>Ct0</Alias>
+			<Columns>
+					Ct0.id, Ct0.branchcode, Ct0.macdocid, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+					Ct0.transcode, Ct0.docdate, Ct0.factoryid, Ct0.customerid, Ct0.employeeid, Ct0.receiptemployeeid,
+					Ct0.shiftid, Ct0.deptid, Ct0.receiptdeptid, Ct0.startdate, Ct0.enddate, Ct0.starttime,
+					Ct0.endtime, Ct0.machineid, Ct0.machinemaintcatgid, Ct0.mainttypeid, Ct0.machinereasonid, Ct0.remark,
+					Ct0.isoutsource, Ct0.maintemployeeid, Ct0.description, Ct0.summarycontent, Ct0.machinestatusid, Ct0.result,
+					Ct0.machinefailureid, Ct0.machinedetailitemid, Ct0.quantity, Ct0.amount, Ct0.unit, Ct0.errordetail,
+					Ct0.macdocid_plandetail, Ct0.rowid_plandetail, Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby,
+					Ct0.modifiedat, Ct0.timestamp, Mi.itemname AS machinedetailitemname, Ma.name AS machinename, Item.name AS itemname, Ct0.filename,
+					NULL AS filecontent, Ct0.machinedetailid, De.description AS machinedetailname, Ct0.itemid, Ct0.machinejobid, CASE WHEN Ct0.machinejobdescription &lt;&gt; '' THEN Ct0.machinejobdescription ELSE Mj.name END AS machinejobname,
+					Ct0.rowtype, Mj.name AS name_machinejob, Ct0.machinejobdescription, Ct0.macdocid_sourcedoc, Ct0.rowid_sourcedoc, Ct0.productid,
+					Mmc.name AS machinemaintcatgname
+			</Columns>
+			<JoinCollection>
+				<Ma>
+					<Name>B20machine</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.machineid = Ma.id</JoinCondition>
+				</Ma>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+				</Item>
+				<Mj>
+					<Name>B20machinejob</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.machinejobid = Mj.id</JoinCondition>
+				</Mj>
+				<Mi>
+					<Name>Vb20machinedetailitem</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.machinedetailitemid = Mi.rowid</JoinCondition>
+				</Mi>
+				<De>
+					<Name>B20machinedetail</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Ct0.machinedetailid = De.rowid</JoinCondition>
+				</De>
+				<Mmc>
+					<Name>B20machinemaintcatg</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Mmc.id = Ct0.machinemaintcatgid</JoinCondition>
+				</Mmc>
+			</JoinCollection>
+		</MacDocDetail_Edit>
+		<MacDocDetail_Explore>
+			<Name>B30macdocdetail</Name>
+			<Source>Ct0</Source>
+			<Columns>Ct0.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Ct0>
+					<Name>B30macdocdetail</Name>
+					<Columns>
+						Ct0.id, Ct0.branchcode, Ct0.macdocid, Ct0.rowid, Ct0.builtinorder, Ct0.doccode,
+						Ct0.transcode, Ct0.docdate, Ct0.factoryid, Ct0.customerid, c.code AS customercode, c.name AS customername,
+						Ct0.employeeid, Ct0.shiftid, s.code AS shiftcode, Ct0.deptid, Ct0.receiptdeptid, Ct0.startdate,
+						Ct0.enddate, Ct0.starttime, Ct0.endtime, Ct0.machineid, Ct0.machinemaintcatgid, Mmc.code AS machinemaintcatgcode,
+						Mmc.name AS machinemaintcatgname, Ct0.mainttypeid, Mt.code AS mainttypecode, Ct0.machinereasonid, Mr.code AS machinereasoncode, Ct0.remark,
+						Ct0.isoutsource, Ct0.maintemployeeid, Ct0.description, Ct0.summarycontent, Ct0.machinestatusid, Ms.code AS machinestatuscode,
+						Ms.name AS machinestatusname, Ct0.result, Ct0.machinefailureid, Ct0.machinedetailitemid, Ct0.quantity, Ct0.amount,
+						Ct0.unit, Ct0.errordetail, Ct0.isactive, Ct0.createdby, Ct0.createdat, Ct0.modifiedby,
+						Ct0.modifiedat, Ct0.timestamp, Ma.name AS machinename, Ma.code AS machinecode, Di.itemcode AS machinedetailitemcode, Di.itemname AS machinedetailitemname,
+						Mf.code AS machinefailurecode, Em.name AS maintemployeename, Em.code AS maintemployeecode, Ct0.filename, Mf.name AS machinefailurename, Mde.detailnumber,
+						Mde.description AS detailname, Dept.code AS receiptdeptcode, Dept.name AS receiptdeptname, Ct0.itemid, Ct0.machinejobid, Mj.code AS machinejobcode,
+						Item.name AS itemname, Item.code AS itemcode, CASE WHEN Ct0.machinejobdescription &lt;&gt; '' THEN Ct0.machinejobdescription ELSE Mj.name END AS machinejobname, Ct0.rowtype, Ct0.productid, Pro.code AS productcode,
+						Pro.name AS productname, Ct0.receiptemployeeid, Em1.code AS receiptemployeecode, Em1.name AS receiptemployeename
+					</Columns>
+					<JoinCollection>
+						<Ma>
+							<Name>B20machine</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.machineid = Ma.id</JoinCondition>
+						</Ma>
+						<Di>
+							<Name>Vb20machinedetailitem</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.machinedetailitemid = Di.rowid</JoinCondition>
+						</Di>
+						<Mf>
+							<Name>B20machinefailure</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.machinefailureid = Mf.id</JoinCondition>
+						</Mf>
+						<Mde>
+							<Name>B20machinedetail</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.machinedetailid = Mde.rowid</JoinCondition>
+						</Mde>
+						<Dept>
+							<Name>B20dept</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.receiptdeptid = Dept.id</JoinCondition>
+						</Dept>
+						<Em>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.maintemployeeid = Em.id</JoinCondition>
+						</Em>
+						<Em1>
+							<Name>B20employee</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.receiptemployeeid = Em1.id</JoinCondition>
+						</Em1>
+						<Item>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.itemid = Item.id</JoinCondition>
+						</Item>
+						<Mj>
+							<Name>B20machinejob</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.machinejobid = Mj.id</JoinCondition>
+						</Mj>
+						<c>
+							<Name>B20customer</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>c.id = Ct0.customerid</JoinCondition>
+						</c>
+						<Mmc>
+							<Name>B20machinemaintcatg</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Mmc.id = Ct0.machinemaintcatgid</JoinCondition>
+						</Mmc>
+						<Mt>
+							<Name>B20mainttype</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Mt.id = Ct0.mainttypeid</JoinCondition>
+						</Mt>
+						<Mr>
+							<Name>B20machinereason</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Mr.id = Ct0.machinereasonid</JoinCondition>
+						</Mr>
+						<Ms>
+							<Name>B20machinestatus</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ms.id = Ct0.machinestatusid</JoinCondition>
+						</Ms>
+						<Pro>
+							<Name>B20product</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Ct0.productid = Pro.id</JoinCondition>
+						</Pro>
+						<s>
+							<Name>B20hrmshift</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>s.id = Ct0.shiftid</JoinCondition>
+						</s>
+					</JoinCollection>
+				</Ct0>
+			</SourceCollection>
+		</MacDocDetail_Explore>
+		<MacDocDetail_Material_Edit>
+			<Source>B30macdocdetail</Source>
+			<Alias>Material</Alias>
+			<Columns>
+					Material.id, Material.branchcode, Material.macdocid, Material.rowid, Material.builtinorder, Material.doccode,
+					Material.transcode, Material.docdate, Material.factoryid, Material.customerid, Material.employeeid, Material.deptid,
+					Material.machineid, Ma.name AS machinename, Material.machinemaintcatgid, Material.machinedetailid, Material.itemid, Item.code AS itemcode,
+					Item.name AS itemname, Material.unit, Material.quantity, Material.amount, Material.remark, Material.rowtype,
+					Material.quantity9, Material.convertrate9, Material.isactive, Material.createdby, Material.createdat, Material.modifiedby,
+					Material.modifiedat, Material.timestamp
+			</Columns>
+			<JoinCollection>
+				<Ma>
+					<Name>B20machine</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Material.machineid = Ma.id</JoinCondition>
+				</Ma>
+				<Item>
+					<Name>B20item</Name>
+					<JoinType>Left</JoinType>
+					<JoinCondition>Material.itemid = Item.id</JoinCondition>
+				</Item>
+			</JoinCollection>
+		</MacDocDetail_Material_Edit>
+		<MacDocDetail_Material_Explore>
+			<Name>B30macdocdetail</Name>
+			<Source>Material</Source>
+			<Columns>Material.*</Columns>
+			<SelectType>With</SelectType>
+			<SourceCollection>
+				<Material>
+					<Name>B30macdocdetail</Name>
+					<Columns>
+						Material.id, Material.branchcode, Material.macdocid, Material.rowid, Material.builtinorder, Material.doccode,
+						Material.transcode, Material.docdate, Material.factoryid, Material.customerid, Material.employeeid, Material.deptid,
+						Material.machineid, Ma.name AS machinename, Material.machinemaintcatgid, Material.machinedetailid, Material.itemid, Item.code AS itemcode,
+						Item.name AS itemname, Material.unit, Material.quantity, Material.amount, Material.remark, Material.rowtype,
+						Material.quantity9, Material.convertrate9, Material.isactive, Material.createdby, Material.createdat, Material.modifiedby,
+						Material.modifiedat, Material.timestamp
+					</Columns>
+					<JoinCollection>
+						<Ma>
+							<Name>B20machine</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Material.machineid = Ma.id</JoinCondition>
+						</Ma>
+						<Item>
+							<Name>B20item</Name>
+							<JoinType>Left</JoinType>
+							<JoinCondition>Material.itemid = Item.id</JoinCondition>
+						</Item>
+					</JoinCollection>
+				</Material>
+			</SourceCollection>
+		</MacDocDetail_Material_Explore>
+	</TableCollection>
+</root>

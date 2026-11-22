@@ -1,5 +1,5 @@
 -- Uncomment the DROP to remove columns or change their names, order or types. DROP removes the GRANTs on the view.
--- DROP VIEW IF EXISTS dbo.vb30statsdocinventory;
+-- DROP VIEW IF EXISTS dbo.vb30statsdocinventory_edit;
 
 CREATE OR REPLACE VIEW dbo.vb30statsdocinventory_edit AS
  SELECT ct0.id,
@@ -141,7 +141,7 @@ CREATE OR REPLACE VIEW dbo.vb30statsdocinventory_edit AS
             WHEN ct0.speakerbomtype::text = '2'::text THEN 'Trả nợ'::character varying
             ELSE NULL::character varying
         END AS speakerbomtypename,
-        ct0.rowid_po
+    ct0.rowid_po
    FROM b30statsdocinventory ct0
      LEFT JOIN b20item item ON ct0.itemid = item.id
      LEFT JOIN b20iteminfo iteminfo ON ct0.itemid = iteminfo.itemid

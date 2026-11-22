@@ -1,0 +1,78 @@
+-- Uncomment the DROP to remove columns or change their names, order or types. DROP removes the GRANTs on the view.
+-- DROP VIEW IF EXISTS dbo.vb30statsstockledger_post;
+
+CREATE OR REPLACE VIEW dbo.vb30statsstockledger_post AS
+SELECT ct.id,
+    ct.branchcode,
+    ct.fiscalyear,
+    ct.statsdocid,
+    ct0.rowid,
+    ct.doccode,
+    ct.docgroup,
+    ct.docdate,
+    ct.docno,
+    ct.description,
+    ct0.factoryid,
+    ct0.warehouseid,
+    ct0.receiptwarehouseid,
+    ct0.statsdocid_wo,
+    ct.receiptstatsdocid_wo,
+    ct0.itemid,
+    ct0.unit,
+    ct0.quantity,
+    ct0.productionprocessid,
+    ct0.productionlineid,
+    ct0.shiftid,
+    ct0.bizdocid_so,
+    ct.deptid,
+    ct0.employeeid,
+    ct0.customfieldid1,
+    ct0.customfieldid2,
+    ct0.customfieldid3,
+    ct0.quantity9,
+    ct0.convertrate9,
+    ct.isactive,
+    ct0.itemserialno,
+    ct0.BizdocId_DO
+FROM b30statsdocinventory ct0
+JOIN b30statsdocitem ct ON ct0.statsdocid::text = ct.statsdocid::text
+JOIN b00docstatus doc ON ct.docstatus = doc.docstatuskey
+WHERE ct.isactive = TRUE AND doc.postsl = 1
+UNION ALL
+SELECT ct.id,
+    ct.branchcode,
+    ct.fiscalyear,
+    ct.statsdocid,
+    ct0.rowid,
+    ct.doccode,
+    '1'::bpchar AS docgroup,
+    ct.docdate,
+    ct.docno,
+    ct.description,
+    ct0.factoryid,
+    COALESCE(ct0.receiptwarehouseid, ct0.warehouseid) AS warehouseid,
+    NULL::integer AS receiptwarehouseid,
+    COALESCE(ct.receiptstatsdocid_wo, ct0.statsdocid_wo) AS statsdocid_wo,
+    NULL::character varying(16) AS receiptstatsdocid_wo,
+    ct0.itemid,
+    ct0.unit,
+    ct0.quantity,
+    ct0.productionprocessid,
+    ct0.productionlineid,
+    ct0.shiftid,
+    ct0.bizdocid_so,
+    ct.deptid,
+    ct0.employeeid,
+    ct0.customfieldid1,
+    ct0.customfieldid2,
+    ct0.customfieldid3,
+    ct0.quantity9,
+    ct0.convertrate9,
+    ct.isactive,
+    ct0.itemserialno,
+    ct0.BizdocId_DO
+FROM b30statsdocinventory ct0
+JOIN b30statsdocitem ct ON ct0.statsdocid::text = ct.statsdocid::text
+JOIN b00docstatus doc ON ct.docstatus = doc.docstatuskey
+WHERE ct.isactive = TRUE AND doc.postsl = 1 AND ct.docgroup = '2'::bpchar AND (ct0.receiptwarehouseid IS NOT NULL OR COALESCE(ct.receiptstatsdocid_wo,
+    ''::character varying)::text <> ''::text);
