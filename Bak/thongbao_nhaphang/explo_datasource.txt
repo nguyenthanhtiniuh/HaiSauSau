@@ -1,0 +1,114 @@
+<root>
+	<TableCollection>
+		<ParentTable template="StatsDocItem_Explore">
+			<Columns>Id, StatsDocId, DocNo, DocDate, BranchCode, Lock, PostSL, RowId_DocProcess, DocProcessId, Description, DocStatus, DocCode, 
+			FactoryName, StatsDocWoInfo, CreatedBy_Name, CreatedAt, ApprovalStatus, IsActive, BizDocid_RC, DocNo_RC, TransCode, Driver, VehicleName</Columns>
+			<Alias>Ct</Alias>
+			<FilterKey>DocCode='DO' AND BranchCode='{=Branch()}'</FilterKey>
+			<Sort>DocStatus,DocDate DESC</Sort>
+			<Evaluators>
+				<Eval_Editor>
+					<ClassName>BravoCommandKey</ClassName>
+					<CommandKey>EDIT_DO</CommandKey>
+					<zCtorArgs>PrimaryKeyValue={=ISNULL(Id,-1)};</zCtorArgs>
+					<Expr>LASTCOMMAND() IN ('New', 'NewAsCopy', 'Open')</Expr>
+				</Eval_Editor>
+				<Eval_Reporter>
+					<ClassName>BravoCommandKey</ClassName>
+					<CommandKey>StatsDocItemViewer</CommandKey>
+					<zCtorArgs>AutoRun=True;Id={=Id};</zCtorArgs>
+					<Expr>LastCommand() IN ('Viewer','Print', 'QuickPrint', 'Preview')</Expr>
+				</Eval_Reporter>
+				<Eval_PreviewReporter>
+					<ClassName>BravoCommandKey</ClassName>
+					<CommandKey>StatsDocItemViewer</CommandKey>
+					<zCtorArgs>AutoRun=True;Id={=Id};</zCtorArgs>
+				</Eval_PreviewReporter>
+			</Evaluators>
+			<ChildCollection>
+				<ChildTable_Detail>
+					<Name>vB30StatsDocInventory</Name>
+					<ParentKey>StatsDocId</ParentKey>
+					<ChildKey>StatsDocId</ChildKey>
+					<Sort>BuiltinOrder</Sort>
+					<!--EvaluatorGroups>
+						<EvalGroup_Phys_VisibleWhen>
+							<Eval_Phys_ItemSerialNo_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.ItemSerialNo</Name>
+									<Visible>!EMPTY(IsItemWithSerialNo)</Visible>
+								</Controls>
+							</Eval_Phys_ItemSerialNo_VisibleWhen>
+							<Eval_Phys_ItemLocation_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.LocationCode.LocationName</Name>
+									<Visible>!EMPTY(IsItemWithLocation)</Visible>
+								</Controls>
+							</Eval_Phys_ItemLocation_VisibleWhen>
+							<Eval_Phys_ItemLot_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.ItemLotCode.MfgDate.ExpiryDate</Name>
+									<Visible>!EMPTY(IsItemWithLot)</Visible>
+								</Controls>
+							</Eval_Phys_ItemLot_VisibleWhen>
+							<Eval_Phys_ItemColor_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.ColorCode</Name>
+									<Visible>!EMPTY(IsItemWithColor)</Visible>
+								</Controls>
+							</Eval_Phys_ItemColor_VisibleWhen>
+							<Eval_Phys_ItemSize_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.SizeCode</Name>
+									<Visible>!EMPTY(IsItemWithSize)</Visible>
+								</Controls>
+							</Eval_Phys_ItemSize_VisibleWhen>
+							<Eval_Phys_ItemQuality_VisibleWhen>
+								<Controls>
+									<Name>Item_Phys.ItemQualityCode</Name>
+									<Visible>!EMPTY(IsItemWithQuality)</Visible>
+								</Controls>
+							</Eval_Phys_ItemQuality_VisibleWhen>
+						</EvalGroup_Phys_VisibleWhen>
+					</EvaluatorGroups-->
+					<ChildCollection>
+						<ChildTable_Phys template="StatsDocItemPhys_Explore">
+							<Name>vB30StatsDocItemPhys</Name>
+							<Columns>Id, RowId_SourceDoc, BuiltinOrder, Quantity9, Unit, Quantity, ItemSerialNo, LocationCode, LocationName, ItemLotCode, MfgDate, ExpiryDate,
+									ColorCode, SizeCode, ItemQualityCode</Columns>
+							<Alias>phys</Alias>
+							<ParentTable>Ct0</ParentTable>
+							<ParentKey>RowId</ParentKey>
+							<ChildKey>RowId_SourceDoc</ChildKey>
+							<Sort>BuiltinOrder</Sort>
+							<FilterKey />
+						</ChildTable_Phys>
+					</ChildCollection>
+				</ChildTable_Detail>
+				<ChildTable_StatsDocProcess>
+					<RetrieveChangeLog>False</RetrieveChangeLog>
+					<Name>vB30StatsDocProcess</Name>
+					<ChildKey>StatsDocId</ChildKey>
+					<ParentKey>StatsDocId</ParentKey>
+					<Sort>BuiltinOrder,Sub_BuiltinOrder</Sort>
+					<FilterKey />
+				</ChildTable_StatsDocProcess>
+				<ChildTable_ProcessResult>
+					<Name>vB30StatsDocProcessResult</Name>
+					<RetrieveChangeLog>False</RetrieveChangeLog>
+					<ParentTable>Ct</ParentTable>
+					<ChildKey>StatsDocId</ChildKey>
+					<ParentKey>StatsDocId</ParentKey>
+					<Sort>ApprovedAt DESC</Sort>
+					<FilterKey />
+				</ChildTable_ProcessResult>
+				<ChildTable_FileStore>
+					<Name>vB20FileStore</Name>
+					<ChildKey>Stt</ChildKey>
+					<ParentKey>StatsDocId</ParentKey>
+					<Sort>BuiltinOrder</Sort>
+				</ChildTable_FileStore>
+			</ChildCollection>
+		</ParentTable>
+	</TableCollection>
+</root>

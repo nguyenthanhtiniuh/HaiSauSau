@@ -1,0 +1,1511 @@
+<root>
+	<TableCollection>
+		<Ct template="StatsDocItem_Edit">
+			<Name>vB30StatsDocItem_Edit</Name>
+			<FilterKey>DocCode='DO'</FilterKey>
+			<ServerLoaded>
+				<Eval_BizProcess_UserIdList_GetValue>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_B20DocProcess_UserIdList</Command>
+					<Parameters>
+						<DocCode>DocCode</DocCode>
+						<Stt>StatsDocId</Stt>
+						<RowId_DocProcess>RowId_DocProcess</RowId_DocProcess>
+						<DocProcessId>DocProcessId</DocProcessId>
+					</Parameters>
+					<DataMember>BizProcess_UserIdList,BizProcess_RoleList</DataMember>
+					<Expr>!Empty(RowId_DocProcess)</Expr>
+					<Text />
+				</Eval_BizProcess_UserIdList_GetValue>
+				<Eval_DocCodeUserId_BindingMembers />
+				<Eval_CustomerId_BindingMembers>
+					<bindingMembers>
+						<Name>CustomerName</Name>
+					</bindingMembers>
+					<ClassName>BravoBindingMember</ClassName>
+					<DataMember>CustomerId</DataMember>
+					<LookupKey>Customer</LookupKey>
+					<FilterKey>IsGroup=False</FilterKey>
+				</Eval_CustomerId_BindingMembers>
+				<Eval_PhysTotalQuantity_GetInitValueFromChild />
+				<Eval_RemainPhysQuantity_SetInitValue />
+				<Eval_UserId_DefaultValue>
+					<DataMember>UserId</DataMember>
+					<Value>User('Id')</Value>
+					<Expr>UserId&lt;&gt;User('Id') AND Id&lt;0</Expr>
+				</Eval_UserId_DefaultValue>
+				<Eval_UsingIsDraftData_SetValue />
+			</ServerLoaded>
+			<RowAdded>
+				<Eval_DocCode_BindingMembers />
+				<Eval_DocCodeUserId_BindingMembers />
+				<Eval_DocNo_DefaultValue>EMPTY(AutoNumbering)</Eval_DocNo_DefaultValue>
+				<Eval_UsingIsDraftData_SetValue />
+			</RowAdded>
+			<RowCopied>
+				<Eval_DocCode_BindingMembers_WhenCopy>
+					<ClassName>BravoBindingMember</ClassName>
+					<bindingMembers>
+						<DocStatus_Ct>DocStatus</DocStatus_Ct>
+						<AutoPrintVoucher>AutoPrintVoucher</AutoPrintVoucher>
+						<AutoNumbering>AutoNumbering</AutoNumbering>
+					</bindingMembers>
+					<LookupKey>DmCt</LookupKey>
+					<DataMember>DocCode</DataMember>
+				</Eval_DocCode_BindingMembers_WhenCopy>
+				<Eval_DocNo_ResetValue>
+					<DataMember>DocNo</DataMember>
+					<Value>NULL</Value>
+					<Expr>Empty(StatsDocId)</Expr>
+					<bSuppressChangeEvents>True</bSuppressChangeEvents>
+				</Eval_DocNo_ResetValue>
+				<Eval_DocDate_ResetValue>
+					<DataMember>DocDate</DataMember>
+					<Value>GETDATE()</Value>
+				</Eval_DocDate_ResetValue>
+				<Eval_FiscalYear_ResetValue>
+					<DataMember>FiscalYear</DataMember>
+					<Expr>FiscalYear&lt;&gt;FISCALYEAR()</Expr>
+					<Value>FISCALYEAR()</Value>
+				</Eval_FiscalYear_ResetValue>
+				<Eval_DocNo_DefaultValue>Empty(DocNo) AND EMPTY(AutoNumbering)</Eval_DocNo_DefaultValue>
+				<Eval_DocCodeUserId_BindingMembers />
+				<Eval_DocStatusDefault_DefaultFromUser />
+				<Eval_DocStatus_BindingMembers_WhenCopy>
+					<ClassName>BravoBindingMember</ClassName>
+					<bindingMembers>
+						<IsCancelled>IsCancelled</IsCancelled>
+						<PostSL>PostSL</PostSL>
+						<Lock>Lock</Lock>
+						<PostGL>PostGL</PostGL>
+					</bindingMembers>
+					<LookupKey>DocStatus</LookupKey>
+					<DataMember>DocStatus</DataMember>
+				</Eval_DocStatus_BindingMembers_WhenCopy>
+				<Eval_BizProcessGroup_ResetValue>
+					<DataMember>RowId_DocProcess,DocProcessId</DataMember>
+					<Value>NULL</Value>
+				</Eval_BizProcessGroup_ResetValue>
+				<Eval_UsingIsDraftData_SetValue />
+				<Eval_IsDraftData_ResetValue />
+				<Eval_ApprovalStatus_ResetValue>
+					<DataMember>ApprovalStatus</DataMember>
+					<Value>NULL</Value>
+				</Eval_ApprovalStatus_ResetValue>
+			</RowCopied>
+			<ColumnChanging>
+				<CurrencyCode>
+					<Eval_ExchangeRate_ResetIfChangeByUser>
+						<DataMember>ExchangeRate_Currency,ExchangeRate</DataMember>
+						<Value>NULL</Value>
+						<bSuppressChangeEvents>True</bSuppressChangeEvents>
+					</Eval_ExchangeRate_ResetIfChangeByUser>
+				</CurrencyCode>
+				<DocDate>
+					<Eval_DocNo_ResetValue />
+				</DocDate>
+			</ColumnChanging>
+			<ColumnChanged>
+				<DocDate>
+					<Eval_DocNo_DefaultValue>Empty(DocNo) AND EMPTY(AutoNumbering)</Eval_DocNo_DefaultValue>
+					<Eval_Ct0_DocDate_GetValueFromParent />
+					<Eval_UsingIsDraftData_SetValue />
+				</DocDate>
+				<DocNo>
+					<Eval_DocNo_DefaultValue>Empty(DocNo) AND EMPTY(AutoNumbering)</Eval_DocNo_DefaultValue>
+				</DocNo>
+				<CurrencyCode>
+					<Eval_ExchangeRate_EditWhen>
+						<DataMember>ExchangeRate</DataMember>
+						<Controls>
+							<Enabled>CurrencyCode&lt;&gt;CONFIG('M_Ma_Tte0')</Enabled>
+						</Controls>
+					</Eval_ExchangeRate_EditWhen>
+					<Eval_BaseCurrency_VisibleWhen>
+						<DataMember>Amount9,Amount3</DataMember>
+						<Controls>
+							<Name>BravoGridContainer.Item_Detail.Amount9.Amount3</Name>
+							<Visible>{=CurrencyCode&lt;&gt;CONFIG('M_Ma_Tte0')}</Visible>
+						</Controls>
+					</Eval_BaseCurrency_VisibleWhen>
+				</CurrencyCode>
+				<Id_Currency>
+					<Eval_ExchangeRate_Currency_GetExchangeRate />
+				</Id_Currency>
+				<ExchangeRate_Currency>
+					<Eval_ExchangeRate_DefaultValue />
+				</ExchangeRate_Currency>
+				<DecimalRound>
+					<Eval_BaseCurrency_FormatWhen>
+						<DataMember>Amount9.Amount3</DataMember>
+						<Controls>
+							<Name>BravoGridContainer.Item_Detail.OriginalAmount9.OriginalAmount3</Name>
+							<Format>FormatCurrency(CurrencyCode)</Format>
+						</Controls>
+					</Eval_BaseCurrency_FormatWhen>
+					<Eval_Ct0_OriginalAmount9_RoundWhenChangeCurrency />
+					<Eval_Ct0_OriginalAmount3_RoundWhenChangeCurrency />
+				</DecimalRound>
+				<ExchangeRate>
+					<Eval_ExchangeRate_Currency_GetExchangeRate>Empty(ExchangeRate) AND Empty(ExchangeRate_Currency)</Eval_ExchangeRate_Currency_GetExchangeRate>
+					<Eval_ExchangeRate_DefaultValue>Empty(ExchangeRate) AND !Empty(ExchangeRate_Currency)</Eval_ExchangeRate_DefaultValue>
+					<Eval_Ct0_Amount9 />
+					<Eval_Ct0_Amount3 />
+				</ExchangeRate>
+				<CustomerId>
+					<Eval_Ct0_CustomerId_GetValueFromParent />
+				</CustomerId>
+				<StatsDocId_WO>
+					<Eval_Ct0_StatsDocId_WO_GetValueFromParent />
+				</StatsDocId_WO>
+				<WarehouseId>
+					<Eval_Ct0_WarehouseId_GetValueFromParent />
+				</WarehouseId>
+				<DeptId>
+					<Eval_Ct0_DeptId_GetValueFromParent />
+				</DeptId>
+				<EmployeeId>
+					<Eval_Ct0_EmployeeId_GetValueFromParent />
+				</EmployeeId>
+				<DocStatusDefault>
+					<Eval_DocStatusDefault_DefaultFromUser />
+				</DocStatusDefault>
+				<DocumentViewStyleDefault>
+					<Eval_DocumentViewStyle_DefaultFromUser>
+						<DataMember>DocumentViewStyle</DataMember>
+						<Value>DocumentViewStyleDefault</Value>
+						<Expr>DocumentViewStyleDefault IS NOT NULL</Expr>
+					</Eval_DocumentViewStyle_DefaultFromUser>
+				</DocumentViewStyleDefault>
+				<AutoNumbering>
+					<Eval_DocNo_EnabledWhen>
+						<DataMember>DocNo</DataMember>
+						<Controls>
+							<Enabled>EMPTY(AutoNumbering)</Enabled>
+						</Controls>
+					</Eval_DocNo_EnabledWhen>
+				</AutoNumbering>
+				<ShiftId>
+					<Eval_Ct0_ShiftId_GetValueFromParent />
+				</ShiftId>
+				<FactoryId>
+					<Eval_Ct0_FactoryId_GetValueFromParent />
+				</FactoryId>
+				<PostGL>
+					<Eval_DocStatus_SetStyle>
+						<DataMember>DocStatus</DataMember>
+						<Controls>
+							<Style>IIF(PostGL=0 OR IsCancelled=1,'ForeColor:Red;','ForeColor:Blue;');</Style>
+						</Controls>
+					</Eval_DocStatus_SetStyle>
+				</PostGL>
+				<ProductionProcessId>
+					<Eval_Ct0_ProductionProcessId_GetValueFromParent />
+				</ProductionProcessId>
+				<ProductionLineId>
+					<Eval_Ct0_ProductionLineId_GetValueFromParent />
+				</ProductionLineId>
+				<BizDocId_SO>
+					<Eval_Ct0_BizDocId_SO_GetValueFromParent />
+				</BizDocId_SO>
+				<UsingIsDraftData>
+					<Eval_IsDraftData_VisibleWhen>
+						<DataMember>IsDraftData</DataMember>
+						<Controls>
+							<Visible>!Empty(UsingIsDraftData)</Visible>
+						</Controls>
+					</Eval_IsDraftData_VisibleWhen>
+				</UsingIsDraftData>
+			</ColumnChanged>
+			<Evaluators>
+				<Eval_DocCodeUserId_BindingMembers>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_B00DmCt_GetDefaultValue</Command>
+					<DataMember>DocStatusDefault,DocumentViewStyleDefault</DataMember>
+					<Parameters>
+						<DocCode>DocCode</DocCode>
+						<BranchCode>BranchCode</BranchCode>
+						<nUserId>UserId</nUserId>
+					</Parameters>
+					<Text />
+				</Eval_DocCodeUserId_BindingMembers>
+				<Eval_DocCode_BindingMembers>
+					<bindingMembers>
+						<TransTypeCode>TransTypeCode</TransTypeCode>
+						<Nh_Ct>DocGroup</Nh_Ct>
+						<Ma_Nvu>Ma_Nvu</Ma_Nvu>
+						<DocStatus_Ct>DocStatus</DocStatus_Ct>
+						<UsingDeptId>UsingDeptId</UsingDeptId>
+						<UsingEmployeeId>UsingEmployeeId</UsingEmployeeId>
+						<UsingStatsDocId_WO>UsingStatsDocId_WO</UsingStatsDocId_WO>
+						<UsingWorkProcessId>UsingWorkProcessId</UsingWorkProcessId>
+						<UsingShiftId>UsingShiftId</UsingShiftId>
+						<UsingProductionProcessId>UsingProductionProcessId</UsingProductionProcessId>
+						<UsingBizDocId_SO>UsingBizDocId_SO</UsingBizDocId_SO>
+						<UsingWarehouseId>UsingWarehouseId</UsingWarehouseId>
+						<UsingProductionLineId>UsingProductionLineId</UsingProductionLineId>
+						<UsingFactoryId>UsingFactoryId</UsingFactoryId>
+						<DocumentViewStyle>DocumentViewStyle</DocumentViewStyle>
+						<DocCodeNumbering>DocCodeNumbering</DocCodeNumbering>
+						<UsingCheckINVWhenNotEnough>UsingCheckINVWhenNotEnough</UsingCheckINVWhenNotEnough>
+						<AutoPrintVoucher>AutoPrintVoucher</AutoPrintVoucher>
+						<AutoNumbering>AutoNumbering</AutoNumbering>
+					</bindingMembers>
+					<ClassName>BravoBindingMember</ClassName>
+					<DataMember>DocCode</DataMember>
+					<LookupKey>DmCt</LookupKey>
+				</Eval_DocCode_BindingMembers>
+				<Eval_DocNo_DefaultValue>
+					<ClassName>BravoServerConstraint</ClassName>
+					<DataMember>DocNo</DataMember>
+					<Command>ufn_B30StatsDoc_DefaultDocNo</Command>
+					<Caching>Never</Caching>
+					<dataAccessMode>Write</dataAccessMode>
+					<Parameters>
+						<BranchCode>BranchCode</BranchCode>
+						<StatsDocId>StatsDocId</StatsDocId>
+						<DocCode>DocCode</DocCode>
+						<DocDate>DocDate</DocDate>
+						<DocNo>DocNo</DocNo>
+						<outputType>1</outputType>
+					</Parameters>
+					<Text />
+				</Eval_DocNo_DefaultValue>
+				<Eval_ExchangeRate_Currency_GetExchangeRate>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_B20Currency_GetExchangeRate</Command>
+					<DataMember>ExchangeRate_Currency</DataMember>
+					<Parameters>BranchCode,DocDate,Id_Currency,ExchangeRateType</Parameters>
+					<Expr>Id_Currency IS NOT NULL</Expr>
+					<Text />
+				</Eval_ExchangeRate_Currency_GetExchangeRate>
+				<Eval_ExchangeRate_DefaultValue>
+					<DataMember>ExchangeRate</DataMember>
+					<Expr>Empty(ExchangeRate) AND !Empty(ExchangeRate_Currency)</Expr>
+					<Value>ExchangeRate_Currency</Value>
+				</Eval_ExchangeRate_DefaultValue>
+				<Eval_DocStatusDefault_DefaultFromUser>
+					<DataMember>DocStatus</DataMember>
+					<Value>ISNULL(DocStatusDefault,DocStatus)</Value>
+					<Expr>DocStatusDefault IS NOT NULL AND Empty(StatsDocId)</Expr>
+				</Eval_DocStatusDefault_DefaultFromUser>
+				<Eval_UsingIsDraftData_SetValue>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_Approval_CheckUsingIsDraftData</Command>
+					<Parameters>
+						<Id>Id</Id>
+						<DocDate>DocDate</DocDate>
+						<DocCode>DocCode</DocCode>
+						<RowId_DocProcess>RowId_DocProcess</RowId_DocProcess>
+						<BranchCode>BRANCH()</BranchCode>
+						<ApprovalStatus>ApprovalStatus</ApprovalStatus>
+					</Parameters>
+					<DataMember>UsingIsDraftData</DataMember>
+					<Text />
+				</Eval_UsingIsDraftData_SetValue>
+				<Eval_IsDraftData_ResetValue>
+					<DataMember>IsDraftData</DataMember>
+					<Value>0</Value>
+				</Eval_IsDraftData_ResetValue>
+				<Eval_GetDetailData_FromPX>
+					<ClassName>BravoServerConstraint</ClassName>
+					<DataMember>Ct0,phys</DataMember>
+					<CommandKey>PX</CommandKey>
+					<Command>ufn_B30StatsDocItem_ConvertFromPX</Command>
+					<Parameters>
+						<IdList>GETJSONDATA('PostData','','','',FALSE)</IdList>
+					</Parameters>
+					<zCtorArgs>AutoSearch=True;FilterKey=DocDate&lt;=CAST('{=DocDate}' AS DATE) AND PostGL=1</zCtorArgs>
+					<zTargetValueMember>_pId</zTargetValueMember>
+					<showMessage>Never</showMessage>
+					<Text />
+					<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+				</Eval_GetDetailData_FromPX>
+				<Eval_GetDetailData_FromRC>
+					<ClassName>BravoServerConstraint</ClassName>
+					<CommandKey>BizDocDetail_GetData</CommandKey>
+					<zCtorArgs>AutoSearch=True;FilterKey=CustomerId={=ISNULL(Ct.CustomerId,0)} AND Ct.DocCode='RC' AND Ct.IsActive=True AND Ct.DocDate&lt;=CAST('{=DocDate}' AS DATE) AND Ct.BranchCode='{=BRANCH()}';</zCtorArgs>
+					<Command>ufn_B30StatsDocItem_ConvertFromB30BizDocDetail_RC</Command>
+					<Parameters>
+						<IdList>GETJSONDATA('PostData','','','',FALSE)</IdList>
+						<DocDate>DocDate</DocDate>
+						<CurrencyCode>CurrencyCode</CurrencyCode>
+						<ExchangeRate>ExchangeRate</ExchangeRate>
+						<BranchCode>Branch()</BranchCode>
+					</Parameters>
+					<DataMember>Ct0</DataMember>
+					<mergingData>Reset</mergingData>
+					<Text />
+					<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+				</Eval_GetDetailData_FromRC>
+			</Evaluators>
+			<Validators>
+				<CheckNotNull>
+					<SourceColumn>Description,EmployeeId,VehicleId</SourceColumn>
+				</CheckNotNull>
+				<CheckWarehouseId>
+					<SourceColumn>WarehouseId</SourceColumn>
+					<zValidateExpr>!Empty(WarehouseId)</zValidateExpr>
+					<Expr>ISNULL(UsingWarehouseId,0)=1</Expr>
+				</CheckWarehouseId>
+				<CheckNotNull_DocNo>
+					<SourceColumn>DocNo</SourceColumn>
+					<Expr>EMPTY(AutoNumbering)</Expr>
+				</CheckNotNull_DocNo>
+				<FiscalDate>
+					<SourceColumn>DocDate</SourceColumn>
+					<zValidateExpr>DocDate BETWEEN FISCALYEAR('FirstDayOfYear') AND FISCALYEAR('LastDayOfYear')</zValidateExpr>
+					<Text>
+						<Vietnamese>Dữ liệu không phải của năm làm việc hiện thời ({=FORMAT(FISCALYEAR('FirstDayOfYear'))} - {=FORMAT(FISCALYEAR('LastDayOfYear'))})</Vietnamese>
+						<English>Editing data is not current year ({=FORMAT(FISCALYEAR('FirstDayOfYear'))} - {=FORMAT(FISCALYEAR('LastDayOfYear'))})</English>
+						<Japanese>編集中のデータは今年ではありません({=FORMAT(FISCALYEAR('FirstDayOfYear'))} - {=FORMAT(FISCALYEAR('LastDayOfYear'))})</Japanese>
+						<Chinese>编辑数据不是当年的({=FORMAT(FISCALYEAR('FirstDayOfYear'))} - {=FORMAT(FISCALYEAR('LastDayOfYear'))})</Chinese>
+						<Korean>데이터 편집이 현재 연도가 아닙니다({=FORMAT(FISCALYEAR('FirstDayOfYear'))} - {=FORMAT(FISCALYEAR('LastDayOfYear'))})</Korean>
+					</Text>
+				</FiscalDate>
+				<LockDate>
+					<SourceColumn>DocDate</SourceColumn>
+					<zValidateExpr>DocDate&gt;FISCALYEAR('FactoryLockDate')</zValidateExpr>
+					<Expr>!EMPTY(FISCALYEAR('FactoryLockDate'))</Expr>
+					<Text>
+						<Vietnamese>Đã khóa số liệu đến ngày {=FORMAT(FISCALYEAR('FactoryLockDate'))}</Vietnamese>
+						<English>Editing data is locked from {=FORMAT(FISCALYEAR('FactoryLockDate'))}</English>
+						<Japanese>データの編集がロックされています {=FORMAT(FISCALYEAR('FactoryLockDate'))}</Japanese>
+						<Chinese>编辑数据被锁定 {=FORMAT(FISCALYEAR('FactoryLockDate'))}</Chinese>
+						<Korean>데이터 편집이 잠겨 있습니다 {=FORMAT(FISCALYEAR('FactoryLockDate'))}</Korean>
+					</Text>
+				</LockDate>
+				<CheckDocNoUnique>
+					<ClassName>BravoUniqueKeyValidator</ClassName>
+					<SourceColumn>DocNo</SourceColumn>
+					<FilterKey>DocCodeNumbering='{=ISNULL(DocCodeNumbering,'')}' AND BranchCode='{=Branch()}' AND FiscalYear='{=FiscalYear}' AND Ct.IsActive=True</FilterKey>
+					<bValidateWarning>True</bValidateWarning>
+					<bValidateIfModify>True</bValidateIfModify>
+					<bValidateIfNotEmpty>True</bValidateIfNotEmpty>
+					<Text>
+						<Vietnamese>Số chứng từ phải duy nhất.</Vietnamese>
+						<English>The document number must be unique.</English>
+						<Chinese>该文件号必须是唯一的。</Chinese>
+						<Japanese>ドク番号は一意である必要があります。</Japanese>
+						<Korean>선생님 번호 고유해야 합니다.</Korean>
+					</Text>
+				</CheckDocNoUnique>
+				<CheckBizProcess>
+					<ClassName>BravoValidator</ClassName>
+					<SourceColumn>UserId</SourceColumn>
+					<zValidateExpr>({=USER('Id')} = CreatedBy AND (Empty(DocProcessId) OR ISNULL(IsDraftData0,0)=1)) OR CHARINDEX(','+CONVERT({=USER('Id')},'String')+',', BizProcess_UserIdList)&gt;=0</zValidateExpr>
+					<Expr>!EMPTY(RowId_DocProcess) AND Id&gt;0</Expr>
+					<Text>
+						<Vietnamese>Người sử dụng không được sửa dữ liệu trong quá trình duyệt</Vietnamese>
+						<English>User can not modify the document in approval process.</English>
+						<Japanese>承認プロセスで文書を変更することはできません</Japanese>
+						<Chinese>无法在批准过程中修改文档</Chinese>
+						<Korean>승인 프로세스에서 문서를 수정할 수 없습니다.</Korean>
+					</Text>
+					<Caption>
+						<Vietnamese>Người dùng {=USER('Username')}</Vietnamese>
+						<English>User {=USER('Username')}</English>
+						<Chinese>用户 {=USER('Username')}</Chinese>
+						<Japanese>ユーザー {=USER('Username')}</Japanese>
+						<Korean>사용자 {=USER('Username')}</Korean>
+					</Caption>
+				</CheckBizProcess>
+			</Validators>
+			<TempColumns>
+				<ExchangeRate_Currency>
+					<DataType>System.Decimal</DataType>
+				</ExchangeRate_Currency>
+				<IsPostWhenSaveNewDoc>
+					<DataType>System.Int16</DataType>
+				</IsPostWhenSaveNewDoc>
+				<AutoPrintVoucher>
+					<DataType>System.Boolean</DataType>
+				</AutoPrintVoucher>
+				<DocStatusDefault>
+					<DataType>System.Byte</DataType>
+				</DocStatusDefault>
+				<DocumentViewStyleDefault>
+					<DataType>System.Byte</DataType>
+				</DocumentViewStyleDefault>
+				<CustomerName>
+					<DataType>System.String</DataType>
+				</CustomerName>
+				<_Flag>
+					<DataType>System.String</DataType>
+				</_Flag>
+				<BizProcess_UserIdList>
+					<DataType>System.String</DataType>
+				</BizProcess_UserIdList>
+				<BizProcess_RoleList>
+					<DataType>System.String</DataType>
+				</BizProcess_RoleList>
+				<UsingIsDraftData>
+					<DataType>System.Int16</DataType>
+				</UsingIsDraftData>
+			</TempColumns>
+			<Expressions>
+				<ctViewName>'vB30StatsDocItem_Edit'</ctViewName>
+				<ct0Name>'B30StatsDocInventory'</ct0Name>
+				<ct0ViewName>'vB30StatsDocInventory'</ct0ViewName>
+			</Expressions>
+			<BeforeTransaction>
+				<Eval_DocProcess_SetValue>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_B20DocProcess_GetData</Command>
+					<DataMember>RowId_DocProcess,DocProcessId</DataMember>
+					<Parameters>
+						<RowId_DocProcess>RowId_DocProcess</RowId_DocProcess>
+						<DocProcessId>DocProcessId</DocProcessId>
+						<DocDate>DocDate</DocDate>
+						<BranchCode>BranchCode</BranchCode>
+						<DocCode>DocCode</DocCode>
+						<LangId>LANGID()</LangId>
+						<Id>Id</Id>
+						<CurrentDataXML>'{=GetJsonData('Ct','','','',FALSE)}'</CurrentDataXML>
+					</Parameters>
+					<Text />
+				</Eval_DocProcess_SetValue>
+				<Eval_Ct0_UpdateBuiltinOrder />
+				<Eval_DocNo_DefaultValue>EMPTY(DocNo) AND !EMPTY(AutoNumbering)</Eval_DocNo_DefaultValue>
+				<Eval_StatsDocId_AutoValue>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>ufn_sys_CreateSttBySeq</Command>
+					<dataAccessMode>Write</dataAccessMode>
+					<Parameters>
+						<TableName>LayoutTableName()</TableName>
+						<Ws_Id>Branch('Ws_Id')</Ws_Id>
+						<Ext>DocCode</Ext>
+					</Parameters>
+					<DataMember>StatsDocId</DataMember>
+					<Expr>Empty(StatsDocId)</Expr>
+					<Text />
+				</Eval_StatsDocId_AutoValue>
+				<Eval_Ct0_RowId_AutoValue />
+				<Eval_IsPostWhenSaveNewDoc>
+					<DataMember>IsPostWhenSaveNewDoc</DataMember>
+					<Value>IIF(ROWSTATE()='Added',1,0)</Value>
+				</Eval_IsPostWhenSaveNewDoc>
+				<Eval_IsDraftData_ResetValue>Empty(RowId_DocProcess)</Eval_IsDraftData_ResetValue>
+				<Eval_ApprovalStatus_SetValue>
+					<DataMember>ApprovalStatus</DataMember>
+					<Value>IIF(ISNULL(IsDraftData,0)=0,2,1)</Value>
+					<Expr>ISNULL(ApprovalStatus, '') IN ('1','2','') AND !Empty(DocProcessId)</Expr>
+				</Eval_ApprovalStatus_SetValue>
+			</BeforeTransaction>
+			<BeforeCommit>
+				<Eval_Ct_CreateProcess>
+					<CommandType>Procedure</CommandType>
+					<CommandName>usp_B20DocProcess_CreateProcess</CommandName>
+					<Parameters>
+						<Stt>StatsDocId</Stt>
+						<RowId_DocProcess>RowId_DocProcess</RowId_DocProcess>
+						<BranchCode>BranchCode</BranchCode>
+						<DocCode>DocCode</DocCode>
+						<nUserId>USER('Id')</nUserId>
+						<DefaultDocStatus>DocStatus</DefaultDocStatus>
+						<LangId>LANGID()</LangId>
+					</Parameters>
+					<Text />
+				</Eval_Ct_CreateProcess>
+				<Eval_Ct_PostStatsStockLedger>
+					<CommandType>Procedure</CommandType>
+					<CommandName>usp_B30StatsDocItem_Post</CommandName>
+					<Parameters>
+						<StatsDocId>StatsDocId</StatsDocId>
+						<BranchCode>BranchCode</BranchCode>
+						<DocDate>DocDate</DocDate>
+						<DocCode>DocCode</DocCode>
+						<DocStatus>DocStatus</DocStatus>
+						<IsPostWhenSaveNewDoc>IsPostWhenSaveNewDoc</IsPostWhenSaveNewDoc>
+						<nUserId>USER('Id')</nUserId>
+						<LangId>LANGID()</LangId>
+						<FiscalYear>FISCALYEAR()</FiscalYear>
+					</Parameters>
+					<Text />
+				</Eval_Ct_PostStatsStockLedger>
+			</BeforeCommit>
+			<AfterTransaction>
+				<Eval_AutoPrintVoucher>
+					<ClassName>BravoCommandKey</ClassName>
+					<CommandKey>StatsDocItemViewer AutoRun=True;StartupCommandKey=QuickPrint;PrimaryKeyValue={=Id};</CommandKey>
+					<commandFormState>Minimized</commandFormState>
+					<Expr>ISNULL(AutoPrintVoucher,False)=True</Expr>
+				</Eval_AutoPrintVoucher>
+				<Eval_Approval_PushNotification>
+					<ClassName>BravoServerConstraint</ClassName>
+					<Command>usp_B00NotificationQueue_Approval</Command>
+					<dataAccessMode>Write</dataAccessMode>
+					<Parameters>
+						<ApprovalStatus>2</ApprovalStatus>
+						<Id>Id</Id>
+						<Stt>StatsDocId</Stt>
+						<DocCode>DocCode</DocCode>
+						<DocNo>DocNo</DocNo>
+						<RowId_DocProcess>RowId_DocProcess</RowId_DocProcess>
+						<DocProcessId>DocProcessId</DocProcessId>
+						<LangId>LANGID()</LangId>
+						<nUserId>USER('Id')</nUserId>
+						<BranchCode>BRANCH()</BranchCode>
+					</Parameters>
+					<Expr>!Empty(DocProcessId) AND ISNULL(ApprovalStatus,'')='2'</Expr>
+					<Text />
+				</Eval_Approval_PushNotification>
+			</AfterTransaction>
+			<CommandValidators>
+				<ModifyInactiveData>
+					<CommandName>Edit</CommandName>
+					<Expr>ISNULL(IsActive,1)=1</Expr>
+					<Text>
+						<Vietnamese>Dữ liệu đã đình chỉ.</Vietnamese>
+						<English>Data is inactive.</English>
+						<Japanese>データは無効です</Japanese>
+						<Chinese>数据无效</Chinese>
+						<Korean>데이터가 비활성 상태입니다.</Korean>
+					</Text>
+				</ModifyInactiveData>
+				<CreateData>
+					<CommandName>New,NewAsCopy,Edit</CommandName>
+					<Expr>BRANCH('IsGroup')=0</Expr>
+					<Text>
+						<Vietnamese>Đơn vị cơ sở tổng hợp không được cập nhập dữ liệu.</Vietnamese>
+						<English>Editing data is not allowed with the current subsidiary.</English>
+						<Japanese>現在の子会社ではデータの編集は許可されていません</Japanese>
+						<Chinese>当前子公司不允许编辑数据</Chinese>
+						<Korean>현재 자회사에서 데이터 수정이 허용되지 않습니다.</Korean>
+					</Text>
+				</CreateData>
+				<ModifyCurrentData>
+					<CommandName>Edit,Save,SaveAndNew,SaveAndClose</CommandName>
+					<Expr>ISNULL(Lock,0)=0 AND BranchCode=BRANCH() AND (DocDate BETWEEN FISCALYEAR('FirstDayOfYear') AND FISCALYEAR('LastDayOfYear')) AND (DocDate&gt;FISCALYEAR('FactoryLockDate') OR EMPTY(FISCALYEAR('FactoryLockDate')))</Expr>
+					<Text>
+						<Vietnamese>Dữ liệu không phải của đơn vị cơ sở, năm làm việc hiện thời hoặc đã khóa số liệu.</Vietnamese>
+						<English>Editing data is not current subsidiary, fiscal year or locked.</English>
+						<Japanese>編集データが現在の子会社、会計年度、またはロックされていない</Japanese>
+						<Chinese>编辑数据不是当前子公司，会计年度或已锁定</Chinese>
+						<Korean>편집 데이터가 현재 자회사가 아니거나,회계 연도 또는 잠김</Korean>
+					</Text>
+				</ModifyCurrentData>
+				<CheckRowOnDetail>
+					<CommandName>Save,SaveAndClose,SaveAndNew</CommandName>
+					<Expr>Exists(Ct0)</Expr>
+					<Text>
+						<Vietnamese>Dữ liệu cần có ít nhất 1 dòng để lưu</Vietnamese>
+						<English>Must have at least 1 row(s) to save.</English>
+						<Japanese>データ"通貨の詳細なインベントリを入力してください"を保存するには、少なくとも1の行を持っている必要があります。</Japanese>
+						<Chinese>数据“输入货币的详细清单”必须至少有1行保存。</Chinese>
+						<Korean>데이터 "통화의 상세한 목록을 입력한다."저장 최소한 1 행이 있어야합니다.</Korean>
+					</Text>
+				</CheckRowOnDetail>
+			</CommandValidators>
+			<DefaultValues>
+				<DocCode>'DO'</DocCode>
+				<CurrencyCode>CONFIG('M_Ma_Tte0')</CurrencyCode>
+				<ExchangeRateOperator>1</ExchangeRateOperator>
+				<DecimalRound>0</DecimalRound>
+				<Posted>1</Posted>
+				<DocDate>GETDATE()</DocDate>
+				<BranchCode>BRANCH()</BranchCode>
+				<Ws_Id0>BRANCH('Ws_Id')</Ws_Id0>
+				<FiscalYear>FISCALYEAR()</FiscalYear>
+				<UserId>USER('Id')</UserId>
+				<EmployeeId>USER('EmployeeId')</EmployeeId>
+				<IsDraftData>0</IsDraftData>
+			</DefaultValues>
+			<ChildCollection>
+				<ChildTable_Ct0>
+					<Name>vB30StatsDocInventory</Name>
+					<Alias>Ct0</Alias>
+					<ParentTable>Ct</ParentTable>
+					<ParentKey>StatsDocId</ParentKey>
+					<ChildKey>StatsDocId</ChildKey>
+					<Sort>BuiltinOrder</Sort>
+					<RowAdded>
+						<Eval_Ct0_GetValueFromParent />
+						<Eval_Ct0_StatsDocId_WO_GetValueFromParent>!Empty(Parent.StatsDocId_WO)</Eval_Ct0_StatsDocId_WO_GetValueFromParent>
+						<Eval_Ct0_EmployeeId_GetValueFromParent>!Empty(Parent.EmployeeId)</Eval_Ct0_EmployeeId_GetValueFromParent>
+						<Eval_Ct0_DeptId_GetValueFromParent>!Empty(Parent.DeptId)</Eval_Ct0_DeptId_GetValueFromParent>
+						<Eval_Ct0_FactoryId_GetValueFromParent>_Convert_Expr</Eval_Ct0_FactoryId_GetValueFromParent>
+						<Eval_Ct0_ShiftId_GetValueFromParent>_Convert_Expr</Eval_Ct0_ShiftId_GetValueFromParent>
+						<Eval_Ct0_WarehouseId_GetValueFromParent>!Empty(Parent.WarehouseId)</Eval_Ct0_WarehouseId_GetValueFromParent>
+						<Eval_Ct0_BizDocId_SO_GetValueFromParent>!Empty(Parent.BizDocId_SO)</Eval_Ct0_BizDocId_SO_GetValueFromParent>
+						<Eval_Ct0_ProductionProcessId_GetValueFromParent>!Empty(Parent.ProductionProcessId)</Eval_Ct0_ProductionProcessId_GetValueFromParent>
+						<Eval_Ct0_ProductionLineId_GetValueFromParent>!Empty(Parent.ProductionLineId)</Eval_Ct0_ProductionLineId_GetValueFromParent>
+						<Eval_Ct0_ConvertingFlag_SetNullValue>!_Convert_Expr</Eval_Ct0_ConvertingFlag_SetNullValue>
+						<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+					</RowAdded>
+					<ColumnChanging>
+						<ItemId>
+							<Eval_Ct0_Unit_ResetValue>
+								<DataMember>Unit_Item</DataMember>
+								<Value>NULL</Value>
+							</Eval_Ct0_Unit_ResetValue>
+						</ItemId>
+					</ColumnChanging>
+					<ColumnChanged>
+						<ItemId>
+							<Eval_Ct0_Unit_DefaultValue>_Convert_Expr AND !Empty(ItemId)</Eval_Ct0_Unit_DefaultValue>
+							<Eval_Phys_ItemId_DefaultValueFromParent />
+						</ItemId>
+						<Name_Item>
+							<Eval_Ct0_ItemName_DefaultValue>Empty(_ConvertingFlag)</Eval_Ct0_ItemName_DefaultValue>
+						</Name_Item>
+						<ItemName>
+							<Eval_Ct0_ItemName_DefaultValue>UPDATEDCOLUMN()='ItemName' AND Empty(ItemName)</Eval_Ct0_ItemName_DefaultValue>
+							<Eval_Ct0_Description_DefaultValue>_Convert_Expr</Eval_Ct0_Description_DefaultValue>
+						</ItemName>
+						<Unit_Item>
+							<Eval_Ct0_Unit_DefaultValue>Empty(_ConvertingFlag)</Eval_Ct0_Unit_DefaultValue>
+						</Unit_Item>
+						<Unit>
+							<Eval_Ct0_Unit_DefaultValue>UPDATEDCOLUMN()='Unit' AND Empty(Unit)</Eval_Ct0_Unit_DefaultValue>
+							<Eval_Phys_Unit_DefaultValueFromParent />
+						</Unit>
+						<OriginalUnitCost>
+							<Eval_Ct0_OriginalAmount9 />
+						</OriginalUnitCost>
+						<ConvertRate9>
+							<Eval_Ct0_Quantity />
+							<Eval_RemainPhysQuantity_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity_SetValue>
+							<Eval_UpdatedColName_SetValue>
+								<DataMember>UpdatedColName</DataMember>
+								<Value>'ConvertRate9'</Value>
+							</Eval_UpdatedColName_SetValue>
+							<Eval_Phys_ConvertRate9_DefaultValueFromParent />
+							<Eval_RemainPhysQuantity9_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity9_SetValue>
+							<Eval_UpdatedColName_ResetValue>
+								<DataMember>UpdatedColName</DataMember>
+								<Value>NULL</Value>
+							</Eval_UpdatedColName_ResetValue>
+						</ConvertRate9>
+						<Quantity9>
+							<Eval_Ct0_OriginalAmount9 />
+							<Eval_Ct0_Quantity />
+							<Eval_Ct0_OriginalUnitCost_ResetWhenQuantityZero>
+								<DataMember>OriginalUnitCost</DataMember>
+								<Value>NULL</Value>
+								<Expr>Empty(Quantity9)</Expr>
+							</Eval_Ct0_OriginalUnitCost_ResetWhenQuantityZero>
+							<Eval_RemainPhysQuantity_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity_SetValue>
+							<Eval_RemainPhysQuantity9_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity9_SetValue>
+						</Quantity9>
+						<OriginalAmount9>
+							<Eval_Ct0_OriginalUnitCost>
+								<DataMember>OriginalUnitCost</DataMember>
+								<Expr>!Empty(Quantity9) AND !Empty(OriginalAmount9) AND Empty(OriginalUnitCost)</Expr>
+								<Value>OriginalAmount9/Quantity9</Value>
+								<bSuppressChangeEvents>True</bSuppressChangeEvents>
+							</Eval_Ct0_OriginalUnitCost>
+							<Eval_Ct0_OriginalAmount9>UpdatedColumn()='OriginalAmount9'</Eval_Ct0_OriginalAmount9>
+							<Eval_Ct0_OriginalAmount />
+							<Eval_Ct0_Amount9 />
+							<Eval_Ct0_OriginalAmount3 />
+						</OriginalAmount9>
+						<Amount9>
+							<Eval_Ct0_Amount9_Margin>
+								<ClassName>BravoMoneyEvaluator</ClassName>
+								<DataMember>Amount9</DataMember>
+								<zMoneyValue>OriginalAmount9</zMoneyValue>
+								<zNumberValue>IIF(Parent.ExchangeRateOperator=1,Parent.ExchangeRate,1/Parent.ExchangeRate)</zNumberValue>
+								<zResultDecimalRound>Currency('DecimalRound')</zResultDecimalRound>
+								<zResultMarginValue>IIF(UpdatedColumn()='Amount9',Parent.MoneyDiffValue0,0)</zResultMarginValue>
+							</Eval_Ct0_Amount9_Margin>
+							<Eval_Ct0_Amount />
+							<Eval_Ct0_Amount3 />
+						</Amount9>
+						<Amount>
+							<Eval_Ct0_Amount />
+							<Eval_Ct0_Amount3 />
+						</Amount>
+						<OriginalAmount>
+							<Eval_Ct0_OriginalAmount3 />
+							<Eval_Ct0_Amount3 />
+						</OriginalAmount>
+						<OriginalAmount3>
+							<Eval_Ct0_OriginalAmount3 />
+							<Eval_Ct0_Amount3 />
+						</OriginalAmount3>
+						<Amount3>
+							<Eval_Ct0_Amount3 />
+						</Amount3>
+						<TaxCode>
+							<Eval_Ct0_OriginalAmount3_ResetValue />
+						</TaxCode>
+						<TaxRate>
+							<Eval_Ct0_OriginalAmount3_ResetValue>
+								<DataMember>OriginalAmount3</DataMember>
+								<Value>NULL</Value>
+								<Expr>EMPTY(TaxRate)</Expr>
+							</Eval_Ct0_OriginalAmount3_ResetValue>
+							<Eval_Ct0_OriginalAmount />
+							<Eval_Ct0_Amount />
+							<Eval_Ct0_OriginalAmount3>Empty(_ConvertingFlag)</Eval_Ct0_OriginalAmount3>
+						</TaxRate>
+						<PriceIncludeTax>
+							<Eval_Ct0_OriginalAmount />
+							<Eval_Ct0_Amount />
+							<Eval_Ct0_OriginalAmount3 />
+							<Eval_Ct0_Amount3 />
+						</PriceIncludeTax>
+						<IsItemWithLocation_WH>
+							<Eval_Ct0_IsItemWithLocation />
+						</IsItemWithLocation_WH>
+						<IsItemWithLocation_Item>
+							<Eval_Ct0_IsItemWithLocation />
+						</IsItemWithLocation_Item>
+						<IsItemWithSerialNo>
+							<Eval_Ct0_Phys_ItemWithSerialNo_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_ItemWithSerialNo_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithSerialNo>
+						<IsItemWithLocation>
+							<Eval_Ct0_Phys_LocationId_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_LocationId_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithLocation>
+						<IsItemWithLot>
+							<Eval_Ct0_Phys_ItemLotCode_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_ItemLotCode_VisibleWhen>
+							<Eval_Ct0_Phys_AutoCreateItemLotCode_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_AutoCreateItemLotCode_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithLot>
+						<IsItemWithColor>
+							<Eval_Ct0_Phys_ColorCode_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_ColorCode_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithColor>
+						<IsItemWithSize>
+							<Eval_Ct0_Phys_SizeCode_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_SizeCode_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithSize>
+						<IsItemWithQuality>
+							<Eval_Ct0_Phys_ItemQualityCode_VisibleWhen>_Convert_Expr</Eval_Ct0_Phys_ItemQualityCode_VisibleWhen>
+							<Eval_Ct0_PhysicalInventory>_Convert_Expr</Eval_Ct0_PhysicalInventory>
+						</IsItemWithQuality>
+						<ProductDebitAccount>
+							<Eval_ProductDebitAccount_GetValueFromChild />
+						</ProductDebitAccount>
+						<_PhysicalInventory>
+							<Eval_PhysTotalQuantity_GetValueFromChild />
+							<Eval_RemainPhysQuantity_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity_SetValue>
+							<Eval_PhysTotalQuantity9_GetValueFromChild />
+							<Eval_RemainPhysQuantity9_SetValue>!Empty(_PhysicalInventory)</Eval_RemainPhysQuantity9_SetValue>
+						</_PhysicalInventory>
+					</ColumnChanged>
+					<Evaluators>
+						<Eval_Ct0_UpdateBuiltinOrder>
+							<ClassName>BravoTableOrderer</ClassName>
+							<DataMember>BuiltinOrder</DataMember>
+						</Eval_Ct0_UpdateBuiltinOrder>
+						<Eval_Ct0_GetValueFromParent>
+							<ClassName>BravoCopyValue</ClassName>
+							<CopyValues>
+								<DocCode>Parent.DocCode</DocCode>
+								<DocDate>Parent.DocDate</DocDate>
+								<EmployeeId>Parent.EmployeeId</EmployeeId>
+								<DocGroup>Parent.DocGroup</DocGroup>
+								<FactoryId>Parent.FactoryId</FactoryId>
+							</CopyValues>
+						</Eval_Ct0_GetValueFromParent>
+						<Eval_Ct0_OriginalAmount9>
+							<ClassName>BravoMoneyEvaluator</ClassName>
+							<DataMember>OriginalAmount9</DataMember>
+							<zMoneyValue>OriginalUnitCost</zMoneyValue>
+							<zNumberValue>Quantity9</zNumberValue>
+							<zResultDecimalRound>Parent.DecimalRound</zResultDecimalRound>
+							<zResultMarginValue>IIF(UpdatedColumn()='OriginalAmount9',Parent.MoneyDiffValue,0)</zResultMarginValue>
+						</Eval_Ct0_OriginalAmount9>
+						<Eval_Ct0_Amount9>
+							<ClassName>BravoMoneyEvaluator</ClassName>
+							<DataMember>Amount9</DataMember>
+							<zMoneyValue>OriginalAmount9</zMoneyValue>
+							<zNumberValue>IIF(Parent.ExchangeRateOperator=1,Parent.ExchangeRate,1/Parent.ExchangeRate)</zNumberValue>
+							<zResultDecimalRound>Currency('DecimalRound')</zResultDecimalRound>
+							<zResultMarginValue>IIF(UpdatedColumn()='Amount9',Parent.MoneyDiffValue0,0)</zResultMarginValue>
+						</Eval_Ct0_Amount9>
+						<Eval_Ct0_OriginalAmount>
+							<DataMember>OriginalAmount</DataMember>
+							<Value>IIF(ISNULL(PriceIncludeTax,0)=0,OriginalAmount9,IIF(1+TaxRate=0,0,OriginalAmount9/(1+TaxRate)))</Value>
+							<zResultDecimalRound>Parent.DecimalRound</zResultDecimalRound>
+						</Eval_Ct0_OriginalAmount>
+						<Eval_Ct0_Amount>
+							<DataMember>Amount</DataMember>
+							<Value>IIF(ISNULL(PriceIncludeTax,0)=0,Amount9,IIF(1+TaxRate=0,0,Amount9/(1+TaxRate)))</Value>
+							<zResultDecimalRound>Currency('DecimalRound')</zResultDecimalRound>
+						</Eval_Ct0_Amount>
+						<Eval_Ct0_OriginalAmount3>
+							<ClassName>BravoMoneyEvaluator</ClassName>
+							<DataMember>OriginalAmount3</DataMember>
+							<zMoneyValue>OriginalAmount</zMoneyValue>
+							<zNumberValue>TaxRate</zNumberValue>
+							<zResultDecimalRound>Parent.DecimalRound</zResultDecimalRound>
+							<Expr>ISNULL(TaxRate,0)&lt;&gt;0 AND Empty(_ConvertingFlag)</Expr>
+							<zFormula>IIF(ISNULL(PriceIncludeTax,0)=0,{0}*{1},OriginalAmount9-OriginalAmount)</zFormula>
+							<zResultMarginValue>IIF(UpdatedColumn()='OriginalAmount3',Parent.VATDiffValue,0)</zResultMarginValue>
+						</Eval_Ct0_OriginalAmount3>
+						<Eval_Ct0_Amount3>
+							<ClassName>BravoMoneyEvaluator</ClassName>
+							<DataMember>Amount3</DataMember>
+							<zMoneyValue>OriginalAmount3</zMoneyValue>
+							<zNumberValue>IIF(Parent.ExchangeRateOperator=1,Parent.ExchangeRate,1/Parent.ExchangeRate)</zNumberValue>
+							<zResultMarginValue>IIF(UPDATEDCOLUMN()='Amount3',Parent.VATDiffValue0,0)</zResultMarginValue>
+							<zResultDecimalRound>{=Currency('DecimalRound')}</zResultDecimalRound>
+							<zFormula>IIF(Parent.CurrencyCode=CONFIG('M_Ma_Tte0'),{0},{0}*{1})</zFormula>
+						</Eval_Ct0_Amount3>
+						<Eval_Ct0_Quantity>
+							<DataMember>Quantity9</DataMember>
+							<Value>ISNULL(Quantity9,0)*ConvertRate9</Value>
+						</Eval_Ct0_Quantity>
+						<Eval_Ct0_OriginalAmount9_RoundWhenChangeCurrency>
+							<DataMember>OriginalAmount9</DataMember>
+							<Value>OriginalAmount9</Value>
+							<zResultDecimalRound>Parent.DecimalRound</zResultDecimalRound>
+						</Eval_Ct0_OriginalAmount9_RoundWhenChangeCurrency>
+						<Eval_Ct0_OriginalAmount3_RoundWhenChangeCurrency>
+							<DataMember>OriginalAmount3</DataMember>
+							<Value>OriginalAmount3</Value>
+							<zResultDecimalRound>Parent.DecimalRound</zResultDecimalRound>
+						</Eval_Ct0_OriginalAmount3_RoundWhenChangeCurrency>
+						<Eval_Ct0_ItemName_DefaultValue>
+							<DataMember>ItemName</DataMember>
+							<Value>Name_Item</Value>
+							<Expr>_Convert_Expr</Expr>
+						</Eval_Ct0_ItemName_DefaultValue>
+						<Eval_Ct0_Unit_DefaultValue>
+							<DataMember>Unit</DataMember>
+							<Value>Unit_Item</Value>
+						</Eval_Ct0_Unit_DefaultValue>
+						<Eval_Ct0_Description_DefaultValue>
+							<DataMember>Description</DataMember>
+							<Value>IIF(ISNULL(Name_Item,'')&lt;&gt;ISNULL(ItemName,''),ItemName,Null) </Value>
+						</Eval_Ct0_Description_DefaultValue>
+						<Eval_Ct0_DocDate_GetValueFromParent>
+							<DataMember>DocDate</DataMember>
+							<Value>Parent.DocDate</Value>
+						</Eval_Ct0_DocDate_GetValueFromParent>
+						<Eval_Ct0_StatsDocId_WO_GetValueFromParent>
+							<DataMember>StatsDocId_WO</DataMember>
+							<Value>Parent.StatsDocId_WO</Value>
+							<Expr>ISNULL(Parent.UsingStatsDocId_WO,0)=1 OR Empty(StatsDocId_WO)</Expr>
+						</Eval_Ct0_StatsDocId_WO_GetValueFromParent>
+						<Eval_Ct0_EmployeeId_GetValueFromParent>
+							<DataMember>EmployeeId</DataMember>
+							<Value>Parent.EmployeeId</Value>
+							<Expr>ISNULL(Parent.UsingEmployeeId,0)=1 OR Empty(EmployeeId)</Expr>
+						</Eval_Ct0_EmployeeId_GetValueFromParent>
+						<Eval_Ct0_DeptId_GetValueFromParent>
+							<DataMember>DeptId</DataMember>
+							<Value>Parent.DeptId</Value>
+							<Expr>ISNULL(Parent.UsingDeptId,0)=1 OR Empty(DeptId)</Expr>
+						</Eval_Ct0_DeptId_GetValueFromParent>
+						<Eval_Ct0_ShiftId_GetValueFromParent>
+							<DataMember>ShiftId</DataMember>
+							<Value>Parent.ShiftId</Value>
+						</Eval_Ct0_ShiftId_GetValueFromParent>
+						<Eval_Ct0_FactoryId_GetValueFromParent>
+							<DataMember>FactoryId</DataMember>
+							<Value>Parent.FactoryId</Value>
+						</Eval_Ct0_FactoryId_GetValueFromParent>
+						<Eval_Ct0_WarehouseId_GetValueFromParent>
+							<DataMember>WarehouseId</DataMember>
+							<Value>Parent.WarehouseId</Value>
+							<Expr>ISNULL(Parent.UsingWarehouseId,0)=1 OR Empty(WarehouseId)</Expr>
+						</Eval_Ct0_WarehouseId_GetValueFromParent>
+						<Eval_Ct0_BizDocId_SO_GetValueFromParent>
+							<DataMember>BizDocId_SO</DataMember>
+							<Value>Parent.BizDocId_SO</Value>
+							<Expr>ISNULL(Parent.UsingBizDocId_SO,0)=1 OR Empty(BizDocId_SO)</Expr>
+						</Eval_Ct0_BizDocId_SO_GetValueFromParent>
+						<Eval_Ct0_ProductionProcessId_GetValueFromParent>
+							<DataMember>ProductionProcessId</DataMember>
+							<Value>Parent.ProductionProcessId</Value>
+							<Expr>ISNULL(Parent.UsingProductionProcessId,0)=1 OR Empty(ProductionProcessId)</Expr>
+						</Eval_Ct0_ProductionProcessId_GetValueFromParent>
+						<Eval_Ct0_ProductionLineId_GetValueFromParent>
+							<DataMember>ProductionLineId</DataMember>
+							<Value>Parent.ProductionLineId</Value>
+							<Expr>ISNULL(Parent.UsingProductionLineId,0)=1 OR Empty(ProductionLineId)</Expr>
+						</Eval_Ct0_ProductionLineId_GetValueFromParent>
+						<Eval_Ct0_PhysicalInventory>
+							<DataMember>_PhysicalInventory</DataMember>
+							<Value>ISNULL(IsItemWithSerialNo,0)+ISNULL(IsItemWithLocation,0)+ISNULL(IsItemWithLot,0)</Value>
+						</Eval_Ct0_PhysicalInventory>
+						<Eval_Ct0_IsItemWithLocation>
+							<DataMember>IsItemWithLocation</DataMember>
+							<Value>MinOf(ISNULL(IsItemWithLocation_Item,0),ISNULL(IsItemWithLocation_WH,0))</Value>
+						</Eval_Ct0_IsItemWithLocation>
+						<Eval_PhysTotalQuantity_GetValueFromChild>
+							<DataMember>PhysTotalQuantity</DataMember>
+							<Value>ISNULL(SUM(Child(Phys).Quantity),0)</Value>
+						</Eval_PhysTotalQuantity_GetValueFromChild>
+						<Eval_RemainPhysQuantity_SetValue>
+							<DataMember>RemainPhysQuantity</DataMember>
+							<Value>ISNULL(Quantity,0)-ISNULL(PhysTotalQuantity,0)</Value>
+						</Eval_RemainPhysQuantity_SetValue>
+						<Eval_PhysTotalQuantity_GetInitValueFromChild>
+							<DataMember>PhysTotalQuantity</DataMember>
+							<Value>ISNULL(SUM(Child(Phys).Quantity),0)</Value>
+							<Expr>!Empty(_PhysicalInventory)</Expr>
+						</Eval_PhysTotalQuantity_GetInitValueFromChild>
+						<Eval_RemainPhysQuantity_SetInitValue>
+							<DataMember>RemainPhysQuantity</DataMember>
+							<Value>ISNULL(Quantity,0)-ISNULL(PhysTotalQuantity,0)</Value>
+							<Expr>!Empty(_PhysicalInventory)</Expr>
+						</Eval_RemainPhysQuantity_SetInitValue>
+						<Eval_Ct0_Phys_ItemWithSerialNo_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.ItemSerialNo</Name>
+								<Visible>!Empty(IsItemWithSerialNo)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_ItemWithSerialNo_VisibleWhen>
+						<Eval_Ct0_Phys_LocationId_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.LocationId.LocationName</Name>
+								<Visible>!Empty(IsItemWithLocation)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_LocationId_VisibleWhen>
+						<Eval_Ct0_Phys_ItemLotCode_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.ItemLotCode.MfgDate.ExpiryDate</Name>
+								<Visible>!Empty(IsItemWithLot)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_ItemLotCode_VisibleWhen>
+						<Eval_Ct0_Phys_AutoCreateItemLotCode_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.AutoCreateItemLotCode</Name>
+								<Visible>!Empty(IsItemWithLot) AND CONFIG('M_AllowCreateItemLot')=1</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_AutoCreateItemLotCode_VisibleWhen>
+						<Eval_Ct0_Phys_ColorCode_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.ColorCode</Name>
+								<Visible>!Empty(IsItemWithColor)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_ColorCode_VisibleWhen>
+						<Eval_Ct0_Phys_SizeCode_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.SizeCode</Name>
+								<Visible>!Empty(IsItemWithSize)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_SizeCode_VisibleWhen>
+						<Eval_Ct0_Phys_ItemQualityCode_VisibleWhen>
+							<Controls>
+								<Name>BravoGridContainer.Item_Phys.ItemQualityCode</Name>
+								<Visible>!Empty(IsItemWithQuality)</Visible>
+							</Controls>
+						</Eval_Ct0_Phys_ItemQualityCode_VisibleWhen>
+						<Eval_PhysTotalQuantity9_GetValueFromChild>
+							<DataMember>PhysTotalQuantity9</DataMember>
+							<Value>ISNULL(SUM(Child(Phys).Quantity9),0)</Value>
+						</Eval_PhysTotalQuantity9_GetValueFromChild>
+						<Eval_PhysTotalQuantity9_GetInitValueFromChild>
+							<DataMember>PhysTotalQuantity9</DataMember>
+							<Value>ISNULL(SUM(Child(Phys).Quantity9),0)</Value>
+							<Expr>!Empty(_PhysicalInventory)</Expr>
+						</Eval_PhysTotalQuantity9_GetInitValueFromChild>
+						<Eval_RemainPhysQuantity9_SetInitValue>
+							<DataMember>RemainPhysQuantity9</DataMember>
+							<Value>ISNULL(Quantity9,0)-ISNULL(PhysTotalQuantity9,0)</Value>
+							<Expr>!Empty(_PhysicalInventory)</Expr>
+						</Eval_RemainPhysQuantity9_SetInitValue>
+						<Eval_RemainPhysQuantity9_SetValue>
+							<DataMember>RemainPhysQuantity9</DataMember>
+							<Value>ISNULL(Quantity9,0)-ISNULL(PhysTotalQuantity9,0)</Value>
+						</Eval_RemainPhysQuantity9_SetValue>
+						<Eval_Ct0_ConvertingFlag_SetNullValue>
+							<DataMember>_ConvertingFlag</DataMember>
+							<Value>Null</Value>
+							<Expr>!_Convert_Expr</Expr>
+						</Eval_Ct0_ConvertingFlag_SetNullValue>
+						<Eval_Ct0_RowId_AutoValue>
+							<ClassName>BravoServerConstraint</ClassName>
+							<Command>ufn_sys_CreateSttBySeq</Command>
+							<dataAccessMode>Write</dataAccessMode>
+							<Parameters>
+								<TableName>LayoutTableName()</TableName>
+								<Ws_Id>Branch('Ws_Id')</Ws_Id>
+								<Ext>Parent.DocCode</Ext>
+							</Parameters>
+							<DataMember>RowId</DataMember>
+							<Expr>Empty(RowId)</Expr>
+							<Text />
+						</Eval_Ct0_RowId_AutoValue>
+						<Eval_Ct0_CustomerId_GetValueFromParent>
+							<DataMember>CustomerId</DataMember>
+							<Value>Parent.CustomerId</Value>
+						</Eval_Ct0_CustomerId_GetValueFromParent>
+					</Evaluators>
+					<Validators>
+						<CheckNotNull>
+							<SourceColumn>ItemId</SourceColumn>
+						</CheckNotNull>
+						<CheckWarehouseId>
+							<SourceColumn>WarehouseId</SourceColumn>
+							<zValidateExpr>!Empty(WarehouseId))</zValidateExpr>
+							<Expr>Parent.UsingWarehouseId=2</Expr>
+						</CheckWarehouseId>
+						<CheckPhysicalInventory>
+							<ClassName>BravoValidator</ClassName>
+							<SourceColumn>PhysTotalQuantity,RemainPhysQuantity,_PhysicalInventory,WarehouseId,Quantity9</SourceColumn>
+							<TargetColumn>Quantity9</TargetColumn>
+							<zValidateExpr>Empty(_PhysicalInventory) OR Empty(RemainPhysQuantity)</zValidateExpr>
+							<Text>
+								<Vietnamese>Mặt hàng chưa cập nhật chi tiết: vị trí, lô, serial#,...</Vietnamese>
+								<English>Item was not detailed: location, lot, serial#,...</English>
+								<Chinese>项目没有详细介绍：位置，大量的，序列号，...</Chinese>
+								<Japanese>アイテムが詳述されていないし、場所、ロット、シリアル番号、...</Japanese>
+								<Korean>항목은 자세히 설명하지 않은 위치, 많은, 시리얼 #,...</Korean>
+							</Text>
+						</CheckPhysicalInventory>
+					</Validators>
+					<TempColumns>
+						<PhysTotalQuantity>
+							<DataType>System.Decimal</DataType>
+						</PhysTotalQuantity>
+						<QuantityBeforeTrans>
+							<DataType>System.Decimal</DataType>
+							<DefaultValue>0</DefaultValue>
+						</QuantityBeforeTrans>
+						<PrevItemId>
+							<DataType>System.String</DataType>
+						</PrevItemId>
+						<PrevWarehouseId>
+							<DataType>System.String</DataType>
+						</PrevWarehouseId>
+						<PrevAllowIssueWhenNotEnough>
+							<DataType>System.Byte</DataType>
+						</PrevAllowIssueWhenNotEnough>
+						<_RunningTrans>
+							<DataType>System.Int32</DataType>
+						</_RunningTrans>
+						<_ConvertingFlag>
+							<DataType>System.Byte</DataType>
+						</_ConvertingFlag>
+						<_RowDeleting>
+							<DataType>System.Byte</DataType>
+						</_RowDeleting>
+						<PhysTotalQuantity9>
+							<DataType>System.Decimal</DataType>
+						</PhysTotalQuantity9>
+						<UpdatedColName>
+							<DataType>System.String</DataType>
+						</UpdatedColName>
+						<_pId>
+							<DataType>System.Int32</DataType>
+						</_pId>
+					</TempColumns>
+					<Expressions>
+						<_Convert_Expr>Empty(_ConvertingFlag)</_Convert_Expr>
+					</Expressions>
+					<DefaultValues>
+						<BranchCode>BRANCH()</BranchCode>
+					</DefaultValues>
+					<BeforeTransaction>
+						<Eval_Ct0_GetValueFromParent />
+					</BeforeTransaction>
+					<TableMerged>
+						<Eval_Ct0_FactoryId_GetValueFromParent />
+						<Eval_Ct0_ShiftId_GetValueFromParent />
+						<Eval_Ct0_DocDate_GetValueFromParent />
+					</TableMerged>
+					<ChildCollection>
+						<phys template="StatsDocItemPhys_Edit">
+							<Name>vB30StatsDocItemPhys</Name>
+							<ChildKey>RowId_SourceDoc</ChildKey>
+							<ParentTable>ct0</ParentTable>
+							<ParentKey>RowId</ParentKey>
+							<NewAsCopy>Quantity</NewAsCopy>
+							<CopyMode>Never</CopyMode>
+							<RefreshColumnList>RowId,RowId_SourceDoc</RefreshColumnList>
+							<Sort>BuiltinOrder</Sort>
+							<Custom>
+								<Expr>!Empty(Parent._PhysicalInventory)</Expr>
+							</Custom>
+							<TempColumns>
+								<QuantityAdded>
+									<DataType>System.Decimal</DataType>
+								</QuantityAdded>
+								<QuantityBeforeChange>
+									<DataType>System.Decimal</DataType>
+								</QuantityBeforeChange>
+								<FiscalYear>
+									<DataType>System.String</DataType>
+								</FiscalYear>
+								<AutoCreateItemLotCode>
+									<DataType>System.Int32</DataType>
+								</AutoCreateItemLotCode>
+								<Quantity9Added>
+									<DataType>System.Decimal</DataType>
+								</Quantity9Added>
+								<Quantity9BeforeChange>
+									<DataType>System.Decimal</DataType>
+								</Quantity9BeforeChange>
+								<_PhysConvertingFlag>
+									<DataType>System.Byte</DataType>
+								</_PhysConvertingFlag>
+								<Quantity9SaveValue>
+									<DataType>System.Decimal</DataType>
+								</Quantity9SaveValue>
+							</TempColumns>
+							<ServerLoaded>
+								<Eval_Phys_FiscalYear_SetValue />
+								<Eval_Phys_AutoCreateItemLotCode_AutoValue />
+							</ServerLoaded>
+							<Evaluators>
+								<Eval_Phys_ItemLotCode_BindingMembers>
+									<ClassName>BravoBindingMember</ClassName>
+									<DataMember>ItemLotCode</DataMember>
+									<LookupKey>ItemLotDetail</LookupKey>
+									<FilterKey>(IsGroup=False) AND ItemId={=Parent.ItemId}</FilterKey>
+									<bindingMembers>
+										<ItemLotName>ItemLotName</ItemLotName>
+										<MfgDate>MfgDate</MfgDate>
+										<ExpiryDate>ExpiryDate</ExpiryDate>
+										<Id>Id_ItemLot</Id>
+									</bindingMembers>
+								</Eval_Phys_ItemLotCode_BindingMembers>
+								<Eval_Phys_Quantity_SetValue>
+									<DataMember>Quantity</DataMember>
+									<zResultDecimalRound>CONFIG('M_QuantityDecRound')</zResultDecimalRound>
+									<Value>IIF(Parent.IsItemWithSerialNo=1,IIF(ISNULL(Parent.RemainPhysQuantity,0)+ISNULL(QuantityBeforeChange,0)-ISNULL(Quantity,0)&gt;=1,1,0),IIF(ISNULL(Parent.RemainPhysQuantity,0)+ISNULL(QuantityBeforeChange,0)-ISNULL(Quantity,0)&lt;0,ISNULL(Parent.RemainPhysQuantity,0)+ISNULL(QuantityBeforeChange,0),Quantity))</Value>
+									<allowRunning>Nonnested</allowRunning>
+								</Eval_Phys_Quantity_SetValue>
+								<Eval_Phys_FiscalYear_SetValue>
+									<DataMember>FiscalYear</DataMember>
+									<Value>VLOOKUP(Ct,FiscalYear,!Empty(FiscalYear))</Value>
+								</Eval_Phys_FiscalYear_SetValue>
+								<Eval_Phys_DocGroup_DefaultValueFromParent>
+									<DataMember>DocGroup</DataMember>
+									<Value>Parent.DocGroup</Value>
+								</Eval_Phys_DocGroup_DefaultValueFromParent>
+								<Eval_Phys_ItemId_DefaultValueFromParent>
+									<DataMember>ItemId</DataMember>
+									<Value>Parent.ItemId</Value>
+								</Eval_Phys_ItemId_DefaultValueFromParent>
+								<Eval_Phys_WarehouseId_DefaultValueFromParent>
+									<DataMember>WarehouseId</DataMember>
+									<Value>Parent.WarehouseId</Value>
+								</Eval_Phys_WarehouseId_DefaultValueFromParent>
+								<Eval_Phys_AutoCreateItemLotCode_AutoValue>
+									<DataMember>AutoCreateItemLotCode</DataMember>
+									<Value>IIF(Id_ItemLot&gt;0,0,1)</Value>
+									<Expr>!EMPTY(ItemLotCode)</Expr>
+								</Eval_Phys_AutoCreateItemLotCode_AutoValue>
+								<Eval_Phys_ExpiryDate_AutoValue>
+									<DataMember>ExpiryDate</DataMember>
+									<Value>DATEADD(m,Parent.ShelfLife,MfgDate)</Value>
+									<Expr>!EMPTY(Parent.ShelfLife) AND !EMPTY(MfgDate)</Expr>
+								</Eval_Phys_ExpiryDate_AutoValue>
+								<Eval_Phys_Unit_DefaultValueFromParent>
+									<DataMember>Unit</DataMember>
+									<Value>Parent.Unit</Value>
+								</Eval_Phys_Unit_DefaultValueFromParent>
+								<Eval_Phys_ConvertRate9_DefaultValueFromParent>
+									<DataMember>ConvertRate9</DataMember>
+									<Value>Parent.ConvertRate9</Value>
+								</Eval_Phys_ConvertRate9_DefaultValueFromParent>
+								<Eval_Phys_Quantity>
+									<DataMember>Quantity</DataMember>
+									<Value>Quantity9*IIF(Empty(ConvertRate9),1,ConvertRate9)</Value>
+									<zResultDecimalRound>IIF(Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,1)&lt;&gt;1,0,{=CONFIG('M_QuantityDecRound')})</zResultDecimalRound>
+								</Eval_Phys_Quantity>
+								<Eval_Phys_Quantity9_SetValue>
+									<DataMember>Quantity9</DataMember>
+									<zResultDecimalRound>CONFIG('M_QuantityDecRound')</zResultDecimalRound>
+									<Value>IIF(Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,0)=1,
+    IIF(ISNULL(Parent.RemainPhysQuantity9,0)+ISNULL(Quantity9BeforeChange,0)-ISNULL(Quantity9,0)&gt;=0,1,0),
+    IIF(ISNULL(Parent.RemainPhysQuantity9,0)+ISNULL(Quantity9BeforeChange,0)-ISNULL(Quantity9,0)&lt;0,ISNULL(Parent.RemainPhysQuantity9,0)+ISNULL(Quantity9BeforeChange,0),Quantity9))</Value>
+									<allowRunning>Nonnested</allowRunning>
+								</Eval_Phys_Quantity9_SetValue>
+								<Eval_Phys_Quantity_SetValue_WhenIsItemWithSerialNo>
+									<DataMember>Quantity</DataMember>
+									<zResultDecimalRound>0</zResultDecimalRound>
+									<Value>Quantity</Value>
+									<Expr>Parent.IsItemWithSerialNo=1 AND ISNULL(ConvertRate9,0)&lt;&gt;1</Expr>
+									<allowRunning>Nonnested</allowRunning>
+								</Eval_Phys_Quantity_SetValue_WhenIsItemWithSerialNo>
+							</Evaluators>
+							<EvaluatorGroups>
+								<Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue>
+									<Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue1>
+										<DataMember>Quantity9</DataMember>
+										<Value>IIF(Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,0)=1 AND ISNULL(Quantity9,0)&gt;1, 1, IIF(ISNULL(Parent.RemainPhysQuantity9,0)&gt;=1 AND Quantity9=0,1,Quantity9))</Value>
+										<Expr>Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,0)=1</Expr>
+									</Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue1>
+									<Eval_PhysTotalQuantity9_GetValueFromChild />
+									<Eval_RemainPhysQuantity9_SetValue />
+								</Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue>
+							</EvaluatorGroups>
+							<RowAdded>
+								<Eval_Phys_FiscalYear_SetValue />
+								<Eval_Phys_DocGroup_DefaultValueFromParent />
+								<Eval_Phys_ItemId_DefaultValueFromParent />
+								<Eval_Phys_WarehouseId_DefaultValueFromParent />
+								<Eval_Phys_QuantityAdded_AutoValue>
+									<DataMember>QuantityAdded</DataMember>
+									<zResultDecimalRound>CONFIG('M_QuantityDecRound')</zResultDecimalRound>
+									<Value>IIF(Parent.IsItemWithSerialNo=1,IIF(ISNULL(Parent.RemainPhysQuantity,0)&gt;=1,1,0),IIF(ISNULL(Parent.RemainPhysQuantity,0)&lt;=0,0,ISNULL(Parent.RemainPhysQuantity,0)))</Value>
+									<bSuppressChangeEvents>False</bSuppressChangeEvents>
+								</Eval_Phys_QuantityAdded_AutoValue>
+								<Eval_Phys_Quantity_AutoValue>
+									<DataMember>Quantity</DataMember>
+									<Value>QuantityAdded</Value>
+									<bSuppressChangeEvents>True</bSuppressChangeEvents>
+								</Eval_Phys_Quantity_AutoValue>
+								<Eval_PhysTotalQuantity_GetValueFromChild />
+								<Eval_RemainPhysQuantity_SetValue />
+								<Eval_Phys_ConvertRate9_DefaultValueFromParent />
+								<Eval_Phys_Unit_DefaultValueFromParent />
+								<Eval_Phys_Quantity9Added_AutoValue>
+									<DataMember>Quantity9Added</DataMember>
+									<zResultDecimalRound>CONFIG('M_QuantityDecRound')</zResultDecimalRound>
+									<Value>IIF(Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,0)=1,
+    IIF(ISNULL(Parent.RemainPhysQuantity9,0)&gt;=1,1,0),
+    IIF(ISNULL(Parent.RemainPhysQuantity9,0)&lt;=0,0,ISNULL(Parent.RemainPhysQuantity9,0)))</Value>
+									<Expr>EMPTY(_PhysConvertingFlag)</Expr>
+								</Eval_Phys_Quantity9Added_AutoValue>
+								<Eval_Phys_Quantity9_AutoValue>
+									<DataMember>Quantity9</DataMember>
+									<Value>Quantity9Added</Value>
+									<bSuppressChangeEvents>True</bSuppressChangeEvents>
+									<Expr>EMPTY(_PhysConvertingFlag)</Expr>
+								</Eval_Phys_Quantity9_AutoValue>
+								<Eval_PhysTotalQuantity9_GetValueFromChild />
+								<Eval_RemainPhysQuantity9_SetValue />
+								<Eval_Phys_Quantity />
+								<Eval_Phys_QuantityAdded_ResetValue />
+								<Eval_Phys_Quantity9Added_ResetValue />
+								<Eval_PhysConvertingFlag_ResetValue>
+									<DataMember>_PhysConvertingFlag</DataMember>
+									<Value>NULL</Value>
+								</Eval_PhysConvertingFlag_ResetValue>
+							</RowAdded>
+							<TableMerged>
+								<Eval_PhysTotalQuantity_GetValueFromChild />
+								<Eval_RemainPhysQuantity_SetValue />
+								<Eval_PhysTotalQuantity9_GetValueFromChild />
+								<Eval_RemainPhysQuantity9_SetValue />
+							</TableMerged>
+							<ColumnChanging>
+								<Quantity>
+									<Eval_QuantityBeforeChange_SetValue>
+										<DataMember>QuantityBeforeChange</DataMember>
+										<Value>ISNULL(Quantity,0)</Value>
+									</Eval_QuantityBeforeChange_SetValue>
+								</Quantity>
+								<Quantity9>
+									<Eval_Quantity9BeforeChange_SetValue>
+										<DataMember>Quantity9BeforeChange</DataMember>
+										<Value>ISNULL(Quantity9,0)</Value>
+									</Eval_Quantity9BeforeChange_SetValue>
+								</Quantity9>
+							</ColumnChanging>
+							<ColumnChanged>
+								<ConvertRate9>
+									<Eval_Phys_Quantity />
+								</ConvertRate9>
+								<Quantity9>
+									<Eval_Phys_Quantity9_SetValue>EMPTY(Quantity9Added) AND (Quantity9BeforeChange IS NOT NULL OR Quantity9SaveValue=0)</Eval_Phys_Quantity9_SetValue>
+									<Eval_Phys_Quantity9Added_ResetValue>
+										<DataMember>Quantity9Added</DataMember>
+										<Value>NULL</Value>
+									</Eval_Phys_Quantity9Added_ResetValue>
+									<Eval_Quantity9BeforeChange_SetNullValue>
+										<DataMember>Quantity9BeforeChange</DataMember>
+										<Value>Null</Value>
+									</Eval_Quantity9BeforeChange_SetNullValue>
+									<Eval_PhysTotalQuantity9_GetValueFromChild />
+									<Eval_RemainPhysQuantity9_SetValue />
+									<Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue>Parent.IsItemWithSerialNo=1 AND ISNULL(Parent.ConvertRate9,0)=1</Eval_Phys_Quantity9_IsItemWithSerialNo_DefaultValue>
+									<Eval_Phys_Quantity />
+									<Eval_Phy_Quantity9SaveValue>
+										<DataMember>Quantity9SaveValue</DataMember>
+										<Value>IIF(Quantity9=0,0,NULL)</Value>
+									</Eval_Phy_Quantity9SaveValue>
+								</Quantity9>
+								<Quantity>
+									<Eval_Phys_Quantity_SetValue>ISNULL(Quantity,0)&lt;&gt;ISNULL(QuantityAdded,0) OR EMPTY(QuantityAdded)</Eval_Phys_Quantity_SetValue>
+									<Eval_Phys_QuantityAdded_ResetValue>
+										<DataMember>QuantityAdded</DataMember>
+										<Value>NULL</Value>
+									</Eval_Phys_QuantityAdded_ResetValue>
+									<Eval_QuantityBeforeChange_SetNullValue>
+										<DataMember>QuantityBeforeChange</DataMember>
+										<Value>Null</Value>
+									</Eval_QuantityBeforeChange_SetNullValue>
+									<Eval_PhysTotalQuantity_GetValueFromChild />
+									<Eval_RemainPhysQuantity_SetValue />
+									<Eval_Phys_Quantity_ResetAutoValue>
+										<DataMember>Quantity</DataMember>
+										<Value>IIF(ISNULL(Parent.RemainPhysQuantity9,0)=0 AND ISNULL(Parent.RemainPhysQuantity,0)&lt;&gt;0,Quantity+ISNULL(Parent.RemainPhysQuantity,0),Quantity)</Value>
+										<Expr>Parent.IsItemWithSerialNo&lt;&gt;1 AND ISNULL(Parent.UpdatedColName,'')&lt;&gt;'ConvertRate9'</Expr>
+									</Eval_Phys_Quantity_ResetAutoValue>
+								</Quantity>
+								<ItemLotCode>
+									<Eval_Phys_ItemLotCode_BindingMembers />
+									<Eval_Phys_AutoCreateItemLotCode_AutoValue>CONFIG('M_AllowCreateItemLot')=1</Eval_Phys_AutoCreateItemLotCode_AutoValue>
+								</ItemLotCode>
+								<AutoCreateItemLotCode>
+									<Eval_Phys_ItemLotCode_BindingMembers>EMPTY(AutoCreateItemLotCode)</Eval_Phys_ItemLotCode_BindingMembers>
+								</AutoCreateItemLotCode>
+								<MfgDate>
+									<Eval_Phys_ExpiryDate_AutoValue />
+								</MfgDate>
+							</ColumnChanged>
+							<UniqueKey>
+								<ItemSerialNo>ItemSerialNo,ItemId</ItemSerialNo>
+							</UniqueKey>
+							<Validators>
+								<ItemSerialNoUnique>
+									<ClassName>BravoServerConstraintValidator</ClassName>
+									<Command>ufn_Stats_CheckUniqueItemSerialNo</Command>
+									<SourceColumn>BranchCode,FiscalYear,ItemId,ItemSerialNo,WarehouseId,DocGroup,RowId</SourceColumn>
+									<TargetColumn>ItemSerialNo</TargetColumn>
+									<Expr>!Empty(ItemSerialNo)</Expr>
+									<Text>
+										<Vietnamese>Số serial phải duy nhất.</Vietnamese>
+										<English>The serial number must be unique.</English>
+										<Chinese>序列号必须是唯一的。</Chinese>
+										<Japanese>シリアル番号は一意である必要があります。</Japanese>
+										<Korean>그 일련 번호 고유해야 합니다.</Korean>
+									</Text>
+								</ItemSerialNoUnique>
+								<CheckQuantity>
+									<SourceColumn>Quantity,Quantity9</SourceColumn>
+								</CheckQuantity>
+								<CheckQuantitySerialNo>
+									<SourceColumn>Quantity,Quantity9</SourceColumn>
+									<zValidateExpr>Empty(Parent.IsItemWithSerialNo) OR (!Empty(Parent.IsItemWithSerialNo) AND ISNULL(Quantity,0)=1)</zValidateExpr>
+									<Text>
+										<Vietnamese>Số lượng serial không hợp lệ.</Vietnamese>
+										<English>Invalid quantity</English>
+										<Chinese>数量无效</Chinese>
+										<Japanese>無効な数量。</Japanese>
+										<Korean>잘못된 수량</Korean>
+									</Text>
+								</CheckQuantitySerialNo>
+								<CheckItemSerialNo>
+									<SourceColumn>ItemSerialNo</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithSerialNo) AND Empty(ItemSerialNo))</zValidateExpr>
+								</CheckItemSerialNo>
+								<CheckLocationId>
+									<SourceColumn>LocationId</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithLocation) AND Empty(LocationId))</zValidateExpr>
+								</CheckLocationId>
+								<CheckItemLotCode>
+									<SourceColumn>ItemLotCode</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithLot) AND Empty(ItemLotCode))</zValidateExpr>
+								</CheckItemLotCode>
+								<CheckColorCode>
+									<SourceColumn>ColorCode</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithColor) AND Empty(ColorCode))</zValidateExpr>
+								</CheckColorCode>
+								<CheckSizeCode>
+									<SourceColumn>SizeCode</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithSize) AND Empty(SizeCode))</zValidateExpr>
+								</CheckSizeCode>
+								<CheckItemQualityCode>
+									<SourceColumn>ItemQualityCode</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithQuality) AND Empty(ItemQualityCode))</zValidateExpr>
+								</CheckItemQualityCode>
+								<CheckWarehouseId_location>
+									<ClassName>BravoValidator</ClassName>
+									<SourceColumn>LocationId,WarehouseId</SourceColumn>
+									<zValidateExpr>!(!Empty(Parent.IsItemWithLocation) AND WarehouseId_location&lt;&gt;PARENT.WarehouseId)</zValidateExpr>
+									<Text>
+										<Vietnamese>Vị trí không có trong kho</Vietnamese>
+										<English>Location not in stock</English>
+										<Japanese>在庫の場所ではありません</Japanese>
+										<Chinese>地点不是在股票</Chinese>
+										<Korean>재고 위치하지</Korean>
+									</Text>
+								</CheckWarehouseId_location>
+								<CheckExpiryDate>
+									<ClassName>BravoValidator</ClassName>
+									<SourceColumn>MfgDate,ExpiryDate</SourceColumn>
+									<zValidateExpr>MfgDate&lt;=ExpiryDate OR EMPTY(ExpiryDate)</zValidateExpr>
+									<Text>
+										<Vietnamese>Ngày hết hạn phải sau ngày sản xuất</Vietnamese>
+										<English>Expiration date must be after production date</English>
+										<Japanese>有効期限は製造日の後でなければなりません</Japanese>
+										<Chinese>到期日必须在生产日期之后</Chinese>
+										<Korean>만료일은 생산일 이후 여야합니다.</Korean>
+									</Text>
+								</CheckExpiryDate>
+							</Validators>
+							<BeforeTransaction>
+								<Eval_Phys_DeleteIfIsNormalItem>
+									<ClassName>BravoDeleteRowEvaluator</ClassName>
+									<Expr>Empty(Parent.IsItemWithLocation) AND Empty(Parent.IsItemWithLot) AND Empty(Parent.IsItemWithSerialNo) AND Empty(Parent.IsItemWithColor) AND Empty(Parent.IsItemWithSize) AND Empty(Parent.IsItemWithQuality)</Expr>
+								</Eval_Phys_DeleteIfIsNormalItem>
+								<Eval_Phys_DefaultValueFromParent>
+									<ClassName>BravoCopyValue</ClassName>
+									<CopyValues>
+										<DocDate>Parent.DocDate</DocDate>
+										<StatsDocId>Parent.StatsDocId</StatsDocId>
+										<DocCode>Parent.DocCode</DocCode>
+										<DocGroup>Parent.DocGroup</DocGroup>
+										<LocationId>IIF(Empty(Parent.IsItemWithLocation),NULL,LocationId)</LocationId>
+									</CopyValues>
+								</Eval_Phys_DefaultValueFromParent>
+								<Eval_Phys_ItemLotCode_AutoCreate>
+									<ClassName>BravoServerConstraint</ClassName>
+									<Command>usp_B20ItemLot_CreateFromItemReceipt</Command>
+									<dataAccessMode>Write</dataAccessMode>
+									<Parameters>
+										<ItemLotCode>ItemLotCode</ItemLotCode>
+										<ItemId>Parent.ItemId</ItemId>
+										<MfgDate>MfgDate</MfgDate>
+										<ExpiryDate>ExpiryDate</ExpiryDate>
+										<nUserId>USER('Id')</nUserId>
+									</Parameters>
+									<Expr>!EMPTY(AutoCreateItemLotCode)</Expr>
+									<Text />
+								</Eval_Phys_ItemLotCode_AutoCreate>
+								<Eval_Phys_RowId_AutoValue>
+									<ClassName>BravoServerConstraint</ClassName>
+									<Command>ufn_sys_CreateSttBySeq</Command>
+									<dataAccessMode>Write</dataAccessMode>
+									<Parameters>
+										<TableName>LayoutTableName()</TableName>
+										<Ws_Id>Branch('Ws_Id')</Ws_Id>
+										<Ext>Parent.DocCode</Ext>
+									</Parameters>
+									<DataMember>RowId</DataMember>
+									<Expr>Empty(RowId)</Expr>
+									<Text />
+								</Eval_Phys_RowId_AutoValue>
+							</BeforeTransaction>
+							<DefaultValues>
+								<BranchCode>Branch()</BranchCode>
+								<StatusNote>'Hàng mới'</StatusNote>
+							</DefaultValues>
+						</phys>
+					</ChildCollection>
+				</ChildTable_Ct0>
+				<AtchFile template="FileStore">
+					<Name>vB20FileStore</Name>
+					<ParentKey>StatsDocId</ParentKey>
+					<ChildKey>Stt</ChildKey>
+					<Sort>BuiltinOrder</Sort>
+					<CopyMode>Never</CopyMode>
+					<RowAdded>
+						<Eval_AtchFile_DocCode_SetValueFromParent>
+							<DataMember>DocCode</DataMember>
+							<Value>Parent.DocCode</Value>
+						</Eval_AtchFile_DocCode_SetValueFromParent>
+					</RowAdded>
+					<ColumnChanged>
+						<FileSize>
+							<Eval_AtchFile_FileSizeInKB>
+								<DataMember>FileSize</DataMember>
+								<Value>FileSize/1024</Value>
+								<bSuppressChangeEvents>True</bSuppressChangeEvents>
+							</Eval_AtchFile_FileSizeInKB>
+						</FileSize>
+					</ColumnChanged>
+					<Validators>
+						<NotNull>
+							<SourceColumn>FileName</SourceColumn>
+						</NotNull>
+					</Validators>
+				</AtchFile>
+			</ChildCollection>
+		</Ct>
+	</TableCollection>
+</root>

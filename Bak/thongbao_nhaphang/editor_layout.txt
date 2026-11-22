@@ -1,0 +1,1284 @@
+<root>
+	<navigator>
+		<LinkCommand>
+			<Items>
+				<Item_RC>
+					<Caption>
+						<English>Get the details of Receipt command</English>
+						<Vietnamese>Lấy chi tiết Lệnh nhập hàng</Vietnamese>
+						<Japanese>在庫納品伝票の詳細を取得する</Japanese>
+						<Chinese>获取库存发货凭证详情</Chinese>
+						<Korean>재고 배송 바우처의 세부 정보를 가져옵니다.</Korean>
+					</Caption>
+					<Execute>
+						<Eval_GetDetailData_FromRC />
+					</Execute>
+				</Item_RC>
+			</Items>
+		</LinkCommand>
+	</navigator>
+	<panelEditor>
+		<Dock>Fill</Dock>
+		<Rows>
+			<Row_1>
+				<SizeType>Percent</SizeType>
+				<Height>50</Height>
+			</Row_1>
+			<Row_2>
+				<SizeType>Percent</SizeType>
+				<Height>50</Height>
+			</Row_2>
+		</Rows>
+		<Cols>
+			<Column_0>
+				<SizeType>Percent</SizeType>
+				<Width>100</Width>
+			</Column_0>
+		</Cols>
+		<Controls>
+			<panelParent>
+				<Margin>5,5,5,2</Margin>
+				<AutoSize>True</AutoSize>
+				<Dock>Fill</Dock>
+				<Row />
+				<Column>0</Column>
+				<Cols>
+					<Column_0>
+						<SizeType>Percent</SizeType>
+						<Width>55</Width>
+					</Column_0>
+					<Column_1>
+						<SizeType>Absolute</SizeType>
+						<Width>10</Width>
+					</Column_1>
+					<Column_2>
+						<SizeType>Percent</SizeType>
+						<Width>45</Width>
+					</Column_2>
+				</Cols>
+				<Controls>
+					<panelHeaderLeft>
+						<Row />
+						<AutoSize>True</AutoSize>
+						<Column>0</Column>
+						<Dock>Fill</Dock>
+						<Margin>0,0,10,0</Margin>
+						<Cols>
+							<Column_1>
+								<SizeType>Percent</SizeType>
+								<Width>100</Width>
+							</Column_1>
+						</Cols>
+						<Controls>
+							<lblDocDate>
+								<Text>
+									<Vietnamese>Ngày</Vietnamese>
+									<English>Date</English>
+									<Japanese>日</Japanese>
+									<Chinese>天</Chinese>
+									<Korean>일</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblDocDate>
+							<panelDocDate>
+								<Dock>Fill</Dock>
+								<Column>1</Column>
+								<ColumnSpan>1</ColumnSpan>
+								<Cols>
+									<Column_0>
+										<SizeType>Absolute</SizeType>
+										<Width>100</Width>
+									</Column_0>
+									<Column_2>
+										<SizeType>Absolute</SizeType>
+										<Width>110</Width>
+									</Column_2>
+									<Column_4>
+										<SizeType>Percent</SizeType>
+										<Width>40</Width>
+									</Column_4>
+								</Cols>
+								<Controls>
+									<txtDocDate>
+										<ClassName>BravoDateInputBox</ClassName>
+										<DataMember>DocDate</DataMember>
+										<Column>0</Column>
+										<Row />
+										<Anchor>Top,Left,Right</Anchor>
+									</txtDocDate>
+									<lblDocNo>
+										<Text>
+											<Vietnamese>Số</Vietnamese>
+											<English>No.</English>
+											<Japanese>数</Japanese>
+											<Korean>번호</Korean>
+											<Chinese>数</Chinese>
+										</Text>
+										<Column>1</Column>
+										<Row>0</Row>
+									</lblDocNo>
+									<txtDocNo>
+										<ClassName>BravoTextBox</ClassName>
+										<CharacterCasing>Upper</CharacterCasing>
+										<DataMember>DocNo</DataMember>
+										<Column>2</Column>
+										<Anchor>15</Anchor>
+									</txtDocNo>
+									<panelCurrencyCode>
+										<Anchor>Top,Left,Right</Anchor>
+										<Column>3</Column>
+										<Controls>
+											<lblCurrencyCode>
+												<Text>
+													<Vietnamese>Tiền tệ</Vietnamese>
+													<English>Currency</English>
+													<Chinese>货币</Chinese>
+													<Japanese>通貨</Japanese>
+													<Korean>통화.</Korean>
+												</Text>
+												<Column>0</Column>
+											</lblCurrencyCode>
+											<lookupCurrencyCode>
+												<bindingMembers>
+													<ExchangeRateOperator>ExchangeRateOperator</ExchangeRateOperator>
+													<DecimalRound>DecimalRound</DecimalRound>
+													<Id>Id_Currency</Id>
+												</bindingMembers>
+												<ClassName>BravoLookupBox</ClassName>
+												<DataMember>CurrencyCode</DataMember>
+												<zDisplayTextFormat>{0}</zDisplayTextFormat>
+												<SelectKey>IsGroup=False</SelectKey>
+												<LookupKey>Currency</LookupKey>
+												<Width>68</Width>
+												<Column>1</Column>
+											</lookupCurrencyCode>
+											<txtExchangeRate>
+												<ClassName>BravoNumericInputBox</ClassName>
+												<DataMember>ExchangeRate</DataMember>
+												<Width>80</Width>
+												<Column>2</Column>
+												<Style>Format:N2;</Style>
+												<Enabled expr="True">{=CurrencyCode&lt;&gt;CONFIG('M_Ma_Tte0')}</Enabled>
+											</txtExchangeRate>
+										</Controls>
+										<AutoSize>True</AutoSize>
+									</panelCurrencyCode>
+								</Controls>
+								<AutoSize>True</AutoSize>
+							</panelDocDate>
+							<lblCustomerId>
+								<Text>
+									<Vietnamese>Đối tượng</Vietnamese>
+									<!--09/12/2024 LienNTP sửa text-->
+									<English>Cus</English>
+									<Japanese>顧客</Japanese>
+									<Chinese>顾客</Chinese>
+									<Korean>키.</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblCustomerId>
+							<lookupCustomerId>
+								<bindingMembers />
+								<ClassName>BravoLookupBox</ClassName>
+								<DataMember>CustomerId</DataMember>
+								<LookupKey>Customer</LookupKey>
+								<Column>1</Column>
+								<Dock>Fill</Dock>
+							</lookupCustomerId>
+							<lblEmployeeId>
+								<Text>
+									<Vietnamese>Nhân viên</Vietnamese>
+									<English>Employee</English>
+									<Chinese>员工</Chinese>
+									<Japanese>スタッフ</Japanese>
+									<Korean>직원들.</Korean>
+									<French>lblEmployeeId</French>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblEmployeeId>
+							<lookupEmployeeId>
+								<bindingMembers>
+									<DeptId0>DeptId</DeptId0>
+								</bindingMembers>
+								<ClassName>BravoLookupBox</ClassName>
+								<DataMember>EmployeeId</DataMember>
+								<LookupKey>Employee</LookupKey>
+								<SelectKey>IsGroup=False</SelectKey>
+								<Column>1</Column>
+								<Dock>Fill</Dock>
+							</lookupEmployeeId>
+							<lblDeptId>
+								<Text>
+									<Vietnamese>Bộ phận</Vietnamese>
+									<English>Department</English>
+									<Chinese>部门</Chinese>
+									<Japanese>部門</Japanese>
+									<Korean>부입니다.</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblDeptId>
+							<lookupDeptId>
+								<ClassName>BravoLookupBox</ClassName>
+								<DataMember>DeptId</DataMember>
+								<LookupKey>Dept</LookupKey>
+								<SelectKey>IsGroup=False</SelectKey>
+								<Column>1</Column>
+								<Anchor>15</Anchor>
+								<ColumnSpan>2</ColumnSpan>
+							</lookupDeptId>
+							<lblDescription>
+								<Text>
+									<Vietnamese>Diễn giải</Vietnamese>
+									<English>Description</English>
+									<Chinese>描述</Chinese>
+									<Japanese>説明</Japanese>
+									<Korean>설명.</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblDescription>
+							<txtDescription>
+								<ClassName>BravoTextBox</ClassName>
+								<DataMember>Description</DataMember>
+								<Column>1</Column>
+								<ColumnSpan>2</ColumnSpan>
+								<RowSpan>2</RowSpan>
+								<Dock>Fill</Dock>
+								<Multiline>True</Multiline>
+							</txtDescription>
+						</Controls>
+					</panelHeaderLeft>
+					<panelHeaderRight>
+						<Column>2</Column>
+						<AutoSize>True</AutoSize>
+						<Dock>Fill</Dock>
+						<Margin>5,5,5,2</Margin>
+						<Cols>
+							<Column_0>
+								<SizeType>Absolute</SizeType>
+								<Width>110</Width>
+							</Column_0>
+							<Column_1>
+								<SizeType>Percent</SizeType>
+								<Width>50</Width>
+							</Column_1>
+							<Column_2>
+								<SizeType>Absolute</SizeType>
+								<Width>90</Width>
+							</Column_2>
+							<Column_3>
+								<SizeType>Percent</SizeType>
+								<Width>50</Width>
+							</Column_3>
+						</Cols>
+						<Controls>
+							<lookupDocStatus>
+								<Row />
+								<Column>0</Column>
+								<ColumnSpan>4</ColumnSpan>
+								<bindingMembers>
+									<IsCancelled>IsCancelled</IsCancelled>
+									<PostGL>PostGL</PostGL>
+									<Lock>Lock</Lock>
+								</bindingMembers>
+								<ClassName>BravoLookupBox</ClassName>
+								<DataMember>DocStatus</DataMember>
+								<LookupKey>DocStatus</LookupKey>
+								<FilterKey>Ma_Nvu IS NULL OR Ma_Nvu='B'</FilterKey>
+								<ReadOnly>True</ReadOnly>
+								<TabStop>False</TabStop>
+								<BorderStyle>None</BorderStyle>
+								<Style>BackColor:240,240,240;</Style>
+								<fontStyle>Bold</fontStyle>
+								<TextAlign>Right</TextAlign>
+								<Anchor>Top,Left,Bottom,Right</Anchor>
+							</lookupDocStatus>
+							<lblDriver>
+								<Text>
+									<Vietnamese>Tài xế</Vietnamese>
+									<English>Driver</English>
+									<Japanese>運転手</Japanese>
+									<Chinese>司机</Chinese>
+									<Korean>운전자</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblDriver>
+							<txtDriver>
+								<ClassName>BravoTextBox</ClassName>
+								<DataMember>Driver</DataMember>
+								<Column>1</Column>
+								<Anchor>Top,Left,Right</Anchor>
+							</txtDriver>
+							<lblVehicleId>
+								<Text>
+									<Vietnamese>Biển số xe</Vietnamese>
+									<English>License plate</English>
+									<Japanese>車両番号</Japanese>
+									<Chinese>车牌号码</Chinese>
+									<Korean>차량 번호</Korean>
+								</Text>
+								<Column>2</Column>
+							</lblVehicleId>
+							<lookupVehicleId>
+								<ClassName>BravoLookupBox</ClassName>
+								<LookupKey>Vehicle</LookupKey>
+								<SelectKey>IsGroup=False</SelectKey>
+								<DataMember>VehicleId</DataMember>
+								<Column>3</Column>
+								<Anchor>Top,Left,Right</Anchor>
+								<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+							</lookupVehicleId>
+							<lblTransCode>
+								<Text>
+									<Vietnamese>Mã giao dịch</Vietnamese>
+									<English>Receiving warehouse</English>
+									<Japanese>倉庫を受け取ります</Japanese>
+									<Chinese>接收仓库</Chinese>
+									<Korean>창고를 받으십시오</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+							</lblTransCode>
+							<lookupTransCode>
+								<ClassName>BravoLookupBox</ClassName>
+								<LookupKey>Trans</LookupKey>
+								<SelectKey>IsGroup=False </SelectKey>
+								<FilterKey>transtypecode='41'</FilterKey>
+								<DataMember>TransCode</DataMember>
+								<Column>1</Column>
+								<ColumnSpan>3</ColumnSpan>
+								<Anchor>15</Anchor>
+								<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+							</lookupTransCode>
+							<lblWarehouseId>
+								<Text>
+									<Vietnamese>Kho nhập</Vietnamese>
+									<English>Receiving warehouse</English>
+									<Japanese>倉庫を受け取ります</Japanese>
+									<Chinese>接收仓库</Chinese>
+									<Korean>창고를 받으십시오</Korean>
+								</Text>
+								<Row />
+								<Column>0</Column>
+								<Visible expr="True">{=UsingWarehouseId=1}</Visible>
+							</lblWarehouseId>
+							<lookupWarehouseId>
+								<ClassName>BravoLookupBox</ClassName>
+								<LookupKey>Warehouse</LookupKey>
+								<SelectKey>IsGroup=False</SelectKey>
+								<DataMember>WarehouseId</DataMember>
+								<Column>1</Column>
+								<ColumnSpan>3</ColumnSpan>
+								<Anchor>15</Anchor>
+								<Visible expr="True">{=UsingWarehouseId=1}</Visible>
+								<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+							</lookupWarehouseId>
+						</Controls>
+					</panelHeaderRight>
+				</Controls>
+			</panelParent>
+			<BravoGridContainer>
+				<Assembly>Bravo.DataEditor</Assembly>
+				<ClassName>BravoGridContainer</ClassName>
+				<Dock>Fill</Dock>
+				<Row />
+				<Column>0</Column>
+				<Items>
+					<Item_Detail>
+						<zOpenRelatedChild>!Empty(_PhysicalInventory) AND !Empty(Quantity9)</zOpenRelatedChild>
+						<DataMember>Ct0</DataMember>
+						<Dock>Fill</Dock>
+						<Text>
+							<Vietnamese>Chi tiết</Vietnamese>
+							<English>Details</English>
+							<Japanese>ディテール</Japanese>
+							<Korean>세부 묘사</Korean>
+							<Chinese>详情</Chinese>
+						</Text>
+						<Rows>
+							<Row_0>
+								<Height>50</Height>
+							</Row_0>
+						</Rows>
+						<Cols>
+							<ItemId>
+								<Editor>
+									<bindingMembers>
+										<Name>Name_Item</Name>
+										<Unit>Unit_Item</Unit>
+										<IsItemWithSerialNo>IsItemWithSerialNo</IsItemWithSerialNo>
+										<IsItemWithLocation>IsItemWithLocation_Item,IsItemWithLocation</IsItemWithLocation>
+										<IsItemWithLot>IsItemWithLot</IsItemWithLot>
+										<IsItemWithColor>IsItemWithColor</IsItemWithColor>
+										<IsItemWithSize>IsItemWithSize</IsItemWithSize>
+										<IsItemWithQuality>IsItemWithQuality</IsItemWithQuality>
+										<ItemType>ItemType</ItemType>
+									</bindingMembers>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>Item</LookupKey>
+									<SelectKey>IsGroup=False</SelectKey>
+									<Expr>!Exists(Child(phys))</Expr>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mã hàng</Vietnamese>
+											<English>Item</English>
+											<Chinese>项目</Chinese>
+											<Japanese>アイテム</Japanese>
+											<Korean>항목.</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ItemId>
+							<ItemName>
+								<Editor>
+									<Expr>!Empty(ItemId)</Expr>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>250</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tên hàng hóa, dịch vụ</Vietnamese>
+											<English>Item name</English>
+											<Japanese>項目名</Japanese>
+											<Chinese>项目名称</Chinese>
+											<Korean>상품명</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ItemName>
+							<Unit>
+								<Editor>
+									<bindingMembers>
+										<ConvertRate>ConvertRate9</ConvertRate>
+									</bindingMembers>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>ItemUnit</LookupKey>
+									<FilterKey>ItemId={=ISNULL(ItemId,0)}</FilterKey>
+									<Expr>!Empty(ItemId)</Expr>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>60</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đvt</Vietnamese>
+											<English>Unit</English>
+											<Chinese>单位</Chinese>
+											<Japanese>ユニット</Japanese>
+											<Korean>단위</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Unit>
+							<Quantity9>
+								<Editor>
+									<ClassName>BravoQuantityInputBox</ClassName>
+								</Editor>
+								<Width>60</Width>
+								<Style>TextAlign:RightTop;Format:"Q";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số lượng</Vietnamese>
+											<English>Quantity</English>
+											<Chinese>数量</Chinese>
+											<Japanese>数量</Japanese>
+											<Korean>양이냐.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</Quantity9>
+							<PurchaseUnitPrice>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá hóa đơn mua</Vietnamese>
+											<English>Purchase unit price</English>
+											<Chinese>采购单价</Chinese>
+											<Japanese>購入単価}</Japanese>
+											<Korean>구매 단가</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</PurchaseUnitPrice>
+							<TimeDiscount>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>80</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Giảm giá thời điểm</Vietnamese>
+											<English>Time discount</English>
+											<Chinese>时间折扣</Chinese>
+											<Japanese>時間割引}</Japanese>
+											<Korean>시간 할인</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</TimeDiscount>
+							<InvoiceUnitPrice>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá xuất hóa đơn</Vietnamese>
+											<English>Invoice unit price</English>
+											<Chinese>发票单价</Chinese>
+											<Japanese>請求単価}</Japanese>
+											<Korean>청구 단가</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</InvoiceUnitPrice>
+							<OriginalUnitCost>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá {=CurrencyCode}</Vietnamese>
+											<English>Unit cost {=CurrencyCode}</English>
+											<Chinese>价格{=CurrencyCode}</Chinese>
+											<Japanese>価格{=CurrencyCode}</Japanese>
+											<Korean>가격은{=CurrencyCode}.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</OriginalUnitCost>
+							<OriginalAmount9>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>110</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thành tiền {=CurrencyCode}</Vietnamese>
+											<English>Amount {=CurrencyCode}</English>
+											<Chinese>量的{=CurrencyCode}</Chinese>
+											<Japanese>量{=CurrencyCode}</Japanese>
+											<Korean>건설활 동량{=CurrencyCode}.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</OriginalAmount9>
+							<Amount9>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+									<Expr>!Empty(OriginalAmount9)</Expr>
+								</Editor>
+								<Width>110</Width>
+								<Style>Format:"C";TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thành tiền {=CONFIG('M_Ma_Tte0')}</Vietnamese>
+											<English>{=CONFIG('M_Ma_Tte0')} Amount</English>
+											<Chinese>{=CONFIG('M_Ma_Tte0')}金额</Chinese>
+											<Japanese>{=CONFIG('M_Ma_Tte0')}額</Japanese>
+											<Korean>{=CONFIG('M_Ma_Tte0')}에 따른.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</Amount9>
+							<TaxCode>
+								<Editor>
+									<bindingMembers>
+										<Rate>TaxRate</Rate>
+										<Type>TaxType</Type>
+										<PriceIncludeTax>PriceIncludeTax</PriceIncludeTax>
+									</bindingMembers>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>Tax</LookupKey>
+									<SelectKey>IsGroup=False AND Type=1</SelectKey>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>45</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thuế</Vietnamese>
+											<English>VAT</English>
+											<Chinese>增值税</Chinese>
+											<Japanese>付加価値税（VAT）</Japanese>
+											<Korean>부가 가치세.</Korean>
+											<French />
+										</Text>
+										<Style>TextAlign:CenterCenter;</Style>
+									</Row_0>
+								</Rows>
+							</TaxCode>
+							<TaxRate>
+								<Style>BackColor:LavenderBlush;Format:"P0";TextAlign:RightTop;</Style>
+								<Width>45</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>%VAT</Vietnamese>
+											<English>%VAT</English>
+											<Chinese>增值税％</Chinese>
+											<Japanese>％の付加価値税</Japanese>
+											<Korean>%의 부가 가치세.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</TaxRate>
+							<OriginalAmount3>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+									<Expr>!Empty(TaxCode)</Expr>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:RightTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tiền thuế {=CurrencyCode}</Vietnamese>
+											<English>VAT amount {=CurrencyCode}</English>
+											<Chinese>增值税额{=CurrencyCode}</Chinese>
+											<Japanese>付加価値税の額{=CurrencyCode}</Japanese>
+											<Korean>부가 가치세 금액{=CurrencyCode}.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</OriginalAmount3>
+							<Amount3>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+									<Expr>!Empty(OriginalAmount3)</Expr>
+								</Editor>
+								<Width>90</Width>
+								<Style>BackColor:LavenderBlush;TextAlign:RightTop;Format:"C";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tiền thuế {=CONFIG('M_Ma_Tte0')}</Vietnamese>
+											<English>VAT amount {=CONFIG('M_Ma_Tte0')}</English>
+											<Chinese>增值税额{=CONFIG('M_Ma_Tte0')}</Chinese>
+											<Japanese>付加価値税の額{=CONFIG('M_Ma_Tte0')}</Japanese>
+											<Korean>부가 가치세 금액{=CONFIG('M_Ma_Tte0')}.</Korean>
+											<French />
+										</Text>
+									</Row_0>
+								</Rows>
+							</Amount3>
+							<AtchDocDate>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ngày HĐ</Vietnamese>
+											<English>Inv. Date</English>
+											<Chinese>账单日</Chinese>
+											<Japanese>ビル日</Japanese>
+											<Korean>빌 날짜다.</Korean>
+										</Text>
+										<Style>UserData:AtchDocDate;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocDate;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocDate>
+							<AtchDocNo>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+									<bRestrictedUnicode>True</bRestrictedUnicode>
+									<CharacterCasing>Upper</CharacterCasing>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số HĐ</Vietnamese>
+											<English>Inv. No.</English>
+											<Chinese>账单号码</Chinese>
+											<Japanese>ビル·ナンバー</Japanese>
+											<Korean>빌은 수.</Korean>
+										</Text>
+										<Style>UserData:AtchDocNo;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocNo;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocNo>
+							<AtchDocFormNo>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+									<bRestrictedUnicode>True</bRestrictedUnicode>
+									<CharacterCasing>Upper</CharacterCasing>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mẫu số</Vietnamese>
+											<English>Form No.</English>
+											<Chinese>表格编号</Chinese>
+											<Japanese>書式番号</Japanese>
+											<Korean>문서 번호</Korean>
+										</Text>
+										<Style>UserData:AtchDocFormNo;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocFormNo;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocFormNo>
+							<ReceiptDate_EO>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>95</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Hạn nhập kho đơn hàng sớm</Vietnamese>
+											<English>Early order receipt due date</English>
+											<Japanese>早期注文受付締切日</Japanese>
+											<Chinese>早期订单接收截止日期</Chinese>
+											<Korean>조기 주문 접수 마감일</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ReceiptDate_EO>
+							<DiscountRate_EO>
+								<Style>TextAlign:RightTop;Format:P2;</Style>
+								<Width>95</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Chiết khấu đơn hàng sớm (%)</Vietnamese>
+											<English>Early order discount rate</English>
+											<Japanese>早期注文割引率</Japanese>
+											<Chinese>提前订购折扣率</Chinese>
+											<Korean>조기 주문 할인율</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</DiscountRate_EO>
+							<BizDocId_PO>
+								<Editor>
+									<FilterKey>CustomerId = {=ISNULL(Parent.CustomerId, 0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE) AND PostSL=1 AND ISNULL(Closed,0)=0 AND IsActive=True</FilterKey>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>BizDocPO</LookupKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn đặt hàng mua</Vietnamese>
+											<English>Purchase order</English>
+											<Japanese>購入を注文します</Japanese>
+											<Chinese>订购购买</Chinese>
+											<Korean>주문 구매</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</BizDocId_PO>
+							<ClosedDate>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ngày đóng</Vietnamese>
+											<English>Closed date</English>
+											<Chinese>关闭日期</Chinese>
+											<Japanese>閉鎖日</Japanese>
+											<Korean>종료일</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ClosedDate>
+							<SpeakerBOMType>
+								<Visible>False</Visible>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>80</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Loại BOM loa</Vietnamese>
+											<English>Speaker BOM type</English>
+											<Japanese>スピーカーBOMタイプ</Japanese>
+											<Chinese>扬声器BOM类型</Chinese>
+											<Korean>스피커 BOM 유형</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</SpeakerBOMType>
+							<SpeakerBOMTypeName>
+								<ReadOnly>True</ReadOnly>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Loại BOM loa</Vietnamese>
+											<English>Speaker BOM type</English>
+											<Japanese>スピーカーBOMタイプ</Japanese>
+											<Chinese>扬声器BOM类型</Chinese>
+											<Korean>스피커 BOM 유형</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</SpeakerBOMTypeName>
+							<SpeakerBOMId>
+								<Visible>False</Visible>
+							</SpeakerBOMId>
+							<SpeakerBOMCode>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mã BOM loa</Vietnamese>
+											<English>Speaker BOM code</English>
+											<Japanese>スピーカーBOMコード</Japanese>
+											<Chinese>扬声器BOM代码</Chinese>
+											<Korean>스피커 BOM 코드</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</SpeakerBOMCode>
+							<BizDocId_TH>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<FilterKey>CustomerId={=ISNULL(Parent.CustomerId,0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE);</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Yêu cầu trả hàng</Vietnamese>
+											<English>Sales return request</English>
+											<Chinese>退货申请</Chinese>
+											<Japanese>返品依頼</Japanese>
+											<Korean>반품 요청</Korean>
+										</Text>
+										<Style>UserData:BizDocId_TH;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:BizDocId_TH;</Style>
+									</Row_1>
+								</Rows>
+							</BizDocId_TH>
+							<StatsDocId_SN>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<FilterKey>CustomerId={=ISNULL(Parent.CustomerId,0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE);</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Phiếu nhập kho</Vietnamese>
+											<English>Goods receipt</English>
+											<Chinese>入库单</Chinese>
+											<Japanese>入庫伝票</Japanese>
+											<Korean>입고전표</Korean>
+										</Text>
+										<Style>UserData:StatsDocId_SN;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:StatsDocId_SN;</Style>
+									</Row_1>
+								</Rows>
+							</StatsDocId_SN>
+							<BizDocId_RC>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>BizDoc</LookupKey>
+									<FilterKey>DocCode='RC' AND IsActive=True</FilterKey>
+								</Editor>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Lệnh nhập hàng</Vietnamese>
+											<English>Import order</English>
+											<Chinese>入库单</Chinese>
+											<Japanese>入庫指示書</Japanese>
+											<Korean>입고 지시서</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</BizDocId_RC>
+							<Remark>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>200</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ghi chú</Vietnamese>
+											<English>Note</English>
+											<Chinese>备注</Chinese>
+											<Japanese>発言</Japanese>
+											<Korean>레마르크.</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Remark>
+						</Cols>
+					</Item_Detail>
+					<Item_AtchFile>
+						<DataMember>vB20FileStore</DataMember>
+						<Cols>
+							<FileName>
+								<FileHandle>
+									<AllowFileType>All</AllowFileType>
+									<FileSizeLimit>8388608</FileSizeLimit>
+									<DialogFileFilter>DocumentFiles,ImageFiles</DialogFileFilter>
+									<FileOverwriteOption>Overwrite</FileOverwriteOption>
+									<DisplayFileNameOnly>True</DisplayFileNameOnly>
+									<DestinationFolder>CONFIG('M_DefaultSubFolder_Data') + '/' + NEWID()</DestinationFolder>
+									<selectedMembers>
+										<FileSize>FileSize</FileSize>
+										<FileReadTimeUTC>LastUploaded</FileReadTimeUTC>
+										<FileNameWithoutExtension>FileNameWithoutExtension</FileNameWithoutExtension>
+										<FileExtension>FileExtension</FileExtension>
+									</selectedMembers>
+								</FileHandle>
+								<Width>450</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tài liệu/Liên kết</Vietnamese>
+											<English>File/URL</English>
+											<Japanese>ファイル/パス</Japanese>
+											<Chinese>文件/路径</Chinese>
+											<Korean>파일/경로</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</FileName>
+							<Description>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+								</Editor>
+								<Width>360</Width>
+								<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mô tả</Vietnamese>
+											<English>Description</English>
+											<Japanese>説明</Japanese>
+											<Chinese>描述</Chinese>
+											<Korean>설명</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Description>
+							<FileSize>
+								<Width>92</Width>
+								<Style>TextAlign:RightTop;Format:N0;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Dung lượng (KB)</Vietnamese>
+											<English>File size (KB)</English>
+											<Japanese>ファイルサイズ (KB)</Japanese>
+											<Chinese>文件大小 (KB)</Chinese>
+											<Korean>파일 크기 (KB)</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</FileSize>
+							<LastUploaded>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+									<CurrentTimeZone>False</CurrentTimeZone>
+									<Expr>False</Expr>
+								</Editor>
+								<Width>130</Width>
+								<Style>Format:"dd/MM/yyyy HH:mm:ss";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Sửa đổi gần nhất</Vietnamese>
+											<English>Last uploaded</English>
+											<Japanese>最終アップロード</Japanese>
+											<Chinese>上次上传</Chinese>
+											<Korean>마지막 업로드</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</LastUploaded>
+						</Cols>
+						<Text>
+							<Vietnamese>Tài liệu đính kèm</Vietnamese>
+							<English>File attachment</English>
+							<Japanese>添付ファイル</Japanese>
+							<Chinese>文件附件</Chinese>
+							<Korean>파일 첨부 파일</Korean>
+						</Text>
+					</Item_AtchFile>
+				</Items>
+			</BravoGridContainer>
+			<BravoGridContainer_phys>
+				<Assembly>Bravo.DataEditor</Assembly>
+				<ClassName>BravoGridContainer</ClassName>
+				<Dock>Fill</Dock>
+				<Row />
+				<Column>0</Column>
+				<Items>
+					<Item_Phys>
+						<DataMember>phys</DataMember>
+						<DeleteRowEvent>
+							<Execute>
+								<Eval_PhysTotalQuantity_GetValueFromChild />
+								<Eval_RemainPhysQuantity_SetValue />
+							</Execute>
+						</DeleteRowEvent>
+						<Rows>
+							<Row_0 />
+						</Rows>
+						<Cols>
+							<Quantity9>
+								<Visible>False</Visible>
+								<Editor>
+									<ClassName>BravoQuantityInputBox</ClassName>
+								</Editor>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số lượng</Vietnamese>
+											<English>Quantity</English>
+											<Chinese>数量 </Chinese>
+											<Japanese>数量 </Japanese>
+											<Korean>양이냐.</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+								<Width>80</Width>
+							</Quantity9>
+							<Unit>
+								<Visible>False</Visible>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>50</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn vị tính</Vietnamese>
+											<English>Unit</English>
+											<Chinese>单位</Chinese>
+											<Japanese>ユニット</Japanese>
+											<Korean>단위</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Unit>
+							<ConvertRate9>
+								<Style>TextAlign:RightTop;</Style>
+								<Width>0</Width>
+								<Visible>False</Visible>
+							</ConvertRate9>
+							<Quantity>
+								<Visible>False</Visible>
+								<Editor>
+									<ClassName>BravoQuantityInputBox</ClassName>
+									<Expr>False</Expr>
+								</Editor>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số lượng (ĐVT chuẩn)</Vietnamese>
+											<English>Quantity (Standard unit)</English>
+											<Japanese>量（標準ユニット）</Japanese>
+											<Korean>수량 (표준 단위)</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+								<Width>80</Width>
+							</Quantity>
+							<ItemSerialNo>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+									<bRestrictedUnicode>True</bRestrictedUnicode>
+									<CharacterCasing>Upper</CharacterCasing>
+									<Expr>!Empty(Parent.IsItemWithSerialNo)</Expr>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<!--Visible expr="True">{=IsItemWithSerialNo=1}</Visible-->
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Serial#</Vietnamese>
+											<English>Serial#</English>
+											<Chinese>序列号</Chinese>
+											<Japanese>シリアル＃</Japanese>
+											<Korean>연쇄 #.</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ItemSerialNo>
+							<LocationId>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<bindingMembers>
+										<Name>LocationName</Name>
+										<WarehouseId>WarehouseId_location</WarehouseId>
+									</bindingMembers>
+									<LookupKey>Location</LookupKey>
+									<SelectKey>IsGroup=False</SelectKey>
+									<FilterKey>WarehouseId={=ISNULL(Parent.WarehouseId,0)}</FilterKey>
+									<Expr>!Empty(Parent.IsItemWithLocation)</Expr>
+								</Editor>
+								<!--Visible expr="True">{=!Empty(IsItemWithLocation)}</Visible-->
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Vị trí</Vietnamese>
+											<English>Location</English>
+											<Chinese>位置</Chinese>
+											<Japanese>場所</Japanese>
+											<Korean>위치.</Korean>
+										</Text>
+										<Style>UserData:ItemId;</Style>
+									</Row_0>
+								</Rows>
+							</LocationId>
+							<LocationName>
+								<Visible>False</Visible>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>220</Width>
+								<!--Visible expr="True">{=!Empty(IsItemWithLocation)}</Visible-->
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tên vị trí</Vietnamese>
+											<English>Location Name</English>
+											<Chinese>地点名称</Chinese>
+											<Japanese>ロケーション名</Japanese>
+											<Korean>위치 이름.</Korean>
+										</Text>
+										<Style>UserData:LocationName;</Style>
+									</Row_0>
+								</Rows>
+							</LocationName>
+							<StatusNote>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>300</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ghi chú tình trạng</Vietnamese>
+											<English>Status note</English>
+											<Chinese>状态备注</Chinese>
+											<Japanese>ステータスノート</Japanese>
+											<Korean>상태 메모</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</StatusNote>
+							<FileName>
+								<FileHandle>
+									<FileSizeLimit>8388608</FileSizeLimit>
+									<DialogFileFilter>ImageFiles</DialogFileFilter>
+									<FileOverwriteOption>Overwrite</FileOverwriteOption>
+									<DisplayFileNameOnly>True</DisplayFileNameOnly>
+									<DestinationFolder>CONFIG('M_DefaultSubFolder_Data') + '/' + NEWID()</DestinationFolder>
+								</FileHandle>
+								<Width>180</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Hình ảnh</Vietnamese>
+											<English>Image</English>
+											<Chinese>图片</Chinese>
+											<Japanese>画像</Japanese>
+											<Korean>이미지</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</FileName>
+						</Cols>
+						<Text>
+							<Vietnamese>Chi tiết mặt hàng</Vietnamese>
+							<!--09/12/2024 LienNTP sửa text-->
+							<English>Item details</English>
+							<Chinese>产品详细信息</Chinese>
+							<Japanese>アイテムの詳細</Japanese>
+							<Korean>항목 세부 정보</Korean>
+						</Text>
+						<zDeleteRowExpr>ISNULL(Quantity,0)=0</zDeleteRowExpr>
+					</Item_Phys>
+				</Items>
+			</BravoGridContainer_phys>
+		</Controls>
+	</panelEditor>
+	<panelCommand>
+		<Items>
+			<SaveAndNew />
+			<SaveAndClose />
+			<SaveLocal />
+			<CloseWindow />
+			<!--29/07/2024 PhanNH thêm nút tích lưu nháp-->
+			<chkIsDraftData>
+				<ClassName>BravoCheckBox</ClassName>
+				<DataMember>IsDraftData</DataMember>
+				<Style>ForeColor:Red;Font:,,style=Bold;</Style>
+				<Text>
+					<Vietnamese>Lưu nháp</Vietnamese>
+					<English>Save as draft</English>
+					<Chinese>保存为草稿</Chinese>
+					<Japanese>下書き保存</Japanese>
+					<Korean>초안으로 저장</Korean>
+				</Text>
+			</chkIsDraftData>
+		</Items>
+	</panelCommand>
+	<showCommandButtons>Custom</showCommandButtons>
+</root>

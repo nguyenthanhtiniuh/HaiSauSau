@@ -1,0 +1,1358 @@
+<root>
+	<panelExplorer>
+		<Controls>
+			<grdDetail>
+				<Assembly>Bravo.DataExplorer</Assembly>
+				<ClassName>BravoExplorerControl</ClassName>
+				<Dock>Fill</Dock>
+				<Execute>
+					<Eval_Editor />
+					<Eval_Reporter />
+				</Execute>
+				<Groups>
+					<DocStatus />
+				</Groups>
+				<Items>
+					<ChildTable_Detail>
+						<Text>
+							<Vietnamese>Chi tiết mặt hàng</Vietnamese>
+							<English>Item details</English>
+							<Chinese>订单详情</Chinese>
+							<Japanese>注文の詳細</Japanese>
+							<Korean>주문 사항을 규정한다.</Korean>
+							<French>grdSubDetail_ChildTable_Detail</French>
+						</Text>
+						<DataMember>vB30StatsDocInventory</DataMember>
+						<Items>
+							<Item_Phys>
+								<DataMember>phys</DataMember>
+								<Text>
+									<Vietnamese>Chi tiết mặt hàng</Vietnamese>
+									<English>Item details</English>
+									<Chinese>产品详细信息</Chinese>
+									<Japanese>アイテムの詳細</Japanese>
+									<Korean>항목 세부 정보</Korean>
+								</Text>
+								<zDeleteRowExpr>ISNULL(Quantity,0)=0</zDeleteRowExpr>
+								<Rows>
+									<Row_0>
+										<Height>20</Height>
+									</Row_0>
+								</Rows>
+								<Cols>
+									<Quantity9>
+										<Visible>False</Visible>
+										<Editor>
+											<ClassName>BravoQuantityInputBox</ClassName>
+										</Editor>
+										<Style>TextAlign:RightTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Số lượng</Vietnamese>
+													<English>Quantity</English>
+													<Chinese>数量 </Chinese>
+													<Japanese>数量 </Japanese>
+													<Korean>양이냐.</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+										<Width>80</Width>
+									</Quantity9>
+									<Unit>
+										<Visible>False</Visible>
+										<Style>TextAlign:LeftTop;</Style>
+										<Width>50</Width>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Đơn vị tính</Vietnamese>
+													<English>Unit</English>
+													<Chinese>单位</Chinese>
+													<Japanese>ユニット</Japanese>
+													<Korean>단위</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+									</Unit>
+									<ConvertRate9>
+										<Style>TextAlign:RightTop;</Style>
+										<Width>0</Width>
+										<Visible>False</Visible>
+									</ConvertRate9>
+									<Quantity>
+										<Visible>False</Visible>
+										<Editor>
+											<ClassName>BravoQuantityInputBox</ClassName>
+											<Expr>False</Expr>
+										</Editor>
+										<Style>TextAlign:RightTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Số lượng (ĐVT chuẩn)</Vietnamese>
+													<English>Quantity (Standard unit)</English>
+													<Japanese>量（標準ユニット）</Japanese>
+													<Korean>수량 (표준 단위)</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+										<Width>80</Width>
+									</Quantity>
+									<ItemSerialNo>
+										<Editor>
+											<ClassName>BravoTextBox</ClassName>
+											<bRestrictedUnicode>True</bRestrictedUnicode>
+											<CharacterCasing>Upper</CharacterCasing>
+											<Expr>!Empty(Parent.IsItemWithSerialNo)</Expr>
+										</Editor>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Serial#</Vietnamese>
+													<English>Serial#</English>
+													<Chinese>序列号</Chinese>
+													<Japanese>シリアル＃</Japanese>
+													<Korean>연쇄 #.</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+									</ItemSerialNo>
+									<LocationId>
+										<Editor>
+											<ClassName>BravoLookupBox</ClassName>
+											<bindingMembers>
+												<Name>LocationName</Name>
+												<WarehouseId>WarehouseId_location</WarehouseId>
+											</bindingMembers>
+											<LookupKey>Location</LookupKey>
+											<SelectKey>IsGroup=False</SelectKey>
+											<FilterKey>WarehouseId={=ISNULL(Parent.WarehouseId,0)}</FilterKey>
+											<Expr>!Empty(Parent.IsItemWithLocation)</Expr>
+										</Editor>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Vị trí</Vietnamese>
+													<English>Location</English>
+													<Chinese>位置</Chinese>
+													<Japanese>場所</Japanese>
+													<Korean>위치.</Korean>
+												</Text>
+												<Style>UserData:ItemId;</Style>
+											</Row_0>
+										</Rows>
+									</LocationId>
+									<LocationName>
+										<Visible>False</Visible>
+										<Style>TextAlign:LeftTop;</Style>
+										<Width>220</Width>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Tên vị trí</Vietnamese>
+													<English>Location Name</English>
+													<Chinese>地点名称</Chinese>
+													<Japanese>ロケーション名</Japanese>
+													<Korean>위치 이름.</Korean>
+												</Text>
+												<Style>UserData:LocationName;</Style>
+											</Row_0>
+										</Rows>
+									</LocationName>
+									<StatusNote>
+										<Editor>
+											<ClassName>BravoTextBox</ClassName>
+										</Editor>
+										<Style>TextAlign:LeftTop;</Style>
+										<Width>300</Width>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Ghi chú tình trạng</Vietnamese>
+													<English>Status note</English>
+													<Chinese>状态备注</Chinese>
+													<Japanese>ステータスノート</Japanese>
+													<Korean>상태 메모</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+									</StatusNote>
+									<FileName>
+										<FileHandle>
+											<FileSizeLimit>8388608</FileSizeLimit>
+											<DialogFileFilter>ImageFiles</DialogFileFilter>
+											<FileOverwriteOption>Overwrite</FileOverwriteOption>
+											<DisplayFileNameOnly>True</DisplayFileNameOnly>
+											<DestinationFolder>CONFIG('M_DefaultSubFolder_Data') + '/' + NEWID()</DestinationFolder>
+										</FileHandle>
+										<Width>180</Width>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Hình ảnh</Vietnamese>
+													<English>Image</English>
+													<Chinese>图片</Chinese>
+													<Japanese>画像</Japanese>
+													<Korean>이미지</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+									</FileName>
+								</Cols>
+							</Item_Phys>
+						</Items>
+						<Rows>
+							<Row_0>
+								<Height>20</Height>
+							</Row_0>
+							<Row_1 />
+						</Rows>
+						<Cols>
+							<ItemCode>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>Item</LookupKey>
+									<SelectKey>IsGroup=False</SelectKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mã hàng</Vietnamese>
+											<English>Item</English>
+											<Chinese>项目</Chinese>
+											<Japanese>アイテム</Japanese>
+											<Korean>항목.</Korean>
+										</Text>
+										<Style>UserData:ItemCode;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:ItemCode;</Style>
+									</Row_1>
+								</Rows>
+							</ItemCode>
+							<ItemName>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>250</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tên hàng hóa, dịch vụ</Vietnamese>
+											<English>Item name</English>
+											<Chinese>项目名称</Chinese>
+											<Japanese>項目名</Japanese>
+											<Korean>상품명</Korean>
+										</Text>
+										<Style>UserData:ItemName;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:ItemName;</Style>
+									</Row_1>
+								</Rows>
+							</ItemName>
+							<Unit>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>ItemUnit</LookupKey>
+									<FilterKey>ItemId={=ISNULL(ItemId,0)}</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đvt</Vietnamese>
+											<English>Unit</English>
+											<Chinese>单位</Chinese>
+											<Japanese>ユニット</Japanese>
+											<Korean>단위</Korean>
+										</Text>
+										<Style>UserData:Unit;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:Unit;</Style>
+									</Row_1>
+								</Rows>
+							</Unit>
+							<Quantity9>
+								<Editor>
+									<ClassName>BravoQuantityInputBox</ClassName>
+								</Editor>
+								<Width>60</Width>
+								<Style>TextAlign:RightTop;Format:"N0";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số lượng</Vietnamese>
+											<English>Quantity</English>
+											<Chinese>数量</Chinese>
+											<Japanese>数量</Japanese>
+											<Korean>양이냐.</Korean>
+											<French />
+										</Text>
+										<Style>UserData:Quantity9;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:Quantity9;</Style>
+									</Row_1>
+								</Rows>
+							</Quantity9>
+							<PurchaseUnitPrice>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá hóa đơn mua</Vietnamese>
+											<English>Purchase unit price</English>
+											<Chinese>采购单价</Chinese>
+											<Japanese>購入単価}</Japanese>
+											<Korean>구매 단가</Korean>
+											<French />
+										</Text>
+										<Style>UserData:PurchaseUnitPrice;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:PurchaseUnitPrice;</Style>
+									</Row_1>
+								</Rows>
+							</PurchaseUnitPrice>
+							<TimeDiscount>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>80</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Giảm giá thời điểm</Vietnamese>
+											<English>Time discount</English>
+											<Chinese>时间折扣</Chinese>
+											<Japanese>時間割引}</Japanese>
+											<Korean>시간 할인</Korean>
+										</Text>
+										<Style>UserData:TimeDiscount;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:TimeDiscount;</Style>
+									</Row_1>
+								</Rows>
+							</TimeDiscount>
+							<InvoiceUnitPrice>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá xuất hóa đơn</Vietnamese>
+											<English>Invoice unit price</English>
+											<Chinese>发票单价</Chinese>
+											<Japanese>請求単価}</Japanese>
+											<Korean>청구 단가</Korean>
+										</Text>
+										<Style>UserData:InvoiceUnitPrice;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:InvoiceUnitPrice;</Style>
+									</Row_1>
+								</Rows>
+							</InvoiceUnitPrice>
+							<OriginalUnitCost>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>100</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn giá</Vietnamese>
+											<English>Unit cost</English>
+											<Chinese>价格</Chinese>
+											<Japanese>価格</Japanese>
+											<Korean>가격은.</Korean>
+											<French />
+										</Text>
+										<Style>UserData:OriginalUnitCost;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:OriginalUnitCost;</Style>
+									</Row_1>
+								</Rows>
+							</OriginalUnitCost>
+							<OriginalAmount9>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Width>110</Width>
+								<Style>TextAlign:RightTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thành tiền</Vietnamese>
+											<English>Amount</English>
+											<Chinese>量的</Chinese>
+											<Japanese>量</Japanese>
+											<Korean>건설활 동량.</Korean>
+											<French />
+										</Text>
+										<Style>UserData:OriginalAmount9;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:OriginalAmount9;</Style>
+									</Row_1>
+								</Rows>
+							</OriginalAmount9>
+							<OriginalAmount3>
+								<Editor>
+									<ClassName>BravoNumericInputBox</ClassName>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:RightTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tiền thuế</Vietnamese>
+											<English>VAT amount</English>
+											<Chinese>增值税额</Chinese>
+											<Japanese>付加価値税の額</Japanese>
+											<Korean>부가 가치세 금액.</Korean>
+											<French />
+										</Text>
+										<Style>UserData:OriginalAmount3;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:OriginalAmount3;</Style>
+									</Row_1>
+								</Rows>
+							</OriginalAmount3>
+							<AtchDocDate>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ngày HĐ</Vietnamese>
+											<English>Inv. Date</English>
+											<Chinese>账单日</Chinese>
+											<Japanese>ビル日</Japanese>
+											<Korean>빌 날짜다.</Korean>
+										</Text>
+										<Style>UserData:AtchDocDate;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocDate;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocDate>
+							<AtchDocNo>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+									<bRestrictedUnicode>True</bRestrictedUnicode>
+									<CharacterCasing>Upper</CharacterCasing>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Số HĐ</Vietnamese>
+											<English>Inv. No.</English>
+											<Chinese>账单号码</Chinese>
+											<Japanese>ビル·ナンバー</Japanese>
+											<Korean>빌은 수.</Korean>
+										</Text>
+										<Style>UserData:AtchDocNo;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocNo;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocNo>
+							<AtchDocFormNo>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+									<bRestrictedUnicode>True</bRestrictedUnicode>
+									<CharacterCasing>Upper</CharacterCasing>
+								</Editor>
+								<Style>BackColor:LavenderBlush;TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mẫu số</Vietnamese>
+											<English>Form No.</English>
+											<Chinese>表格编号</Chinese>
+											<Japanese>書式番号</Japanese>
+											<Korean>문서 번호</Korean>
+										</Text>
+										<Style>UserData:AtchDocFormNo;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:AtchDocFormNo;</Style>
+									</Row_1>
+								</Rows>
+							</AtchDocFormNo>
+							<ReceiptDate_EO>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>95</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Hạn nhập kho đơn hàng sớm</Vietnamese>
+											<English>Early order receipt due date</English>
+											<Japanese>早期注文受付締切日</Japanese>
+											<Chinese>早期订单接收截止日期</Chinese>
+											<Korean>조기 주문 접수 마감일</Korean>
+										</Text>
+										<Style>UserData:ReceiptDate_EO;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:ReceiptDate_EO;</Style>
+									</Row_1>
+								</Rows>
+							</ReceiptDate_EO>
+							<DiscountRate_EO>
+								<Style>TextAlign:RightTop;Format:"P2";</Style>
+								<Width>95</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Chiết khấu đơn hàng sớm (%)</Vietnamese>
+											<English>Early order discount rate</English>
+											<Japanese>早期注文割引率</Japanese>
+											<Chinese>提前订购折扣率</Chinese>
+											<Korean>조기 주문 할인율</Korean>
+										</Text>
+										<Style>UserData:DiscountRate_EO;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:DiscountRate_EO;</Style>
+									</Row_1>
+								</Rows>
+							</DiscountRate_EO>
+							<BizDocId_PO>
+								<Editor>
+									<FilterKey>CustomerId = {=ISNULL(Parent.CustomerId, 0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE) AND PostSL=1 AND ISNULL(Closed,0)=0 AND IsActive=True</FilterKey>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>BizDocPO</LookupKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Đơn đặt hàng mua</Vietnamese>
+											<English>Purchase order</English>
+											<Japanese>購入を注文します</Japanese>
+											<Chinese>订购购买</Chinese>
+											<Korean>주문 구매</Korean>
+										</Text>
+										<Style>UserData:BizDocId_PO;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:BizDocId_PO;</Style>
+									</Row_1>
+								</Rows>
+							</BizDocId_PO>
+							<ClosedDate>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>90</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ngày đóng</Vietnamese>
+											<English>Closed date</English>
+											<Chinese>关闭日期</Chinese>
+											<Japanese>閉鎖日</Japanese>
+											<Korean>종료일</Korean>
+										</Text>
+										<Style>UserData:ClosedDate;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:ClosedDate;</Style>
+									</Row_1>
+								</Rows>
+							</ClosedDate>
+							<IsSpeakerBOM>
+								<Style>BackColor:LightYellow;ImageAlign:CenterCenter;DataType:System.Boolean;</Style>
+								<Width>70</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Là BOM loa</Vietnamese>
+											<English>Is speaker BOM</English>
+											<Japanese>スピーカーのBOM（部品表）ですか</Japanese>
+											<Chinese>是扬声器BOM吗</Chinese>
+											<Korean>스피커 BOM인가요</Korean>
+										</Text>
+										<Style>UserData:IsSpeakerBOM;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:IsSpeakerBOM;</Style>
+									</Row_1>
+								</Rows>
+							</IsSpeakerBOM>
+							<SpeakerBOMType>
+								<Visible>False</Visible>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>80</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Loại BOM loa</Vietnamese>
+											<English>Speaker BOM type</English>
+											<Japanese>スピーカーBOMタイプ</Japanese>
+											<Chinese>扬声器BOM类型</Chinese>
+											<Korean>스피커 BOM 유형</Korean>
+										</Text>
+										<Style>UserData:SpeakerBOMType;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:SpeakerBOMType;</Style>
+									</Row_1>
+								</Rows>
+							</SpeakerBOMType>
+							<SpeakerBOMTypeName>
+								<ReadOnly>True</ReadOnly>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Loại BOM loa</Vietnamese>
+											<English>Speaker BOM type</English>
+											<Japanese>スピーカーBOMタイプ</Japanese>
+											<Chinese>扬声器BOM类型</Chinese>
+											<Korean>스피커 BOM 유형</Korean>
+										</Text>
+										<Style>UserData:SpeakerBOMTypeName;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:SpeakerBOMTypeName;</Style>
+									</Row_1>
+								</Rows>
+							</SpeakerBOMTypeName>
+							<SpeakerBOMId>
+								<Visible>False</Visible>
+								<Rows>
+									<Row_0>
+										<Style>UserData:SpeakerBOMId;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:SpeakerBOMId;</Style>
+									</Row_1>
+								</Rows>
+							</SpeakerBOMId>
+							<SpeakerBOMCode>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>100</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mã BOM loa</Vietnamese>
+											<English>Speaker BOM code</English>
+											<Japanese>スピーカーBOMコード</Japanese>
+											<Chinese>扬声器BOM代码</Chinese>
+											<Korean>스피커 BOM 코드</Korean>
+										</Text>
+										<Style>UserData:SpeakerBOMCode;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:SpeakerBOMCode;</Style>
+									</Row_1>
+								</Rows>
+							</SpeakerBOMCode>
+							<BizDocId_TH>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<FilterKey>CustomerId={=ISNULL(Parent.CustomerId,0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE);</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Yêu cầu trả hàng</Vietnamese>
+											<English>Sales return request</English>
+											<Chinese>退货申请</Chinese>
+											<Japanese>返品依頼</Japanese>
+											<Korean>반품 요청</Korean>
+										</Text>
+										<Style>UserData:BizDocId_TH;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:BizDocId_TH;</Style>
+									</Row_1>
+								</Rows>
+							</BizDocId_TH>
+							<StatsDocId_SN>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<FilterKey>CustomerId={=ISNULL(Parent.CustomerId,0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE);</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Phiếu nhập kho</Vietnamese>
+											<English>Goods receipt</English>
+											<Chinese>入库单</Chinese>
+											<Japanese>入庫伝票</Japanese>
+											<Korean>입고전표</Korean>
+										</Text>
+										<Style>UserData:StatsDocId_SN;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:StatsDocId_SN;</Style>
+									</Row_1>
+								</Rows>
+							</StatsDocId_SN>
+							<StatsDocId_DO>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>StatsDocItemDO</LookupKey>
+									<FilterKey>CustomerId={=ISNULL(Parent.CustomerId,0)} AND DocDate&lt;=CAST('{=Parent.DocDate}' AS DATE);</FilterKey>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>120</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thông báo hàng về</Vietnamese>
+											<English>Goods arrival notice</English>
+											<Chinese>到货通知</Chinese>
+											<Japanese>入荷通知</Japanese>
+											<Korean>입고 통지</Korean>
+										</Text>
+										<Style>UserData:StatsDocId_DO;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:StatsDocId_DO;</Style>
+									</Row_1>
+								</Rows>
+							</StatsDocId_DO>
+							<Remark>
+								<Editor>
+									<ClassName>BravoTextBox</ClassName>
+								</Editor>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>200</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ghi chú</Vietnamese>
+											<English>Note</English>
+											<Chinese>备注</Chinese>
+											<Japanese>発言</Japanese>
+											<Korean>레마르크.</Korean>
+										</Text>
+										<Style>UserData:Remark;</Style>
+									</Row_0>
+									<Row_1>
+										<Style>UserData:Remark;</Style>
+									</Row_1>
+								</Rows>
+							</Remark>
+						</Cols>
+					</ChildTable_Detail>
+					<ChildTable_FileStore>
+						<DataMember>vB20FileStore</DataMember>
+						<Rows>
+							<Row_0>
+								<Height>40</Height>
+							</Row_0>
+						</Rows>
+						<Text>
+							<Vietnamese>Tài liệu đính kèm</Vietnamese>
+							<English>File attachment</English>
+							<Japanese>添付ファイル</Japanese>
+							<Chinese>文件附件</Chinese>
+							<Korean>파일 첨부 파일</Korean>
+						</Text>
+						<Cols>
+							<FileName>
+								<FileHandle>
+									<VisibleColumns>Download</VisibleColumns>
+									<DisplayFileNameOnly>True</DisplayFileNameOnly>
+								</FileHandle>
+								<Width>450</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Tài liệu/Liên kết</Vietnamese>
+											<English>File/URL</English>
+											<Japanese>ファイル/パス</Japanese>
+											<Chinese>文件/路径</Chinese>
+											<Korean>파일/경로</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</FileName>
+							<Description>
+								<Width>350</Width>
+								<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Mô tả</Vietnamese>
+											<English>Description</English>
+											<Japanese>説明</Japanese>
+											<Chinese>描述</Chinese>
+											<Korean>설명</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Description>
+							<FileSize>
+								<Width>110</Width>
+								<Style>TextAlign:RightTop;Format:"N0";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Dung lượng (KB)</Vietnamese>
+											<English>File size (KB)</English>
+											<Japanese>ファイルサイズ (KB)</Japanese>
+											<Chinese>文件大小 (KB)</Chinese>
+											<Korean>파일 크기 (KB)</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</FileSize>
+							<LastUploaded>
+								<Editor>
+									<ClassName>BravoDateInputBox</ClassName>
+									<CurrentTimeZone>False</CurrentTimeZone>
+									<Expr>False</Expr>
+								</Editor>
+								<Width>140</Width>
+								<Style>Format:"G";</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Sửa đổi gần nhất</Vietnamese>
+											<English>Last uploaded</English>
+											<Japanese>最終アップロード</Japanese>
+											<Chinese>上次上传</Chinese>
+											<Korean>마지막 업로드</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</LastUploaded>
+						</Cols>
+					</ChildTable_FileStore>
+					<ChildTable_StatsDocProcess>
+						<DataMember>vB30StatsDocProcess</DataMember>
+						<childPosition>Bottom</childPosition>
+						<childPositionSize>0.3, 0</childPositionSize>
+						<hideZeroValue>None</hideZeroValue>
+						<Rows>
+							<Row_0>
+								<Height>50</Height>
+							</Row_0>
+						</Rows>
+						<Text>
+							<Vietnamese>Duyệt chứng từ</Vietnamese>
+							<English>Approval document</English>
+							<Japanese>承認</Japanese>
+							<Chinese>批准</Chinese>
+							<Korean>승인</Korean>
+						</Text>
+						<TreeColumnPos>1</TreeColumnPos>
+						<Cols>
+							<ApprovalStep>
+								<Style>TextAlign:LeftTop;</Style>
+								<Width>40</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Stt</Vietnamese>
+											<English>No.</English>
+											<Japanese>数</Japanese>
+											<Korean>아니.</Korean>
+											<Chinese>没有。</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ApprovalStep>
+							<BizProcessName>
+								<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+								<Width>190</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Bước duyệt</Vietnamese>
+											<English>Step</English>
+											<Japanese>ステップ</Japanese>
+											<Korean>단계</Korean>
+											<Chinese>步</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</BizProcessName>
+							<ApprovedResultName>
+								<Width>120</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Trạng thái</Vietnamese>
+											<English>Document status</English>
+											<Japanese>文書のステータス</Japanese>
+											<Korean>문서 상태</Korean>
+											<Chinese>文档状态</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ApprovedResultName>
+							<ApprovedAt>
+								<Style>Format:"dd/MM/yy HH:mm:ss";</Style>
+								<Width>140</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Thời gian duyệt</Vietnamese>
+											<English>Approved at</English>
+											<Japanese>閲覧する時間</Japanese>
+											<Korean>에서 승인</Korean>
+											<Chinese>批准</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ApprovedAt>
+							<ApprovalByUserName>
+								<Width>120</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Người đã duyệt</Vietnamese>
+											<English>Approved by</English>
+											<Japanese>によって承認された</Japanese>
+											<Korean>승인</Korean>
+											<Chinese>由通过</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ApprovalByUserName>
+							<Description>
+								<Width>300</Width>
+								<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Lý do duyệt</Vietnamese>
+											<English>Reason</English>
+											<Chinese>原因</Chinese>
+											<Korean>이유</Korean>
+											<Japanese>理由</Japanese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</Description>
+							<UserIdList>
+								<Width>210</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Danh sách người được duyệt</Vietnamese>
+											<English>List of approved people</English>
+											<Japanese>承認された人のリスト</Japanese>
+											<Korean>승인 된 사람들의 목록</Korean>
+											<Chinese>批准人名单</Chinese>
+										</Text>
+									</Row_0>
+								</Rows>
+							</UserIdList>
+							<DocProcessRoleIdList>
+								<Width>200</Width>
+								<Style>TextAlign:LeftTop;</Style>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Danh sách vai trò được duyệt</Vietnamese>
+											<English>List of role</English>
+											<Japanese>承認された役割のリスト</Japanese>
+											<Chinese>批准的角色清单</Chinese>
+											<Korean>승인 된 역할 목록</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</DocProcessRoleIdList>
+							<IsESign>
+								<Style>DataType:System.Boolean;ImageAlign:CenterCenter;</Style>
+								<Width>50</Width>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Ký</Vietnamese>
+											<English>Signing</English>
+											<Japanese>署名</Japanese>
+											<Chinese>签名</Chinese>
+											<Korean>서명</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</IsESign>
+							<ESignType>
+								<Style>TextAlign:LeftTop;</Style>
+								<Editor>
+									<ClassName>BravoLookupBox</ClassName>
+									<LookupKey>ClassInfo3</LookupKey>
+									<FilterKey>ParentCode='ESignType'</FilterKey>
+								</Editor>
+								<Rows>
+									<Row_0>
+										<Text>
+											<Vietnamese>Loại ký</Vietnamese>
+											<English>Signature type</English>
+											<Japanese>署名の種類</Japanese>
+											<Chinese>签名类型</Chinese>
+											<Korean>서명 유형</Korean>
+										</Text>
+									</Row_0>
+								</Rows>
+							</ESignType>
+							<Sub_BuiltinOrder>
+								<Visible>False</Visible>
+							</Sub_BuiltinOrder>
+						</Cols>
+						<bDrawContentBorders>False</bDrawContentBorders>
+						<Items>
+							<ChildTable_ProcessResult>
+								<DataMember>vB30StatsDocProcessResult</DataMember>
+								<childPosition>Bottom</childPosition>
+								<childPositionSize>0.3, 0</childPositionSize>
+								<hideZeroValue>None</hideZeroValue>
+								<Rows>
+									<Row_0>
+										<Height>23</Height>
+									</Row_0>
+								</Rows>
+								<Text>
+									<Vietnamese>Lịch sử duyệt</Vietnamese>
+									<English>Approval history</English>
+									<Japanese>承認履歴</Japanese>
+									<Chinese>批准历史</Chinese>
+									<Korean>승인 내역</Korean>
+								</Text>
+								<TreeColumnPos>1</TreeColumnPos>
+								<Cols>
+									<ApprovedAt>
+										<Style>Format:"dd/MM/yy HH:mm:ss";</Style>
+										<Width>130</Width>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Thời gian duyệt</Vietnamese>
+													<English>Approved at</English>
+													<Japanese>閲覧する時間</Japanese>
+													<Korean>에서 승인</Korean>
+													<Chinese>批准</Chinese>
+												</Text>
+											</Row_0>
+										</Rows>
+									</ApprovedAt>
+									<BizProcessName>
+										<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+										<Width>180</Width>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Bước duyệt</Vietnamese>
+													<English>Step</English>
+													<Japanese>ステップ</Japanese>
+													<Korean>단계</Korean>
+													<Chinese>步</Chinese>
+												</Text>
+											</Row_0>
+										</Rows>
+									</BizProcessName>
+									<ApprovedResultName>
+										<Width>120</Width>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Trạng thái</Vietnamese>
+													<English>Document status</English>
+													<Japanese>文書のステータス</Japanese>
+													<Korean>문서 상태</Korean>
+													<Chinese>文档状态</Chinese>
+												</Text>
+											</Row_0>
+										</Rows>
+									</ApprovedResultName>
+									<ApprovedUserName>
+										<Width>120</Width>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Người đã duyệt</Vietnamese>
+													<English>Approved by</English>
+													<Japanese>によって承認された</Japanese>
+													<Korean>승인</Korean>
+													<Chinese>由通过</Chinese>
+												</Text>
+											</Row_0>
+										</Rows>
+									</ApprovedUserName>
+									<GroupName>
+										<Width>120</Width>
+										<Style>TextAlign:LeftTop;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Nhóm duyệt</Vietnamese>
+													<English>Approval group</English>
+													<Japanese>承認グループ</Japanese>
+													<Chinese>审批组</Chinese>
+													<Korean>승인 그룹</Korean>
+												</Text>
+											</Row_0>
+										</Rows>
+									</GroupName>
+									<Description>
+										<Width>300</Width>
+										<Style>TextAlign:LeftTop;WordWrap:True;</Style>
+										<Rows>
+											<Row_0>
+												<Text>
+													<Vietnamese>Lý do duyệt</Vietnamese>
+													<English>Reason</English>
+													<Chinese>原因</Chinese>
+													<Korean>이유</Korean>
+													<Japanese>理由</Japanese>
+												</Text>
+											</Row_0>
+										</Rows>
+									</Description>
+								</Cols>
+							</ChildTable_ProcessResult>
+						</Items>
+						<Styles>
+							<Style_SubStep>
+								<Name>*</Name>
+								<Expr>IIF(Sub_BuiltinOrder &lt;&gt; 0, 'Font:,,style=Italic;', '')</Expr>
+							</Style_SubStep>
+						</Styles>
+					</ChildTable_StatsDocProcess>
+					<Item_PreviewReport>
+						<Text>
+							<Vietnamese>Mẫu in</Vietnamese>
+							<English>Printing form</English>
+							<Japanese>印刷組版</Japanese>
+							<Chinese>打印</Chinese>
+							<Korean>인쇄 양식</Korean>
+						</Text>
+						<Execute>
+							<Eval_PreviewReporter />
+						</Execute>
+					</Item_PreviewReport>
+				</Items>
+				<DataMember>Ct</DataMember>
+				<zDisplayTextMember>Description</zDisplayTextMember>
+				<Rows>
+					<Row_0>
+						<Height>40</Height>
+					</Row_0>
+				</Rows>
+				<Cols>
+					<DocNo>
+						<Style>TextAlign:LeftTop;</Style>
+						<Width>120</Width>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Số</Vietnamese>
+									<English>No.</English>
+									<Chinese>数</Chinese>
+									<Japanese>数</Japanese>
+									<Korean>번호.</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</DocNo>
+					<DocDate>
+						<Style>TextAlign:CenterTop;</Style>
+						<Width>90</Width>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Ngày</Vietnamese>
+									<English>Date</English>
+									<Chinese>日期</Chinese>
+									<Japanese>日付</Japanese>
+									<Korean>날짜.</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</DocDate>
+					<Description>
+						<Style>TextAlign:LeftTop;</Style>
+						<Width>300</Width>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Diễn giải</Vietnamese>
+									<English>Description</English>
+									<Chinese>描述</Chinese>
+									<Japanese>説明</Japanese>
+									<Korean>설명.</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</Description>
+					<DocStatus>
+						<Editor>
+							<ClassName>BravoLookupBox</ClassName>
+							<LookupKey>DocStatus</LookupKey>
+						</Editor>
+						<Visible>False</Visible>
+					</DocStatus>
+					<Driver>
+						<Editor>
+							<ClassName>BravoTextBox</ClassName>
+						</Editor>
+						<Style>TextAlign:LeftTop;</Style>
+						<Width>80</Width>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Tài xế</Vietnamese>
+									<English>Driver</English>
+									<Japanese>運転手</Japanese>
+									<Chinese>司机</Chinese>
+									<Korean>운전자</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</Driver>
+					<VehicleCode>
+						<Editor>
+							<ClassName>BravoLookupBox</ClassName>
+							<LookupKey>Vehicle</LookupKey>
+							<SelectKey>IsGroup=False</SelectKey>
+							<ApplyOwnerCommandPermission>True</ApplyOwnerCommandPermission>
+						</Editor>
+						<Style>TextAlign:LeftTop;</Style>
+						<Width>80</Width>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Biển số xe</Vietnamese>
+									<English>License plate</English>
+									<Japanese>車両番号</Japanese>
+									<Chinese>车牌号码</Chinese>
+									<Korean>차량 번호</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</VehicleCode>
+					<TransCode>
+						<Width>60</Width>
+						<Style>TextAlign:LeftTop;</Style>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Giao dịch</Vietnamese>
+									<English>Transaction</English>
+									<Chinese>交易</Chinese>
+									<Japanese>トランザクション</Japanese>
+									<Korean>거래.</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</TransCode>
+					<CreatedBy_Name>
+						<Width>100</Width>
+						<Style>TextAlign:LeftTop;</Style>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Người lập phiếu</Vietnamese>
+									<English>Prepared by</English>
+									<Korean>만들어졌습니다</Korean>
+									<Chinese>由...制作</Chinese>
+									<Japanese>によって作成された</Japanese>
+								</Text>
+							</Row_0>
+						</Rows>
+					</CreatedBy_Name>
+					<CreatedAt>
+						<Width>130</Width>
+						<Format>g</Format>
+						<Style>TextAlign:LeftTop;Format:"g";</Style>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Ngày tạo</Vietnamese>
+									<English>Created date</English>
+									<Japanese>作成日</Japanese>
+									<Korean>생성 날짜</Korean>
+									<Chinese>创建日期</Chinese>
+								</Text>
+							</Row_0>
+						</Rows>
+					</CreatedAt>
+					<ApprovalStatus>
+						<Width>0</Width>
+						<Style>TextAlign:LeftTop;</Style>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Trạng thái duyệt</Vietnamese>
+									<English>Approval status</English>
+									<Japanese>承認状況</Japanese>
+									<Chinese>审批状态</Chinese>
+									<Korean>승인 상태</Korean>
+								</Text>
+							</Row_0>
+						</Rows>
+					</ApprovalStatus>
+					<DocCode>
+						<Visible>False</Visible>
+					</DocCode>
+					<modifiedby>
+						<Style>TextAlign:RightTop;</Style>
+						<Width>0</Width>
+					</modifiedby>
+					<modifiedat>
+						<Width>130</Width>
+						<Format>g</Format>
+						<Style>TextAlign:LeftTop;Format:"g";</Style>
+						<Rows>
+							<Row_0>
+								<Text>
+									<Vietnamese>Ngày sửa</Vietnamese>
+									<English>modifiedat date</English>
+									<Japanese>作成日</Japanese>
+									<Korean>생성 날짜</Korean>
+									<Chinese>创建日期</Chinese>
+								</Text>
+							</Row_0>
+						</Rows>
+					</modifiedat>
+				</Cols>
+			</grdDetail>
+		</Controls>
+	</panelExplorer>
+</root>

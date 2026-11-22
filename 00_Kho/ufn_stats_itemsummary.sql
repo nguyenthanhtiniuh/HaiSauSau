@@ -188,41 +188,7 @@ LANGUAGE plpgsql AS $function$
         FROM updates u
         WHERE Tmp_V_SoTmp.Id = u.Id;
 
-        SELECT '<DefaultReport><Content>' 
-|| CHR(13) || ' <Cols>' 
-|| CHR(13) || '		<WarehouseName>' 
-|| CHR(13) || '			<Visible>False</Visible>' 
-|| CHR(13) || '			<Width>80</Width>' 
-|| CHR(13) || '		</WarehouseName>' 
-|| (CASE WHEN p_groupbylistfield = 'WarehoueId' THEN ''
-ELSE CHR(13) || '		<LocationName>' 
-|| CHR(13) || '			<Visible>False</Visible>' 
-|| CHR(13) || '			<Width>80</Width>' 
-|| CHR(13) || '		</LocationName>' END)
-|| CHR(13) || '	</Cols>' 
-|| CHR(13) || '<Groups>' 
-|| CHR(13) || '	<WarehouseName>' 
-|| CHR(13) || '		<Text>' 
-|| CHR(13) || '			<Vietnamese>Kho hàng: {=WarehouseName}</Vietnamese>' 
-|| CHR(13) || '			<English>Warehouse: {=WarehouseName}</English>' 
-|| CHR(13) || '			<Japanese>倉庫: {=WarehouseName}</Japanese>' 
-|| CHR(13) || '			<Chinese>仓库: {=WarehouseName}</Chinese>' 
-|| CHR(13) || '			<Korean>창고: {=WarehouseName}</Korean>' 
-|| CHR(13) || '		</Text>' 
-|| CHR(13) || '	</WarehouseName>' 
-|| (CASE WHEN p_groupbylistfield = 'WarehoueId' THEN ''
-ELSE CHR(13) || '	<LocationName>' 
-|| CHR(13) || '		<Text>' 
-|| CHR(13) || '			<Vietnamese>Vị trí: {=LocationName}</Vietnamese>' 
-|| CHR(13) || '			<English>Location: {=LocationName}</English>' 
-|| CHR(13) || '			<Japanese>倉庫: {=LocationName}</Japanese>' 
-|| CHR(13) || '			<Chinese>仓库: {=LocationName}</Chinese>' 
-|| CHR(13) || '			<Korean>창고: {=LocationName}</Korean>' 
-|| CHR(13) || '		</Text>' 
-|| CHR(13) || '	</LocationName>' END)
-|| CHR(13) || '</Groups>' 
-|| CHR(13) || '</Content></DefaultReport>' 
-        INTO pout_LAYOUT_XML;
+        SELECT '<DefaultReport><Content>' || CHR(13) || ' <Cols>' || CHR(13) || '		<WarehouseName>' || CHR(13) || '			<Visible>False</Visible>' || CHR(13) || '			<Width>80</Width>' || CHR(13) || '		</WarehouseName>' || (CASE WHEN p_groupbylistfield = 'WarehoueId' THEN '' ELSE CHR(13) || '		<LocationName>' || CHR(13) || '			<Visible>False</Visible>' || CHR(13) || '			<Width>80</Width>' || CHR(13) || '		</LocationName>' END) || CHR(13) || '	</Cols>' || CHR(13) || '<Groups>' || CHR(13) || '	<WarehouseName>' || CHR(13) || '		<Text>' || CHR(13) || '			<Vietnamese>Kho hàng: {=WarehouseName}</Vietnamese>' || CHR(13) || '			<English>Warehouse: {=WarehouseName}</English>' || CHR(13) || '			<Japanese>倉庫: {=WarehouseName}</Japanese>' || CHR(13) || '			<Chinese>仓库: {=WarehouseName}</Chinese>' || CHR(13) || '			<Korean>창고: {=WarehouseName}</Korean>' || CHR(13) || '		</Text>' || CHR(13) || '	</WarehouseName>' || (CASE WHEN p_groupbylistfield = 'WarehoueId' THEN '' ELSE CHR(13) || '	<LocationName>' || CHR(13) || '		<Text>' || CHR(13) || '			<Vietnamese>Vị trí: {=LocationName}</Vietnamese>' || CHR(13) || '			<English>Location: {=LocationName}</English>' || CHR(13) || '			<Japanese>倉庫: {=LocationName}</Japanese>' || CHR(13) || '			<Chinese>仓库: {=LocationName}</Chinese>' || CHR(13) || '			<Korean>창고: {=LocationName}</Korean>' || CHR(13) || '		</Text>' || CHR(13) || '	</LocationName>' END) || CHR(13) || '</Groups>' || CHR(13) || '</Content></DefaultReport>' INTO pout_LAYOUT_XML;
 
         OPEN _ref_out FOR
         SELECT pout_LAYOUT_XML AS pout_LAYOUT_XML;
@@ -243,7 +209,10 @@ ELSE CHR(13) || '	<LocationName>'
 
         RETURN NEXT _ref1;
     END;
-$function$;
+$function$
+;
+
+
 
 BEGIN
     ;
