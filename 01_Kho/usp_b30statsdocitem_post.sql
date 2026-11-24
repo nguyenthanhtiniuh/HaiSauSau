@@ -71,11 +71,11 @@ BEGIN
 			INSERT INTO dbo.B30StatsStockLedger(Id, BranchCode, FiscalYear, StatsDocId, RowId, DocCode, DocGroup, DocDate, DocNo, Description,
 				FactoryId, WarehouseId, ReceiptWarehouseId, StatsDocId_WO, ReceiptStatsDocId_WO, ItemId, Unit, Quantity,
 				ProductionProcessId, ProductionLineId, ShiftId, BizDocId_SO, DeptId, EmployeeId,
-				CustomFieldId1, CustomFieldId2, CustomFieldId3, Quantity9, ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR)
+				CustomFieldId1, CustomFieldId2, CustomFieldId3, Quantity9, ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR,bizdocid_bh)
 			SELECT Ct.Id, Ct.BranchCode, Ct.FiscalYear, Ct.StatsDocId, Ct.RowId, Ct.DocCode, Ct.DocGroup, Ct.DocDate, Ct.DocNo, Ct.Description, Ct.FactoryId,
 				Ct.WarehouseId, Ct.ReceiptWarehouseId, Ct.StatsDocId_WO, Ct.ReceiptStatsDocId_WO, Ct.ItemId, Ct.Unit, Ct.Quantity,
 				Ct.ProductionProcessId, Ct.ProductionLineId, Ct.ShiftId, Ct.BizDocId_SO, Ct.DeptId, Ct.EmployeeId, Ct.CustomFieldId1,
-				Ct.CustomFieldId2, Ct.CustomFieldId3, Ct.Quantity9, Ct.ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR
+				Ct.CustomFieldId2, Ct.CustomFieldId3, Ct.Quantity9, Ct.ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR,bizdocid_bh
 			FROM dbo.vB30StatsStockLedger_Post Ct
 			WHERE Ct.StatsDocId = p_StatsDocId;
 		ELSE
@@ -84,7 +84,7 @@ BEGIN
 				SELECT Ct.Id, Ct.BranchCode, Ct.FiscalYear, Ct.StatsDocId, Ct.RowId, Ct.DocCode, Ct.DocGroup, Ct.DocDate, Ct.DocNo, Ct.Description, Ct.FactoryId,
 					Ct.WarehouseId, Ct.ReceiptWarehouseId, Ct.StatsDocId_WO, Ct.ReceiptStatsDocId_WO, Ct.ItemId, Ct.Unit, Ct.Quantity,
 					Ct.ProductionProcessId, Ct.ProductionLineId, Ct.ShiftId, Ct.BizDocId_SO, Ct.DeptId, Ct.EmployeeId, Ct.CustomFieldId1,
-					Ct.CustomFieldId2, Ct.CustomFieldId3, Ct.Quantity9, Ct.ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR
+					Ct.CustomFieldId2, Ct.CustomFieldId3, Ct.Quantity9, Ct.ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR,bizdocid_bh
 				FROM dbo.vB30StatsStockLedger_Post Ct
 				INNER JOIN Tmp_Inserted tb ON tb.StatsDocId = Ct.StatsDocId
 			) AS ins ON sl.StatsDocId = ins.StatsDocId AND sl.RowId = ins.RowId AND sl.DocGroup = ins.DocGroup
@@ -95,18 +95,18 @@ BEGIN
 					ItemId = ins.ItemId, Unit = ins.Unit, Quantity = ins.Quantity, ProductionProcessId = ins.ProductionProcessId, ProductionLineId = ins.ProductionLineId,
 					ShiftId = ins.ShiftId, BizDocId_SO = ins.BizDocId_SO, DeptId = ins.DeptId, EmployeeId = ins.EmployeeId, CustomFieldId1 = ins.CustomFieldId1,
 					CustomFieldId2 = ins.CustomFieldId2, CustomFieldId3 = ins.CustomFieldId3, Quantity9 = ins.Quantity9, ConvertRate9 = ins.ConvertRate9,
-					itemserialno=ins.itemserialno,BizdocId_DO=ins.BizdocId_DO,rowid_po=ins.rowid_po,bizdocid_po=ins.bizdocid_po,BizDocId_RR=ins.BizDocId_RR
+					itemserialno=ins.itemserialno,BizdocId_DO=ins.BizdocId_DO,rowid_po=ins.rowid_po,bizdocid_po=ins.bizdocid_po,BizDocId_RR=ins.BizDocId_RR,bizdocid_bh=ins.bizdocid_bh
 			WHEN NOT MATCHED BY SOURCE AND sl.StatsDocId IN (SELECT StatsDocId FROM Tmp_Inserted) THEN
 				DELETE
 			WHEN NOT MATCHED BY TARGET THEN
 				INSERT (Id, BranchCode, FiscalYear, StatsDocId, RowId, DocCode, DocGroup, DocDate, DocNo, Description,
 					FactoryId, WarehouseId, ReceiptWarehouseId, StatsDocId_WO, ReceiptStatsDocId_WO, ItemId, Unit, Quantity,
 					ProductionProcessId, ProductionLineId, ShiftId, BizDocId_SO, DeptId, EmployeeId,
-					CustomFieldId1, CustomFieldId2, CustomFieldId3, Quantity9, ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR)
+					CustomFieldId1, CustomFieldId2, CustomFieldId3, Quantity9, ConvertRate9,itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR,bizdocid_bh)
 				VALUES (ins.Id, ins.BranchCode, ins.FiscalYear, ins.StatsDocId, ins.RowId, ins.DocCode, ins.DocGroup, ins.DocDate, ins.DocNo, ins.Description,
 					ins.FactoryId, ins.WarehouseId, ins.ReceiptWarehouseId, ins.StatsDocId_WO, ins.ReceiptStatsDocId_WO, ins.ItemId, ins.Unit, ins.Quantity,
 					ins.ProductionProcessId, ins.ProductionLineId, ins.ShiftId, ins.BizDocId_SO, ins.DeptId, ins.EmployeeId,
-					ins.CustomFieldId1, ins.CustomFieldId2, ins.CustomFieldId3, ins.Quantity9, ins.ConvertRate9,ins.itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR);
+					ins.CustomFieldId1, ins.CustomFieldId2, ins.CustomFieldId3, ins.Quantity9, ins.ConvertRate9,ins.itemserialno,BizdocId_DO,rowid_po,bizdocid_po,BizDocId_RR,bizdocid_bh);
 		END IF;
 
 		IF EXISTS (
