@@ -1,0 +1,74 @@
+# ==============================================================================
+# GITIGNORE CHO DỰ ÁN CƠ SỞ DỮ LIỆU & TÙY BIẾN ERP BRAVO (HaiSauSau)
+# ==============================================================================
+
+# --- Microsoft Office Temporary & Lock Files (Excel, Word) ---
+~$*.xlsx
+~$*.xls
+~$*.docx
+~$*.doc
+~$*.pptx
+~$*.ppt
+
+# --- Hệ điều hành Windows & Đồng bộ OneDrive ---
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.tmp
+*.sync
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# --- IDEs & Code Editors ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+.cursor/
+
+# --- Database Tools Cache & Local Config (SSMS, DBeaver, pgAdmin, DataGrip) ---
+.dbeaver/
+.dbeaver-data-sources.xml
+*.sqlsuo
+*.sqldata
+*.dbmdl
+pgadmin4.db
+*.bak
+*.backup
+*.dmp
+*.dump
+
+# --- Logs, Test Data & Scratch Files ---
+*.log
+logs/
+temp/
+tmp/
+_tmp/
+scratch/
+
+# --- Môi trường & Thông tin nhạy cảm (Security / Secrets) ---
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.pfx
+credentials.json
+secrets/
+
+# --- Quy ước file tạm / file backup cá nhân ---
+*_bak.sql
+*_temp.sql
